@@ -8,13 +8,17 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
+
     public function run(): void
     {
-        $this->call(Userseeder::class);
-        User::factory(10)->create();
+        $this->call([
+            DriversTableSeeder::class,
+            CarsTableSeeder::class,
+            MissionsTableSeeder::class,
+        
+            // UserSeeder::class,
+        ]);
+        // User::factory(10)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
