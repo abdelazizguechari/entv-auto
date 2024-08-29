@@ -47,7 +47,7 @@
 							<div class="row">
                  <div class="col-md-4 pe-md-0">
                  <div class="">
-                        <img src="{{ asset('img/car1.jpg') }}" width="215" height="500" alt="">
+                        <img src="{{ asset('img/car1.jpg') }}" width="215" height="520" alt="">
                        </div>
                  </div>
                  <div class="col-md-8 ps-md-0">
@@ -57,8 +57,8 @@
 
 
                     <form class="forms-sample"  method="POST" action="{{ route('login') }} ">
+                      
                     @csrf
-
                       <div class="mb-3">
                         <label for="login" class="form-label">Email address</label>
                         <input type="text" class="form-control" id="login" placeholder="Email" name="email" required>
@@ -81,10 +81,19 @@
                         <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Login</button>
                       
                       </div>
-
-
-                      <a href={{route('signe.admin')}} class="d-block mt-3 text-muted">Not a user? Sign up</a>
                     </form>
+
+                    <a href="{{route('google_auth')}}">
+
+                    <div class="d-flex justify-content-center pt-3">
+                      <button type="submit" class="btn btn-outline-primary btn-icon-text a">
+                        Go with Google <img src="{{ asset('backend/assets/images/google.svg') }}" alt="Google" style="width: 20px; height: 20px; margin-left: 8px;">
+                      </button>
+                    </div>
+                    
+                  </a>
+                      <a href={{route('signe.admin')}} class="d-block mt-3 text-muted">Not a user? <span class="link-primary">Sign up</span> </a>
+                    
                   </div>
                 </div>
               </div>

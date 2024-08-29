@@ -17,14 +17,14 @@
 					<i data-feather="menu"></i>
 				</a>
 				<div class="navbar-content">
-					<form class="search-form">
+					{{-- <form class="search-form">
 						<div class="input-group">
               <div class="input-group-text">
                 <i data-feather="search"></i>
               </div>
 							<input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
 						</div>
-					</form>
+					</form> --}}
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -117,7 +117,7 @@
                     </div>
                     <div class="d-flex justify-content-between flex-grow-1">
                       <div class="me-4">
-                        <p>Amiah Burton</p>
+                        <p>Aziz gr</p>
                         <p class="tx-12 text-muted">Project deatline</p>
                       </div>
                       <p class="tx-12 text-muted">2 hrs ago</p>
@@ -219,7 +219,7 @@
             }}" alt="">
 									</div>
 									<div class="text-center">
-										<p class="tx-16 fw-bolder">{{$profiledata -> name}}</p>
+										<p class="tx-16 fw-bolder">{{$profiledata -> firstname}}</p>
 										<p class="tx-12 text-muted">{{$profiledata -> email}}</p>
 									</div>
 								</div>

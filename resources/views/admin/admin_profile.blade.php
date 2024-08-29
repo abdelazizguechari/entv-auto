@@ -72,10 +72,16 @@
       
               <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="forms-sample">
                   @csrf
+
                   <div class="mb-3">
-                      <label for="Username" class="form-label">Username</label>
-                      <input type="text" class="form-control" name="username" id="Username" autocomplete="off" value="{{ $profiledata->name }}">
+                      <label for="Username" class="form-label">firstname</label>
+                      <input type="text" class="form-control" name="firstname" id="Username" autocomplete="off" value="{{ $profiledata->firstname }}">
                   </div>
+
+                  <div class="mb-3">
+                    <label for="Username" class="form-label">Lastname</label>
+                    <input type="text" class="form-control" name="lastname" id="Username" autocomplete="off" value="{{ $profiledata->lastname }}">
+                </div>
       
                   <div class="mb-3">
                       <label for="address" class="form-label">Address</label>
