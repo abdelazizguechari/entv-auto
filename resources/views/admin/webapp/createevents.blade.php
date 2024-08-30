@@ -46,27 +46,15 @@
                             <label for="fuel_tokens">Fuel Tokens</label>
                             <input type="number" class="form-control" id="fuel_tokens" name="fuel_tokens">
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="fuel_tokens_used">Fuel Tokens Used</label>
-                            <input type="number" class="form-control" id="fuel_tokens_used" name="fuel_tokens_used">
-                        </div> -->
                         <div class="form-group">
                             <label for="distance">Distance</label>
                             <input type="number" class="form-control" id="distance" name="distance">
                         </div>
                         <div class="form-group">
                             <label for="cars">Cars</label>
-                            <select class="form-control" id="cars" name="cars[]" multiple>
+                            <select class="form-control" id="cars" name="cars[]" multiple required>
                                 @foreach($cars as $car)
                                     <option value="{{ $car->immatriculation }}">{{ $car->immatriculation }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="drivers">Drivers</label>
-                            <select class="form-control" id="drivers" name="drivers[]" multiple>
-                                @foreach($drivers as $driver)
-                                    <option value="{{ $driver->id }}">{{ $driver->nom }}</option>
                                 @endforeach
                             </select>
                         </div>

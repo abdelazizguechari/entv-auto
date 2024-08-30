@@ -32,7 +32,7 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function () {
 
-    
+Route::post('/api/drivers-by-cars', [MissionsController::class, 'getDriversByCars']);    
 
 route::get('/admin/addcar',[AdminController::class , 'Addcar' ]) -> name('add.car');
 Route::get('/admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
@@ -50,7 +50,6 @@ Route::post('admin/driver/store', [DriverController::class, 'store'])->name('dri
 Route::get('/admin/ourdrivers', [DriverController::class, 'index'])->name('admin.ourdrivers');
 
 });
-
 
 
 Route::middleware(['auth'])->group(function () {

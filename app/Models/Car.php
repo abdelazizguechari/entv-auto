@@ -40,8 +40,8 @@ class Car extends Model
         return $this->belongsTo(Driver::class, 'driver_id');
     }
 
-   public function mission(): BelongsTo
-   {
-       return $this->belongsTo(Mission::class);
-   }
+    public function missions(): BelongsToMany
+    {
+        return $this->belongsToMany(Mission::class, 'mission_car', 'car_id', 'mission_id');
+    }
 }

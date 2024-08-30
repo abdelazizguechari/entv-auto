@@ -33,8 +33,8 @@ class Driver extends Model
         return $this->hasOne(Car::class, 'immatriculation', 'voiture_id');
     }
 
-    public function missions(): BelongsTo
+    public function missions(): BelongsToMany
     {
-        return $this->belongsTo(Mission::class, 'mission_driver', 'driver_id', 'mission_id');
+        return $this->belongsToMany(Mission::class, 'mission_driver', 'driver_id', 'mission_id');
     }
 }

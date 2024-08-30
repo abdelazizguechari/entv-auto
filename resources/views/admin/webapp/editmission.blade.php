@@ -7,10 +7,11 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Edit Mission</h6>
-                    <form id="edit-mission-form" action="{{ route('missions.update', $mission->id) }}" method="POST">
+                    <h6 class="card-title" id="form-title">Edit Mission</h6>
+                    <form action="{{ route('missions.update', ['id' => $mission->id]) }}" method="POST" id="editMissionForm">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" id="mission_type" name="mission_type" value="{{ $mission->type }}">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $mission->name }}" required>
@@ -27,11 +28,11 @@
                             <label for="mission_end">Mission End</label>
                             <input type="datetime-local" class="form-control" id="mission_end" name="mission_end" value="{{ $mission->mission_end }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="crew_leader_group">
                             <label for="crew_leader">Crew Leader</label>
                             <input type="text" class="form-control" id="crew_leader" name="crew_leader" value="{{ $mission->crew_leader }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="crew_name_group">
                             <label for="crew_name">Crew Name</label>
                             <input type="text" class="form-control" id="crew_name" name="crew_name" value="{{ $mission->crew_name }}">
                         </div>
@@ -48,42 +49,15 @@
                             <input type="number" class="form-control" id="fuel_tokens" name="fuel_tokens" value="{{ $mission->fuel_tokens }}">
                         </div>
                         <div class="form-group">
-                            <label for="fuel_tokens_used">Fuel Tokens Used</label>
-                            <input type="number" class="form-control" id="fuel_tokens_used" name="fuel_tokens_used" value="{{ $mission->fuel_tokens_used }}">
-                        </div>
-                        <div class="form-group">
                             <label for="distance">Distance</label>
                             <input type="number" class="form-control" id="distance" name="distance" value="{{ $mission->distance }}">
                         </div>
-                        <div class="form-group" id="car-select-group">
+                        <div class="form-group" id="carSelectGroup">
                             <label for="car_id">Car</label>
-                            <select class="form-control" id="car_id" name="car_id">
+                            <select class="form-control" id="car_id" name="car_id[]" required>
+                                <option value="">Select a car</option>
                                 @foreach($cars as $car)
-                                    <option value="{{ $car->immatriculation }}" {{ $mission->car_id == $car->immatriculation ? 'selected' : '' }}>{{ $car->immatriculation }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group" id="driver-select-group">
-                            <label for="driver_id">Driver</label>
-                            <select class="form-control" id="driver_id" name="driver_id">
-                                @foreach($drivers as $driver)
-                                    <option value="{{ $driver->id }}" {{ $mission->driver_id == $driver->id ? 'selected' : '' }}>{{ $driver->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group" id="cars-select-group" style="display: none;">
-                            <label for="cars">Cars</label>
-                            <select class="form-control" id="cars" name="cars[]" multiple>
-                                @foreach($cars as $car)
-                                    <option value="{{ $car->immatriculation }}" {{ in_array($car->immatriculation, $mission->cars->pluck('immatriculation')->toArray()) ? 'selected' : '' }}>{{ $car->immatriculation }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group" id="drivers-select-group" style="display: none;">
-                            <label for="drivers">Drivers</label>
-                            <select class="form-control" id="drivers" name="drivers[]" multiple>
-                                @foreach($drivers as $driver)
-                                    <option value="{{ $driver->id }}" {{ in_array($driver->id, $mission->drivers->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $driver->nom }}</option>
+                                    <option value="{{ $car->immatriculation }}" {{ $mission->cars->contains($car->immatriculation) ? 'selected' : '' }}>{{ $car->immatriculation }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -97,14 +71,63 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const missionType = "{{ $mission->type }}"; // Assuming you have a 'type' field in your mission model
+        const missionType = document.getElementById('mission_type').value;
+        const formTitle = document.getElementById('form-title');
+        const carSelect = document.getElementById('car_id');
+        const crewLeaderGroup = document.getElementById('crew_leader_group');
+        const crewNameGroup = document.getElementById('crew_name_group');
 
-        if (missionType === 'event') {
-            document.getElementById('car-select-group').style.display = 'none';
-            document.getElementById('driver-select-group').style.display = 'none';
-            document.getElementById('cars-select-group').style.display = 'block';
-            document.getElementById('drivers-select-group').style.display = 'block';
+        // Set form title based on mission type
+        if (missionType === 'transportation') {
+            formTitle.textContent = 'Edit Transportation Mission';
+        } else if (missionType === 'mission') {
+            formTitle.textContent = 'Edit Mission';
+        } else if (missionType === 'evenements') {
+            formTitle.textContent = 'Edit Event Mission';
         }
+
+        // Adjust form fields based on mission type
+        if (missionType === 'evenements') {
+            carSelect.setAttribute('multiple', 'multiple');
+            crewLeaderGroup.style.display = 'block';
+            crewNameGroup.style.display = 'block';
+        } else if (missionType === 'transportation') {
+            carSelect.removeAttribute('multiple');
+            crewLeaderGroup.style.display = 'none';
+            crewNameGroup.style.display = 'none';
+        } else {
+            carSelect.removeAttribute('multiple');
+            crewLeaderGroup.style.display = 'block';
+            crewNameGroup.style.display = 'block';
+        }
+
+        // Fetch drivers based on selected cars for event missions
+        carSelect.addEventListener('change', function () {
+            const selectedCars = Array.from(carSelect.selectedOptions).map(option => option.value);
+            const driverSelect = document.getElementById('driver_id');
+            driverSelect.innerHTML = '<option value="">Select a driver</option>'; // Reset driver options
+
+            if (selectedCars.length > 0) {
+                fetch(`/api/drivers-by-cars`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ cars: selectedCars })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(driver => {
+                        const option = document.createElement('option');
+                        option.value = driver.id;
+                        option.textContent = driver.nom;
+                        driverSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching drivers:', error));
+            }
+        });
     });
 </script>
 

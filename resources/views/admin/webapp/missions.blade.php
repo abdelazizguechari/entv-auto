@@ -21,10 +21,9 @@
                                 <th>Crew Name</th>
                                 <th>Status</th>
                                 <th>Fuel Tokens</th>
-                                <!-- <th>Fuel Tokens Used</th> -->
                                 <th>Distance</th>
-                                <th>Car</th>
-                                <th>Driver</th>
+                                <th>Cars</th>
+                                <th>Drivers</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -41,10 +40,17 @@
                                     <td>{{ $mission->crew_name }}</td>
                                     <td>{{ $mission->status }}</td>
                                     <td>{{ $mission->fuel_tokens }}</td>
-                                    <!-- <td>{{ $mission->fuel_tokens_used }}</td> -->
                                     <td>{{ $mission->distance }}</td>
-                                    <td>{{ $mission->car_id }}</td>
-                                    <td>{{ $mission->driver_id }}</td>
+                                    <td>
+                                        @foreach($mission->cars as $car)
+                                            {{ $car->immatriculation }}<br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach($mission->drivers as $driver)
+                                            {{ $driver->nom }}<br>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
                                         <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">

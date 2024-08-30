@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mission extends Model
 {
@@ -28,16 +29,20 @@ class Mission extends Model
         'driver_id',
     ];
 
-
-    public function cars(): HasMany
+    public function index()
     {
-        return $this->hasMany(Car::class);
+        $missions = Mission::with(['cars', 'drivers'])->get();
+        return view('admin.webapp.missions', compact('missions'));
     }
 
-
-    public function drivers(): HasMany
+    public function cars(): BelongsToMany
     {
-        return $this->hasMany(Driver::class);
+        return $this->belongsToMany(Car::class, 'mission_car', 'mission_id', 'car_id');
+    }
+
+    public function drivers(): BelongsToMany
+    {
+        return $this->belongsToMany(Driver::class, 'mission_driver', 'mission_id', 'driver_id');
     }
 
     public function scopeStatus(Builder $query, string $status): Builder

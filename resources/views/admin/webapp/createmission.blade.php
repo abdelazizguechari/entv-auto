@@ -46,27 +46,16 @@
                             <label for="fuel_tokens">Fuel Tokens</label>
                             <input type="number" class="form-control" id="fuel_tokens" name="fuel_tokens">
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="fuel_tokens_used">Fuel Tokens Used</label>
-                            <input type="number" class="form-control" id="fuel_tokens_used" name="fuel_tokens_used">
-                        </div> -->
                         <div class="form-group">
                             <label for="distance">Distance</label>
                             <input type="number" class="form-control" id="distance" name="distance">
                         </div>
                         <div class="form-group">
                             <label for="car_id">Car</label>
-                            <select class="form-control" id="car_id" name="car_id">
+                            <select class="form-control" id="car_id" name="car_id" required>
+                                <option value="">Select a car</option>
                                 @foreach($cars as $car)
                                     <option value="{{ $car->immatriculation }}">{{ $car->immatriculation }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="driver_id">Driver</label>
-                            <select class="form-control" id="driver_id" name="driver_id">
-                                @foreach($drivers as $driver)
-                                    <option value="{{ $driver->id }}">{{ $driver->nom }}</option>
                                 @endforeach
                             </select>
                         </div>
