@@ -1,14 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
-@section('admin') 
-
-
+@section('admin')
 
 <div class="page-content">
 
@@ -21,55 +13,47 @@
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
-<div class="card">
-  <div class="card-body">
-    <h6 class="card-title">Cars table</h6>
-    <div class="table-responsive">
-      <table id="dataTableExample" class="table">
-        <thead>
-          <tr>
-            <th>immatriculation</th>
-            <th>modele</th>
-            <th>kilometrage</th>
-            <th>type carburant</th>
-          
-          </tr>
-        </thead>
-        <tbody>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Cars table</h6>
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th>immatriculation</th>
+                                    <th>modele</th>
+                                    <th>kilometrage</th>
+                                    <th>type carburant</th>
+                                    <th>driver</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $cars = App\Models\Car::latest()->get();
+                                @endphp
 
-          
-@php
-$car = App\Models\Carsm::latest()->get();    
-@endphp
-
-
-        @foreach($car as $key => $item )
-          <tr>
-            <td>{{$item -> immatriculation}}</td>
-            <td>{{$item -> modele}}</td>
-            <td>{{$item -> kilometrage}}</td>
-            <td>{{$item -> type_carburant}}</td>
-            <td>
-              <a class="btn btn-danger" href="">supprimer</a>
-              <a  class="btn btn-success" href="">editing</a>
-            </td>
-
-          </tr>
-
-          @endforeach 
-    
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+                                @foreach($cars as $car)
+                                    <tr>
+                                        <td>{{ $car->immatriculation }}</td>
+                                        <td>{{ $car->modele }}</td>
+                                        <td>{{ $car->kilometrage }}</td>
+                                        <td>{{ $car->type_carburant }}</td>
+                                        <td>{{ $car->driver->nom ?? 'No driver assigned' }}</td>
+                                        <td>
+                                            <a class="btn btn-danger" href="{{ route('cars.delete', ['immatriculation' => $car->immatriculation]) }}">supprimer</a>
+                                            <a class="btn btn-success" href="{{ route('cars.edit', ['immatriculation' => $car->immatriculation]) }}">editing</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 </div>
-
-
-
-
 
 @endsection

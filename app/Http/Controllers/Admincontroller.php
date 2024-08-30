@@ -172,4 +172,3 @@ public function Adminlogout(Request $request): RedirectResponse
     return redirect('/admin/login');
 }
 };
-

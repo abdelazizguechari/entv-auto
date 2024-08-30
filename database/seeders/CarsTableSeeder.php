@@ -30,7 +30,7 @@ class CarsTableSeeder extends Seeder
                 'description' => $faker->sentence(),
                 'prix' => $faker->randomFloat(2, 1000, 50000),
                 'date_achat' => $faker->date(),
-                'proprietaire' => $faker->name(),
+                'driver_id' => null, // Initially set to null
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

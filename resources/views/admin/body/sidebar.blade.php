@@ -36,28 +36,25 @@
         </li>
 
         <li class="nav-item">
-        
-
-        <a class="nav-link" data-bs-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
-          <i class="link-icon" data-feather="layout"></i>
-          <span class="link-title">Missions</span>
-          <i class="link-arrow" data-feather="chevron-down"></i>
-        </a>
-        <div class="collapse" id="tables">
-          <ul class="nav sub-menu">
-            <li class="nav-item">
-              <a href="{{route('add.mission')}}" class="nav-link">Mission du jour</a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/tables/data-table.html" class="nav-link">Transport</a>
-            </li>
-
-            <li class="nav-item">
-              <a href="pages/tables/data-table.html" class="nav-link">Événement</a>
-            </li>
-          </ul>
-        </div>
-      </li>
+          <a class="nav-link" data-bs-toggle="collapse" href="#missions" role="button" aria-expanded="false" aria-controls="missions">
+            <i class="link-icon" data-feather="layout"></i>
+            <span class="link-title">Missions</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse" id="missions">
+            <ul class="nav sub-menu">
+              <li class="nav-item">
+                <a href="{{ route('missions.create.transportation') }}" class="nav-link">transportation</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('missions.create.mission') }}" class="nav-link">mission</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('missions.create.events') }}" class="nav-link">événement</a>
+              </li>
+            </ul>
+          </div>
+        </li>
 
         <li class="nav-item nav-category">Applications Web</li>
         <li class="nav-item">
@@ -67,14 +64,14 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link">
+          <a href="{{route('admin.ourdrivers')}}" class="nav-link">
             <i class="link-icon" data-feather="users"></i>
             <span class="link-title">Nos conducteurs</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="pages/apps/calendar.html" class="nav-link">
+          <a href="{{ route('missions.index') }}" class="nav-link">
             <i class="link-icon" data-feather="check-square"></i>
             <span class="link-title">Missions du jour</span>
           </a>

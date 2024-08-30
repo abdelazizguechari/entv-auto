@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Driver extends Model
 {
@@ -27,8 +28,13 @@ class Driver extends Model
         'voiture_id',
     ];
 
-    public function voiture()
+    public function car(): HasOne
     {
-        return $this->belongsTo(Carsm::class, 'voiture_id', 'immatriculation');
+        return $this->hasOne(Car::class, 'immatriculation', 'voiture_id');
+    }
+
+    public function missions(): BelongsTo
+    {
+        return $this->belongsTo(Mission::class, 'mission_driver', 'driver_id', 'mission_id');
     }
 }

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Carsm;
+use App\Models\Car;
+use App\Models\Driver;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,7 +35,7 @@ class CarController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Carsm::create($validatedData);
+        Car::create($validatedData);
 
         return redirect()->route('car.create')->with('success', 'Car details have been saved successfully.');
     }
@@ -55,8 +56,35 @@ class CarController extends Controller
     
     public function cardata()
     {
-        $car = Carsm::latest()->get();
-        return view('admin.webapp.Ourcars', compact('car')->with('car',$car));
+        $cars = Car::with('driver')->latest()->get();
+        return view('admin.webapp.Ourcars', compact('cars'));
     }
-    
+
+
+    public function delete($immatriculation)
+    {
+        $car = Car::findOrFail($immatriculation);
+        $car->delete();
+        return redirect()->back()->with('success', 'Car deleted successfully');
+    }
+
+    public function edit($immatriculation)
+    {
+        $car = Car::findOrFail($immatriculation);
+        $drivers = Driver::all();
+        return view('admin.webapp.editcar', compact('car', 'drivers'));
+    }
+
+    public function update(Request $request, $immatriculation)
+    {
+        $car = Car::findOrFail($immatriculation);
+        $car->immatriculation = $request->input('immatriculation');
+        $car->modele = $request->input('modele');
+        $car->kilometrage = $request->input('kilometrage');
+        $car->type_carburant = $request->input('type_carburant');
+        $car->driver_id = $request->input('driver_id');
+        $car->save();
+
+        return redirect()->route('cars.index')->with('success', 'Car updated successfully');
+    }
 }

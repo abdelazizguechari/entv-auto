@@ -2,7 +2,7 @@
 
 
 
-$cars = App\Models\Carsm::whereNotIn('immatriculation', App\Models\Driver::pluck('voiture_id'))->pluck('immatriculation');
+$cars = App\Models\Car::whereNotIn('immatriculation', App\Models\Driver::pluck('voiture_id'))->pluck('immatriculation');
 
 @endphp
 
