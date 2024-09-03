@@ -1,17 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http ;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admincontroller;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\googleauth;
-use App\Http\Controllers\Agentcontroller;
+use App\Http\Controllers\AgentController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\MissionsController;
-
-
+use App\Http\Controllers\EventController;
 
 Route::get('/', function () {
     return view('admin.admin_login');
@@ -29,31 +27,29 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-
 Route::middleware(['auth'])->group(function () {
 
-Route::post('/api/drivers-by-cars', [MissionsController::class, 'getDriversByCars']);    
+    Route::post('/api/drivers-by-cars', [MissionsController::class, 'getDriversByCars']);    
 
-route::get('/admin/addcar',[AdminController::class , 'Addcar' ]) -> name('add.car');
-Route::get('/admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
-Route::get('/admin/driver', [AdminController::class, 'draiveradd'])->name('add.driver');
-Route::get('/admin/missison', [AdminController::class, 'Addmission'])->name('add.mission');
-Route::get('admin/changpass',[Admincontroller::class , 'changpassword'])-> name('change.password');
-Route::post('admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update');
-Route::post('admin/update/password', [AdminController::class, 'passwordupdate'])->name('password.change');
-Route::get('admin/car/create', [CarController::class, 'create'])->name('car.create');
-Route::post('admin/car/store', [CarController::class, 'store'])->name('car.store');
-route::get('/admin/ourcars',[CarController::class , 'ourcars' ]) -> name('admin.ourcars');
-Route::get('admin/webapp/Ourcars/data' , [CarsController::class , 'cardata']) ->name('car.data');
-Route::get('admin/driver/create', [DriverController::class, 'create'])->name('driver.create');
-Route::post('admin/driver/store', [DriverController::class, 'store'])->name('driver.store');
-Route::get('/admin/ourdrivers', [DriverController::class, 'index'])->name('admin.ourdrivers');
-
+    Route::get('/admin/addcar', [AdminController::class, 'Addcar'])->name('add.car');
+    Route::get('/admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
+    Route::get('/admin/driver', [AdminController::class, 'draiveradd'])->name('add.driver');
+    Route::get('/admin/missison', [AdminController::class, 'Addmission'])->name('add.mission');
+    Route::get('admin/changpass', [AdminController::class, 'changpassword'])->name('change.password');
+    Route::post('admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update');
+    Route::post('admin/update/password', [AdminController::class, 'passwordupdate'])->name('password.change');
+    Route::get('admin/car/create', [CarController::class, 'create'])->name('car.create');
+    Route::post('admin/car/store', [CarController::class, 'store'])->name('car.store');
+    Route::get('/admin/ourcars', [CarController::class, 'ourcars'])->name('admin.ourcars');
+    Route::get('admin/webapp/Ourcars/data', [CarController::class, 'cardata'])->name('car.data');
+    Route::get('admin/driver/create', [DriverController::class, 'create'])->name('driver.create');
+    Route::post('admin/driver/store', [DriverController::class, 'store'])->name('driver.store');
+    Route::get('/admin/ourdrivers', [DriverController::class, 'index'])->name('admin.ourdrivers');
 });
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/missions', [MissionsController::class, 'index'])->name('missions.index');
+    Route::get('/missions/transportation', [MissionsController::class, 'indexTransportation'])->name('missions.index.transportation');
     Route::get('/missions/create/transportation', [MissionsController::class, 'createTransportation'])->name('missions.create.transportation');
     Route::get('/missions/create/mission', [MissionsController::class, 'createMission'])->name('missions.create.mission');
     Route::get('/missions/create/events', [MissionsController::class, 'createEvents'])->name('missions.create.events');
@@ -65,9 +61,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/missions/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
 });
 
-Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
-Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
-Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
+Route::resource('events', EventController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
+    Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
+    Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/drivers', [DriverController::class, 'index'])->name('drivers.index');
@@ -78,10 +78,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/admin/profile', [AdminController::class, 'Adminprofile'])->name('admin.profile');
 Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');   
-Route::get('/agent/dashboard',[Agentcontroller::class , 'AgentDashboard']) -> name('agent.dashboard');
-Route::get('/admin/logout',[AdminController::class , 'Adminlogout' ]) -> name('admin.logout'); 
+Route::get('/agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
+Route::get('/admin/logout', [AdminController::class, 'Adminlogout'])->name('admin.logout'); 
 Route::get('admin/signe', [AdminController::class, 'adminsigne'])->name('signe.admin');
-route::get('/admin/login',[AdminController::class , 'Adminlogin' ]) -> name('admin.login');
-Route::get('/auth/redirect', function () {  return Socialite::driver('google')->redirect();});
-Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
-Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
+Route::get('/admin/login', [AdminController::class, 'Adminlogin'])->name('admin.login');
+Route::get('/auth/redirect', function () { return Socialite::driver('google')->redirect(); });
+Route::get('/auth/google', [googleauth::class, 'redirect'])->name('google_auth');
+Route::get('/auth/google/call-back', [googleauth::class, 'callback']);

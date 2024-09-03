@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Car extends Model
 {
@@ -35,13 +34,13 @@ class Car extends Model
         'description',
     ];
 
-    public function driver(): BelongsTo
+    public function mission(): HasOne
     {
-        return $this->belongsTo(Driver::class, 'driver_id');
+        return $this->hasOne(Mission::class, 'car_id', 'immatriculation');
     }
 
-    public function missions(): BelongsToMany
+    public function driver()
     {
-        return $this->belongsToMany(Mission::class, 'mission_car', 'car_id', 'mission_id');
+        return $this->hasOne(Driver::class, 'voiture_id', 'immatriculation');
     }
 }

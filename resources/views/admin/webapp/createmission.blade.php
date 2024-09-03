@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Create Mission</h6>
-                    <form action="{{ route('missions.store.mission') }}" method="POST">
+                    <form id="missionForm" action="{{ route('missions.store.mission') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -59,7 +59,12 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Create Mission</button>
+                        @if($fromEvent)
+                            <input type="hidden" name="event_id" value="{{ $eventId }}">
+                            <button type="submit" class="btn btn-secondary" name="action" value="add_to_event">Add to Event</button>
+                        @else
+                            <button type="submit" class="btn btn-primary" name="action" value="create">Create Mission</button>
+                        @endif
                     </form>
                 </div>
             </div>

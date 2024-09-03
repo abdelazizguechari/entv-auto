@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mission extends Model
 {
@@ -29,20 +27,14 @@ class Mission extends Model
         'driver_id',
     ];
 
-    public function index()
+    public function car(): BelongsTo
     {
-        $missions = Mission::with(['cars', 'drivers'])->get();
-        return view('admin.webapp.missions', compact('missions'));
+        return $this->belongsTo(Car::class, 'car_id', 'immatriculation');
     }
 
-    public function cars(): BelongsToMany
+    public function driver()
     {
-        return $this->belongsToMany(Car::class, 'mission_car', 'mission_id', 'car_id');
-    }
-
-    public function drivers(): BelongsToMany
-    {
-        return $this->belongsToMany(Driver::class, 'mission_driver', 'mission_id', 'driver_id');
+        return $this->hasOneThrough(Driver::class, Car::class, 'immatriculation', 'voiture_id', 'car_id', 'immatriculation');
     }
 
     public function scopeStatus(Builder $query, string $status): Builder

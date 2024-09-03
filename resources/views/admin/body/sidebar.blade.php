@@ -58,6 +58,12 @@
 
         <li class="nav-item nav-category">Applications Web</li>
         <li class="nav-item">
+          <a href="{{route('events.index')}}" class="nav-link">
+            <i class="link-icon" data-feather="calendar"></i>
+            <span class="link-title">Evenements</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{route('admin.ourcars')}}" class="nav-link">
             <i class="link-icon" data-feather="activity"></i>
             <span class="link-title">Nos voitures</span>
@@ -71,11 +77,23 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('missions.index') }}" class="nav-link">
+          <a class="nav-link" data-bs-toggle="collapse" href="#missionsDisplay" role="button" aria-expanded="false" aria-controls="missionsDisplay">
             <i class="link-icon" data-feather="check-square"></i>
-            <span class="link-title">Missions du jour</span>
+            <span class="link-title">Missions Du Jour</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
+          <div class="collapse" id="missionsDisplay">
+            <ul class="nav sub-menu">
+              <li class="nav-item">
+                <a href="{{ route('missions.index') }}" class="nav-link">Missions</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('missions.index.transportation') }}" class="nav-link">Transportation</a>
+              </li>
+            </ul>
+          </div>
         </li>
+
         <li class="nav-item nav-category">Gestion</li>
 
         <li class="nav-item">

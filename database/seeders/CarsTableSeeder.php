@@ -12,10 +12,9 @@ class CarsTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Insert multiple records
         foreach (range(1, 10) as $index) {
             DB::table('cars')->insert([
-                'immatriculation' => $faker->unique()->bothify('??###'), // Unique registration number
+                'immatriculation' => $faker->unique()->bothify('??###'),
                 'marque' => $faker->word(),
                 'modele' => $faker->word(),
                 'etat' => $faker->word(),
@@ -30,7 +29,7 @@ class CarsTableSeeder extends Seeder
                 'description' => $faker->sentence(),
                 'prix' => $faker->randomFloat(2, 1000, 50000),
                 'date_achat' => $faker->date(),
-                'driver_id' => null, // Initially set to null
+                'driver_id' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

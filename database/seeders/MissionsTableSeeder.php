@@ -26,7 +26,7 @@ class MissionsTableSeeder extends Seeder
         // Insert multiple mission records
         foreach (range(1, 10) as $index) {
             Mission::create([
-                'type' => $faker->randomElement(['transportation', 'mission', 'evenements']),
+                'type' => $faker->randomElement(['transportation', 'mission']),
                 'name' => $faker->word,
                 'description' => $faker->sentence,
                 'mission_start' => $faker->dateTime,

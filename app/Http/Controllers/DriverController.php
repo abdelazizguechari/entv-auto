@@ -19,7 +19,7 @@ class DriverController extends Controller
     {
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
-            'prenom' => 'nullable|string|max:255',  // Corrected this line
+            'prenom' => 'nullable|string|max:255', 
             'assurance_num' => 'nullable|string|max:255',
             'permis_conduire' => 'required|string|unique:driver',
             'telephone' => 'nullable|string|max:255',

@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Create Event Mission</h6>
-                    <form action="{{ route('missions.store.events') }}" method="POST">
+                    <form id="eventForm" action="{{ route('missions.store.events') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -19,51 +19,29 @@
                             <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="mission_start">Mission Start</label>
-                            <input type="datetime-local" class="form-control" id="mission_start" name="mission_start">
+                            <label for="event_start">Event Start</label>
+                            <input type="datetime-local" class="form-control" id="event_start" name="event_start">
                         </div>
                         <div class="form-group">
-                            <label for="mission_end">Mission End</label>
-                            <input type="datetime-local" class="form-control" id="mission_end" name="mission_end">
+                            <label for="event_end">Event End</label>
+                            <input type="datetime-local" class="form-control" id="event_end" name="event_end">
                         </div>
-                        <div class="form-group">
-                            <label for="crew_leader">Crew Leader</label>
-                            <input type="text" class="form-control" id="crew_leader" name="crew_leader">
-                        </div>
-                        <div class="form-group">
-                            <label for="crew_name">Crew Name</label>
-                            <input type="text" class="form-control" id="crew_name" name="crew_name">
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control" id="status" name="status" required>
-                                <option value="ongoing">Ongoing</option>
-                                <option value="scheduled">Scheduled</option>
-                                <option value="completed">Completed</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="fuel_tokens">Fuel Tokens</label>
-                            <input type="number" class="form-control" id="fuel_tokens" name="fuel_tokens">
-                        </div>
-                        <div class="form-group">
-                            <label for="distance">Distance</label>
-                            <input type="number" class="form-control" id="distance" name="distance">
-                        </div>
-                        <div class="form-group">
-                            <label for="cars">Cars</label>
-                            <select class="form-control" id="cars" name="cars[]" multiple required>
-                                @foreach($cars as $car)
-                                    <option value="{{ $car->immatriculation }}">{{ $car->immatriculation }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create Mission</button>
+                        <button type="submit" class="btn btn-primary">Create Event</button>
+                        <button type="button" class="btn btn-secondary" onclick="submitFormAndAddMission()">Add Mission</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function submitFormAndAddMission() {
+        const form = document.getElementById('eventForm');
+        const action = form.action;
+        form.action = action + '?redirect_to_add_mission=true';
+        form.submit();
+    }
+</script>
 
 @endsection
