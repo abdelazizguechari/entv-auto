@@ -40,9 +40,9 @@
 
 
 
-<div class="main-wrapper">
+<div class="main-wrapper "  >
     <div class="page-wrapper full-page">
-        <div class="page-content ">
+        <div class="page-content " >
 
             <div class="row w-100 mx-0 auth-page">
                 <div class="col-md-8 col-xl-6 mx-auto">
@@ -50,12 +50,12 @@
                         <div class="row">
          
             <div class="col-md-12 ps-md-0">
-              <div class="auth-form-wrapper  px-3 py-5">
-                <a href="#" class="noble-ui-logo text-center logo-light d-block mb-2">parck<span>auto</span></a>
+              <div class="auth-form-wrapper  px-3 py-5" style="background-image: url('{{asset('backend/assets/images/back.png')}}');background-size:800px;">
+                <a href="#" class="noble-ui-logo text-center logo-light d-block mb-2">DMT<span style="color: green">ENTV</span></a>
                 <h5 class="text-muted  text-center  fw-normal mb-4">Create account.</h5>
 
 
-                <form action="{{route('user.signe')}}" method="POST" class="forms-sample">
+                <form action="{{route('user.admin')}}" method="POST" class="forms-sample">
                   @csrf
 
                   <div class="row">
@@ -100,10 +100,6 @@
                     </div>
                   </div>
                 
-                  <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="authCheck">
-                    <label class="form-check-label" for="authCheck">Remember me</label>
-                  </div>
                   <div>
                     <input type="submit" class="btn btn-primary text-white me-2 mb-2 mb-md-0">
                   </div>

@@ -17,22 +17,18 @@
 					<i data-feather="menu"></i>
 				</a>
 				<div class="navbar-content">
-					{{-- <form class="search-form">
-						<div class="input-group">
-              <div class="input-group-text">
-                <i data-feather="search"></i>
-              </div>
-							<input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
-						</div>
-					</form> --}}
+          <div style="padding-left:120px;width:100%; display: flex; justify-content: center; align-items: center;">
+            <img src="{{ asset('backend/assets/images/entvlogo.png') }}" width="80" height="80">
+        </div>
+        
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flag-icon flag-icon-us mt-1" title="us"></i> <span class="ms-1 me-1 d-none d-md-inline-block">English</span>
+								<i class="flag-icon flag-icon-fr mt-1" title="us"></i> <span class="ms-1 me-1 d-none d-md-inline-block">Fracais</span>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="languageDropdown">
+                {{-- <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ms-1"> French </span></a> --}}
                 <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> <span class="ms-1"> English </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ms-1"> French </span></a>
                 <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-dz" title="de" id="de"></i> <span class="ms-1"> Arabe </span></a>
 
 							</div>
@@ -51,7 +47,7 @@
                     <a href="pages/apps/chat.html" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="message-square" class="icon-lg mb-1"></i><p class="tx-12">Chat</p></a>
                   </div>
                   <div class="col-3 text-center">
-                    <a href="pages/apps/calendar.html" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="calendar" class="icon-lg mb-1"></i><p class="tx-12">Calendar</p></a>
+                    <a href="{{route('caladner.add')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="calendar" class="icon-lg mb-1"></i><p class="tx-12">Calendar</p></a>
                   </div>
                   <div class="col-3 text-center">
                     <a href="pages/email/inbox.html" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="mail" class="icon-lg mb-1"></i><p class="tx-12">Email</p></a>
@@ -65,7 +61,8 @@
 								</div>
 							</div>
 						</li>
-						<li class="nav-item dropdown">
+            
+						{{-- <li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i data-feather="mail"></i>
 							</a>
@@ -140,7 +137,7 @@
 									<a href="javascript:;">View all</a>
 								</div>
 							</div>
-						</li>
+						</li> --}}
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i data-feather="bell"></i>

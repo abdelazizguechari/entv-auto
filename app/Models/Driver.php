@@ -9,7 +9,7 @@ class Driver extends Model
 {
     use HasFactory;
 
-    protected $table = 'driver';
+   protected $table = 'drivers';
 
     protected $fillable = [
         'nom',
@@ -25,6 +25,7 @@ class Driver extends Model
         'date_naissance',
         'photo',
         'voiture_id',
+    
     ];
 
     public function voiture()

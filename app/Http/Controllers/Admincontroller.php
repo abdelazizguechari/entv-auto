@@ -17,6 +17,12 @@ public function AdminDashboard() {
 
 }
 
+public function caladner() {
+    return view ('admin.webapp.calander');
+
+}
+
+
 
 
 public function Addcar() {

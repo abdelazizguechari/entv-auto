@@ -34,15 +34,15 @@ return new class extends Migration
 
        
 
-    Schema::create('missions', function (Blueprint $table) {
-        $table->id();
-        $table->string('nom_mission');
-        $table->string('departement');
-        $table->string('lieu');
-        $table->time('heure_debut');
-        $table->text('description')->nullable();
-        $table->timestamps();
-    });
+    // Schema::create('missions', function (Blueprint $table) {
+    //     $table->id();
+    //     $table->string('nom_mission');
+    //     $table->string('departement');
+    //     $table->string('lieu');
+    //     $table->time('heure_debut');
+    //     $table->text('description')->nullable();
+    //     $table->timestamps();
+    // });
 
 
 

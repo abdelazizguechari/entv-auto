@@ -1,21 +1,29 @@
 @extends('admin.dash')
 
-@section('admin') 
+@section('admin')
+
+<style>
+.form-control {
+    background-color: transparent !important;
+}
+
+</style>
 
 
 <div class="page-content">
     <div class="row">
         <div class="col-md-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Formulaire de Voiture</h6>
+            <div class="card  bg-transparent">
+                <div class="card-body bg-dark">
+                    <h4 class="card-title  fs-4">Formulaire de Voiture</h4>
+                    <hr>
                     <form method="POST" action="{{ route('car.store') }}">
 
                         @csrf
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Immatriculation</label>
+                                    <label class="form-label ">Immatriculation</label>
                                     <input type="text" class="form-control" name="immatriculation" placeholder="Entrez l'immatriculation" required>
                                 </div>
                             </div><!-- Col -->
@@ -48,8 +56,22 @@
                             </div><!-- Col -->
                         </div><!-- Row -->
 
+                        <!-- Assurance Type and Next Assurance Date Fields -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Type d'Assurance</label>
+                                    <input type="text" class="form-control" name="assurance_type" placeholder="Entrez le type d'assurance">
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Prochaine Date d'Assurance</label>
+                                    <input type="date" class="form-control" name="next_assurance_date">
+                                </div>
+                            </div><!-- Col -->
+                        </div><!-- Row -->
 
-            
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
@@ -144,6 +166,7 @@
         </div>
     </div>
 </div>
+
 
 
 		

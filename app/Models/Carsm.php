@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Carsm extends Model
 {
-    use HasFactory; 
+    use HasFactory;
 
     protected $table = 'cars'; 
+
+    protected $primaryKey = 'immatriculation';
+    public $incrementing = false;  
+    protected $keyType = 'string'; 
 
     protected $fillable = [
         'immatriculation',
@@ -18,6 +22,8 @@ class Carsm extends Model
         'etat',
         'kilometrage',
         'datem',
+        'assurance_type',
+        'next_assurance_date',
         'couleur',
         'type_carburant',
         'transmission',
@@ -28,5 +34,6 @@ class Carsm extends Model
         'date_achat',
         'proprietaire',
         'description',
+        'status', 
     ];
 }

@@ -21,6 +21,8 @@ class CarsTableSeeder extends Seeder
                 'etat' => $faker->word(),
                 'kilometrage' => $faker->numberBetween(0, 200000),
                 'datem' => $faker->word(),
+                'next_assurance_date' => $faker->date(),
+                'assurance_type' => $faker->randomElement(['Responsabilité Civile', 'Tous Risques', 'Assurance Collision','Protection des Personnes']),
                 'couleur' => $faker->safeColorName(),
                 'type_carburant' => $faker->randomElement(['Petrol', 'Diesel', 'Electric']),
                 'transmission' => $faker->randomElement(['Manual', 'Automatic']),
