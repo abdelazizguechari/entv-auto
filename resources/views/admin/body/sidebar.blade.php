@@ -44,21 +44,21 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
+          <a class="nav-link" data-bs-toggle="collapse" href="#mission" role="button" aria-expanded="false" aria-controls="mission">
             <i class="link-icon" data-feather="layout"></i>
             <span class="link-title">Missions</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
-          <div class="collapse" id="tables">
+          <div class="collapse" id="mission">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{ route('missions.create.transportation') }}" class="nav-link">Transport</a>
+                <a href="{{ route('missions.create.transportation') }}" class="nav-link">transportation</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('missions.create.mission') }}" class="nav-link">Mission</a>
+                <a href="{{ route('missions.create.mission') }}" class="nav-link">mission</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('missions.create.events') }}" class="nav-link">Événement</a>
+                <a href="{{ route('missions.create.events') }}" class="nav-link">événement</a>
               </li>
             </ul>
           </div>
@@ -79,23 +79,23 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#mission-pages" role="button" aria-expanded="false" aria-controls="mission-pages">
-            <i class="link-icon" data-feather="layers"></i>
-            <span class="link-title">Nos mission</span>
+          <a class="nav-link" data-bs-toggle="collapse" href="#missionsDisplay" role="button" aria-expanded="false" aria-controls="missionsDisplay">
+            <i class="link-icon" data-feather="check-square"></i>
+            <span class="link-title">Missions & Evenement</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
-          <div class="collapse" id="mission-pages">
+          <div class="collapse" id="missionsDisplay">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{route('all.permission')}}" class="nav-link">mission de jour</a>
+                <a href="{{ route('missions.index') }}" class="nav-link">Missions </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('all.role')}}" class="nav-link">transport</a>
+                <a href="{{ route('missions.index.transportation') }}" class="nav-link">Transportation</a>
               </li>
+
               <li class="nav-item">
-                <a href="{{route('add.roles.permission')}}" class="nav-link">evenement</a>
+                <a href="{{route('events.index')}}" class="nav-link">Evenement</a>
               </li>
-             
             </ul>
           </div>
         </li>
@@ -130,17 +130,17 @@
           <div class="collapse" id="stock-pages">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{route('all.permission')}}" class="nav-link">Toutes les permissions</a>
+                <a href="{{route('add.stock')}}" class="nav-link">add element to stock</a>
               </li>
               <li class="nav-item">
-                <a href="{{route('all.role')}}" class="nav-link">Tous les rôles</a>
+                <a href="{{route('all.role')}}" class="nav-link">nos stock</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{route('add.roles.permission')}}" class="nav-link">Rôle dans Permission</a>
               </li>
               <li class="nav-item">
                 <a href="{{route('all.roles.permission')}}" class="nav-link">Tous les rôles dans Permission</a>
-              </li>
+              </li> --}}
             </ul>
           </div>
         </li>
@@ -154,10 +154,10 @@
           <div class="collapse" id="advancedUI">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="pages/advanced-ui/cropper.html" class="nav-link">Cropper</a>
+                <a href="pages/advanced-ui/cropper.html" class="nav-link">mission archive</a>
               </li>
               <li class="nav-item">
-                <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">Carrousel Owl</a>
+                <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">maintenance archive</a>
               </li>
             </ul>
           </div>

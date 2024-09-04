@@ -20,18 +20,15 @@ class Stock extends Model
         'description'
     ];
 
-
-     // Define the attributes that should be hidden for arrays
      protected $hidden = [
-        'prix_total' // This can be excluded if you want to access it publicly
+        'prix_total'
     ];
 
-    // Define any additional attributes that are not part of the database
     protected $appends = [
-        'prix_total' // Include this if you want to access prix_total in model responses
+        'prix_total' 
     ];
     
-    // Optionally, define an accessor if you want to compute it dynamically
+    
     public function getPrixTotalAttribute()
     {
         return $this->quantity * $this->price;

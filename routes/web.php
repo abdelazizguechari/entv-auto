@@ -12,6 +12,9 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\rolecontroller;
 use App\Http\Controllers\MissionsController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\StockController;
+
 
 
 
@@ -95,9 +98,9 @@ Route::get('/auth/redirect', function () {  return Socialite::driver('google')->
 Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
 Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/missions', [MissionsController::class, 'index'])->name('missions.index');
+    Route::get('/missions/transportation', [MissionsController::class, 'indexTransportation'])->name('missions.index.transportation');
     Route::get('/missions/create/transportation', [MissionsController::class, 'createTransportation'])->name('missions.create.transportation');
     Route::get('/missions/create/mission', [MissionsController::class, 'createMission'])->name('missions.create.mission');
     Route::get('/missions/create/events', [MissionsController::class, 'createEvents'])->name('missions.create.events');
@@ -107,10 +110,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/missions/edit/{id}', [MissionsController::class, 'edit'])->name('missions.edit');
     Route::put('/missions/update/{id}', [MissionsController::class, 'update'])->name('missions.update');
     Route::delete('/missions/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
-    Route::post('/api/drivers-by-cars', [MissionsController::class, 'getDriversByCars']);   
 });
 
 
+Route::resource('events', EventController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
+    Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
+    Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
+});
 
 
 Route::controller(roleController::class)->group(function() {
@@ -140,6 +149,22 @@ Route::controller(MaintenanceController::class)->group(function() {
     // Route::get('/permission/delate/{id}', [MaintenanceController::class, 'delatepermission'])->name('delate.permission');
 
 });
+
+
+
+Route::controller(StockController::class)->group(function() {
+
+    Route::get('/addCar/mantenance{immatriculation}', [StockController::class, 'addstock'])->name('add.stock');
+    // Route::post('/maintenance/store', [StockController::class, 'store'])->name('maintenance.store');
+    // Route::get('/Datain/maintenance', [StockController::class, 'Datainmaintenance'])->name('Datain.maintenance');
+    // Route::get('/maintenance/print/{id}', [StockController::class, 'print'])->name('maintenance.print');
+
+    // Route::get('ad/change/permission/{id}', [StockController::class, 'editpermission'])->name('edit.permission');
+    // Route::post('/permission/update', [StockController::class, 'updatepermission'])->name('update.permission');
+    // Route::get('/permission/delate/{id}', [StockController::class, 'delatepermission'])->name('delate.permission');
+
+});
+
 
 
 

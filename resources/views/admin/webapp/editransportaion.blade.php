@@ -7,7 +7,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Edit Mission</h6>
+                    <h6 class="card-title">Edit Transportation Mission</h6>
                     <form action="{{ route('missions.update', ['id' => $mission->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
