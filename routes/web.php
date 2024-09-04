@@ -61,7 +61,7 @@ route::get('/admin/ourcars/delete/{immatriculation}',[CarController::class , 'de
 Route::put('/admin/ourcars/update/{immatriculation}', [CarController::class, 'updateCar'])->name('update.car');
 
 
-Route::get('admin/webapp/Ourcars/data' , [Carscontroller::class , 'cardata']) ->name('car.data');
+Route::get('admin/webapp/Ourcars/data' , [Carcontroller::class , 'cardata']) ->name('car.data');
 Route::get('admin/driver/create', [DriverController::class, 'create'])->name('driver.create');
 Route::post('admin/driver/store', [DriverController::class, 'store'])->name('driver.store');
 Route::get('admin/our/drivers', [DriverController::class, 'ourdrivers'])->name('our.drivers');
@@ -95,8 +95,8 @@ Route::get('admin/signe', [AdminController::class, 'adminsigne'])->name('signe.a
 Route::post('admin/signe/create', [AdminController::class, 'usersigne'])->name('user.admin');
 route::get('/admin/login',[AdminController::class , 'Adminlogin' ]) -> name('admin.login');
 Route::get('/auth/redirect', function () {  return Socialite::driver('google')->redirect();});
-Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
-Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
+// Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
+// Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/missions', [MissionsController::class, 'index'])->name('missions.index');
@@ -154,8 +154,8 @@ Route::controller(MaintenanceController::class)->group(function() {
 
 Route::controller(StockController::class)->group(function() {
 
-    Route::get('/addCar/mantenance{immatriculation}', [StockController::class, 'addstock'])->name('add.stock');
-    // Route::post('/maintenance/store', [StockController::class, 'store'])->name('maintenance.store');
+    Route::get('/add/stock', [StockController::class, 'addstock'])->name('add.stock');
+    Route::post('/stocks/store', [StockController::class, 'store'])->name('stocks.store');
     // Route::get('/Datain/maintenance', [StockController::class, 'Datainmaintenance'])->name('Datain.maintenance');
     // Route::get('/maintenance/print/{id}', [StockController::class, 'print'])->name('maintenance.print');
 

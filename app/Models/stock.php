@@ -9,18 +9,16 @@ class Stock extends Model
 {
     use HasFactory;
 
-    protected $table = 'sotck';
+    // Correct table name
+    protected $table = 'stock'; 
 
-  
     protected $fillable = [
-        'name',
         'category',
         'quantity',
         'price',
-        'description'
     ];
 
-     protected $hidden = [
+    protected $hidden = [
         'prix_total'
     ];
 
@@ -28,12 +26,8 @@ class Stock extends Model
         'prix_total' 
     ];
     
-    
     public function getPrixTotalAttribute()
     {
         return $this->quantity * $this->price;
     }
-    
-
-
 }

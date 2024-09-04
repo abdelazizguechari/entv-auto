@@ -19,10 +19,11 @@ class CreateStock extends Migration
             $table->string('category'); 
             $table->integer('quantity');
             $table->decimal('price', 10, 2); 
-            $table->decimal('prix_total', 10, 2)->after('price')->virtualAs('quantity * price');
+            $table->decimal('prix_total', 10, 2)->virtualAs('quantity * price');
             $table->text('description')->nullable(); 
             $table->timestamps(); 
         });
+        
     }
 
     /**

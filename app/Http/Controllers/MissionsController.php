@@ -7,6 +7,8 @@ use App\Models\Mission;
 use App\Models\Carsm;
 use App\Models\Driver;
 use App\Models\Event;
+use Illuminate\Support\Facades\Log;
+
 
 class MissionsController extends Controller
 {
@@ -26,7 +28,7 @@ class MissionsController extends Controller
     {
         $cars = Carsm::all();
         if ($cars->isEmpty()) {
-            \Log::info('No cars available');
+            Log::info('No cars available');
         }
         return view('admin.webapp.createtransportation', compact('cars'));
     }
