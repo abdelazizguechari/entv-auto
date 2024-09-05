@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http ;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admincontroller;
-use App\Http\Controllers\googleauth;
+// use App\Http\Controllers\googleauth;
 use App\Http\Controllers\Agentcontroller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\CarController;
@@ -14,6 +14,8 @@ use App\Http\Controllers\MissionsController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\FaQController ;
+
 
 
 
@@ -42,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
 route::get('/admin/addcar',[AdminController::class , 'Addcar' ]) -> name('add.car');
 route::get('/admin/calander',[AdminController::class , 'caladner' ]) -> name('caladner.add');
-Route::get('/admin/faq', [AdminController::class, 'faq'])->name('admin.faq');
+
 Route::get('/admin/driver', [AdminController::class, 'draiveradd'])->name('add.driver');
 Route::get('/admin/missison', [AdminController::class, 'Addmission'])->name('add.mission');
 Route::get('admin/changpass',[Admincontroller::class , 'changpassword'])-> name('change.password');
@@ -51,25 +53,28 @@ Route::post('admin/update/password', [AdminController::class, 'passwordupdate'])
 Route::get('admin/car/create', [CarController::class, 'create'])->name('car.create');
 Route::post('admin/car/store', [CarController::class, 'store'])->name('car.store');
 route::get('/admin/ourcars',[CarController::class , 'ourcars' ]) -> name('admin.ourcars');
-
-
-
-
 route::get('/admin/ourcars/edit/{immatriculation}',[CarController::class , 'edit' ]) -> name('edit.car');
 route::get('/admin/ourcars/delete/{immatriculation}',[CarController::class , 'deleteCar' ]) -> name('delete.car');
-
 Route::put('/admin/ourcars/update/{immatriculation}', [CarController::class, 'updateCar'])->name('update.car');
-
-
-Route::get('admin/webapp/Ourcars/data' , [Carscontroller::class , 'cardata']) ->name('car.data');
+Route::get('admin/webapp/Ourcars/data' , [Carcontroller::class , 'cardata']) ->name('car.data');
 Route::get('admin/driver/create', [DriverController::class, 'create'])->name('driver.create');
 Route::post('admin/driver/store', [DriverController::class, 'store'])->name('driver.store');
 Route::get('admin/our/drivers', [DriverController::class, 'ourdrivers'])->name('our.drivers');
 Route::get('admin/delete/drivers/{id}', [DriverController::class, 'deletedriver'])->name('delete.driver');
 Route::get('admin/edit/drivers/{id}', [DriverController::class, 'editdriver'])->name('edit.driver');
-
-
 Route::put('admin/upadte/drivers/{id}', [DriverController::class, 'updatedriver'])->name('update.driver');
+
+
+route::get('/admin/addadmin',[AdminController::class , 'addadmin' ]) -> name('add.admin');
+route::get('/admin/Ouradmins',[AdminController::class , 'Ouradmins' ])-> name('Our.admins');
+
+route::post('/admin/saveadmin',[AdminController::class , 'Saveadmin' ])-> name('save.admin');
+
+route::get('/admin/Delateadmin/{id}',[AdminController::class , 'Delateadmin' ])-> name('delate.admin');
+
+
+
+
 
 
 
@@ -95,8 +100,8 @@ Route::get('admin/signe', [AdminController::class, 'adminsigne'])->name('signe.a
 Route::post('admin/signe/create', [AdminController::class, 'usersigne'])->name('user.admin');
 route::get('/admin/login',[AdminController::class , 'Adminlogin' ]) -> name('admin.login');
 Route::get('/auth/redirect', function () {  return Socialite::driver('google')->redirect();});
-Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
-Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
+// Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
+// Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/missions', [MissionsController::class, 'index'])->name('missions.index');
@@ -121,6 +126,23 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
 });
 
+
+
+
+
+
+
+Route::controller(FaQController::class)->group(function() {
+
+    Route::get('/admin/faq', [FaQController::class, 'faq'])->name('admin.faq');
+    Route::get('/add/faq', [FaQController::class, 'addFaq'])->name('add.Faq');
+    Route::post('/save/faq', [FaQController::class, 'savefaq'])->name('save.faq');
+
+
+    
+  
+
+});
 
 Route::controller(roleController::class)->group(function() {
 

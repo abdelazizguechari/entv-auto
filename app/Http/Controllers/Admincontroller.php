@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class Admincontroller extends Controller
 {
@@ -123,9 +125,6 @@ public function draiveradd() {
     return view('admin.draiveradd');
 }
 
-public function faq() {
-    return view('admin.faq');
-}
 
 public function adminsigne() {
 
@@ -177,5 +176,82 @@ public function Adminlogout(Request $request): RedirectResponse
 
     return redirect('/admin/login');
 }
+
+
+public function addadmin() {
+
+    $Role = Role::all();
+    return view('admin.role.adminsetup.addadmin',compact('Role')); 
+}
+
+
+public function Ouradmins() {
+
+    $alladmin = User::where('role','admin')->get();
+    return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
+}
+
+
+
+public function Saveadmin(Request $request) {
+   
+   
+    // Validate the request if necessary
+    $user = new User();
+    $user->firstname = $request->firstname;
+    $user->lastname = $request->lastname;
+    $user->mat= $request->mat;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
+    $user->birthday = $request->birthday;
+    $user->password = Hash::make( $request->password);
+    $user->role = 'admin';
+    $user->status = 'active';
+
+    // Assign role if provided
+    if ($request->roles) {
+        $role = Role::find($request->roles);
+        if ($role) {
+            $user->save(); // Save user before assigning role
+            $user->assignRole($role); // Assign the role object
+            $notification = [
+                'message' => 'Admin created and role assigned successfully.',
+                'alert-type' => 'success'
+            ];
+        } else {
+            $notification = [
+                'message' => 'Role not found.',
+                'alert-type' => 'error'
+            ];
+        }
+    } else {
+        $user->save(); // Save user if no role is assigned
+        $notification = [
+            'message' => 'Admin created without role.',
+            'alert-type' => 'success'
+        ];
+    }
+
+    return redirect()->route('Our.admins')->with($notification);
+}
+
+
+
+public function Delateadmin($id) {
+
+    $Delateadmin = User::findOrFail($id)->delete();
+
+
+    $notification = [
+        'message' => 'Admin Deleted .',
+        'alert-type' => 'success'
+    ];
+
+
+    return redirect()->back()->with($notification);
+}
+
+
+
 };
 

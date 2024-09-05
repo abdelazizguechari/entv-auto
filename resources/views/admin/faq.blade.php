@@ -2,46 +2,79 @@
 
 @section('admin') 
 
-
-
 <div class="page-content">
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-     
-            <li class="breadcrumb-item active" aria-current="page">Faq</li>
+            <a href="{{ route('add.Faq') }}" class="btn btn-inverse-info">Add QUESTIONS</a>
         </ol>
     </nav>
 
-				<div class="row ">
-					<div class="col-md-12  ">
+    <div class="row">
+        <div class="col-md-12">
             <div class="card">
-              <div class="card-body">
-                <h6 class="card-title">QUESTIONS FRÉQUEMMENT POSÉES</h6>
-                <div class="accordion" id="FaqAccordion">
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Why is the moon sometimes out during the day?
-                      </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#FaqAccordion">
-                      <div class="accordion-body">
-                        <strong>Pariatur cliche reprehenderit,</strong> enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS
-                      </div>
+                <div class="card-body">
+                    <h6 class="card-title">QUESTIONS FRÉQUEMMENT POSÉES</h6>
+                    <div class="accordion" id="FaqAccordion">
+                       
                     </div>
-                  </div>
-
-                 
-               
-               
-                
-                
                 </div>
-              </div>
             </div>
-					</div>
-				</div>
-			</div>
+        </div>
+    </div>
+</div>
 
-    @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const faqs = @json($faq); 
+
+        const faqAccordion = document.getElementById('FaqAccordion');
+
+        faqs.forEach((item, index) => {
+        
+            const accordionItem = document.createElement('div');
+            accordionItem.className = 'accordion-item';
+
+           
+            const accordionHeader = document.createElement('h2');
+            accordionHeader.className = 'accordion-header';
+            accordionHeader.id = `heading${index}`;
+
+          
+            const accordionButton = document.createElement('button');
+            accordionButton.className = 'accordion-button';
+            accordionButton.type = 'button';
+            accordionButton.dataset.bsToggle = 'collapse';
+            accordionButton.dataset.bsTarget = `#collapse${index}`;
+            accordionButton.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
+            accordionButton.setAttribute('aria-controls', `collapse${index}`);
+            accordionButton.textContent = item.question;
+
+            
+            accordionHeader.appendChild(accordionButton);
+
+            const accordionCollapse = document.createElement('div');
+            accordionCollapse.id = `collapse${index}`;
+            accordionCollapse.className = `accordion-collapse collapse ${index === 0 ? 'show' : ''}`;
+            accordionCollapse.setAttribute('aria-labelledby', `heading${index}`);
+            accordionCollapse.dataset.bsParent = '#FaqAccordion';
+
+            
+            const accordionBody = document.createElement('div');
+            accordionBody.className = 'accordion-body';
+            accordionBody.textContent = item.reponse;
+
+            
+            accordionCollapse.appendChild(accordionBody);
+
+           
+            accordionItem.appendChild(accordionHeader);
+            accordionItem.appendChild(accordionCollapse);
+
+           
+            faqAccordion.appendChild(accordionItem);
+        });
+    });
+</script>
+
+@endsection

@@ -74,7 +74,7 @@
                                             <a href={{route('signe.admin')}} class="d-block mt-3 text-muted">Pas encore inscrit ? <span class="link-primary">S'inscrire</span> </a>
                                         </form>
 
-                                        <a href="{{route('google_auth')}}">
+                                        {{-- <a href="{{route('google_auth')}}"> --}}
                                             <div class="d-flex justify-content-center pt-7">
                                                 <button type="submit" class="btn btn-outline-primary btn-icon-text">
                                                     Continuer avec Google <img src="{{ asset('backend/assets/images/google.svg') }}" alt="Google" style="width: 20px; height: 20px; margin-left: 8px;">

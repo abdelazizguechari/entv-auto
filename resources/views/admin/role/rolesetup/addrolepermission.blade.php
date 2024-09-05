@@ -32,6 +32,9 @@
                         </div>
                         
                         <hr>
+                        @php
+    use Illuminate\Support\Str;
+@endphp
                         
                         @foreach ($permission_group as $group)
                             <div class="row">

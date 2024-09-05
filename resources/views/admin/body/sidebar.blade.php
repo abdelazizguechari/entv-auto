@@ -163,6 +163,7 @@
           </div>
         </li>
 
+
         <li class="nav-item nav-category mt-2 mb-2">Rôles & Permissions</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button" aria-expanded="false" aria-controls="general-pages">
@@ -184,6 +185,26 @@
               <li class="nav-item">
                 <a href="{{route('all.roles.permission')}}" class="nav-link">Tous les rôles dans Permission</a>
               </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#admin" role="button" aria-expanded="false" aria-controls="admin">
+            <i class="link-icon" data-feather="user-check"></i>
+            <span class="link-title">admin & users</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse" id="admin">
+            <ul class="nav sub-menu">
+              <li class="nav-item">
+                <a href="{{route('add.admin')}}" class="nav-link">ADD admin</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('Our.admins')}}" class="nav-link">OUR admins</a>
+              </li>
+              
+             
             </ul>
           </div>
         </li>
