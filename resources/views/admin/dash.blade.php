@@ -102,6 +102,10 @@
 	<!-- End custom js for this page -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+
+	@php
+	use Illuminate\Support\Facades\Session;
+@endphp
 	<script>
 		@if(Session::has('message'))
 		var type = "{{ Session::get('alert-type','info') }}"

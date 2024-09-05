@@ -133,7 +133,7 @@
                 <a href="{{route('add.stock')}}" class="nav-link">add element to stock</a>
               </li>
               <li class="nav-item">
-                <a href="{{route('all.role')}}" class="nav-link">nos stock</a>
+                <a href="{{route('all.stock')}}" class="nav-link">nos stock</a>
               </li>
               {{-- <li class="nav-item">
                 <a href="{{route('add.roles.permission')}}" class="nav-link">Rôle dans Permission</a>

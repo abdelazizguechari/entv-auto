@@ -105,6 +105,7 @@ return [
         ),
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -123,5 +124,15 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    
+
+    'aliases' => [
+
+
+    // Add your aliases here
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+],
 
 ];

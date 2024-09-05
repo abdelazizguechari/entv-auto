@@ -1,12 +1,8 @@
-@php 
-
+@php
+  use Illuminate\Support\Facades\Auth;
 
   $id = Auth::user()->id;
   $profiledata = App\Models\User::find($id);
-
-
-
-
 @endphp
 
 
@@ -16,8 +12,15 @@
 				<a href="#" class="sidebar-toggler">
 					<i data-feather="menu"></i>
 				</a>
+
+        <div style="display: flex; align-items: center;margin-left: 3px;">
+          <i class="" style="width: 17px; height: 17px;" data-feather="clock"></i> 
+          <div id="currentDate" style="width: 210px; margin-left: 3px;" class="text-light fs-6"></div>
+      </div>
+      
+
 				<div class="navbar-content">
-          <div style="padding-left:120px;width:100%; display: flex; justify-content: center; align-items: center;">
+          <div style="padding-left:0px;width:100%; display: flex; justify-content: center; align-items: center;">
             <img src="{{ asset('backend/assets/images/entvlogo.png') }}" width="80" height="80">
         </div>
         
@@ -251,3 +254,26 @@
 					</ul>
 				</div>
 			</nav>
+
+
+      <script>
+        function updateDate() {
+            const dateContainer = document.getElementById('currentDate');
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('fr-FR', {
+                weekday: 'long', // "lundi"
+                year: 'numeric', // "2024"
+                month: 'long',   // "septembre"
+                day: 'numeric'   // "4"
+            });
+            dateContainer.textContent = formattedDate;
+        }
+    
+        // Update the date every day at midnight
+        setInterval(updateDate, 24 * 60 * 60 * 1000);
+    
+        // Initialize the date on page load
+        updateDate();
+    </script>
+    
+    

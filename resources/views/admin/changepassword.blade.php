@@ -1,3 +1,11 @@
+<style>
+  .form-control {
+      background-color: transparent !important;
+  }
+  
+  </style>
+
+
 @extends('admin.dash')
 
 @section('admin')
@@ -9,9 +17,10 @@
 
     <div class="col-md-8 col-xl-12 middle-wrapper">
       <div class="row">
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">Change Password</h6>
+        <div class="card bg-transparent">
+          <div class="card-body bg-dark ">
+            <h6 class="card-title fs-4">Change Password</h6>
+            <hr>
             <form action="{{ route('password.change') }}" method="POST" class="forms-sample">
               @csrf
               <div class="mb-3">

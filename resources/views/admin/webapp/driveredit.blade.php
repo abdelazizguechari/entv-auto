@@ -131,7 +131,11 @@
                                 </div><!-- Col -->
                             </div><!-- Row -->
 
-                            <button type="submit" class="btn btn-primary">Soumettre le formulaire</button>
+                            <button type="submit" class="btn btn-inverse-primary">mis a jour les information</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" class="btn btn-inverse-info">Ajouter le conducteur en congé </button>
+                            &nbsp;&nbsp;
+                            <button type="submit" class="btn btn-inverse-danger">Ajouter le conducteur au questionnaire </button>
                         </form>
                     @endif
                 </div>
