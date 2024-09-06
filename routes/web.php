@@ -74,6 +74,13 @@ route::get('/admin/Delateadmin/{id}',[AdminController::class , 'Delateadmin' ])-
 
 
 
+route::get('/admin/Editadmin/{id}',[AdminController::class , 'Editadmin' ])-> name('edit.admin');
+
+route::post('/admin/Updateadmin/{id}',[AdminController::class , 'Updateadmin' ])-> name('Update.admin');
+
+
+
+
 
 
 
@@ -115,6 +122,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/missions/edit/{id}', [MissionsController::class, 'edit'])->name('missions.edit');
     Route::put('/missions/update/{id}', [MissionsController::class, 'update'])->name('missions.update');
     Route::delete('/missions/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
+
+    
 });
 
 

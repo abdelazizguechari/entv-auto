@@ -55,7 +55,7 @@
             </td>
 
             <td> <a class="btn btn-danger"  href="{{route('delate.admin',$item->id)}}" id="delete">supprimer</a>
-                <a class="btn btn-success" href="{{route('edit.role',$item->id)}}">Edit</a></td>
+                <a class="btn btn-success" href="{{route('edit.admin',$item->id)}}">Edit</a></td>
             
              
 

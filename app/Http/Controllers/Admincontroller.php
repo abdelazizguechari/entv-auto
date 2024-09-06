@@ -98,12 +98,11 @@ public function passwordupdate(Request $request)
         return back()->with($notification);
     }
 
-    // Update the password in the database
     User::whereId(auth()->user()->id)->update([
         'password' => Hash::make($request->new_password)
     ]);
 
-    // Return with success notification
+
     $notification = [
         'message' => 'Password changed successfully.',
         'alert-type' => 'success'
@@ -187,7 +186,16 @@ public function addadmin() {
 
 public function Ouradmins() {
 
-    $alladmin = User::where('role','admin')->get();
+
+    
+        $alladmin = User::where('role','admin')->
+        where('id' ,'!=' ,auth()->id())
+        ->get();
+    
+    
+       
+    
+    
     return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
 }
 
@@ -196,7 +204,7 @@ public function Ouradmins() {
 public function Saveadmin(Request $request) {
    
    
-    // Validate the request if necessary
+   
     $user = new User();
     $user->firstname = $request->firstname;
     $user->lastname = $request->lastname;
@@ -208,12 +216,12 @@ public function Saveadmin(Request $request) {
     $user->role = 'admin';
     $user->status = 'active';
 
-    // Assign role if provided
+  
     if ($request->roles) {
         $role = Role::find($request->roles);
         if ($role) {
-            $user->save(); // Save user before assigning role
-            $user->assignRole($role); // Assign the role object
+            $user->save(); 
+            $user->assignRole($role); 
             $notification = [
                 'message' => 'Admin created and role assigned successfully.',
                 'alert-type' => 'success'
@@ -225,11 +233,7 @@ public function Saveadmin(Request $request) {
             ];
         }
     } else {
-        $user->save(); // Save user if no role is assigned
-        $notification = [
-            'message' => 'Admin created without role.',
-            'alert-type' => 'success'
-        ];
+        $user->save(); 
     }
 
     return redirect()->route('Our.admins')->with($notification);
@@ -251,6 +255,57 @@ public function Delateadmin($id) {
     return redirect()->back()->with($notification);
 }
 
+
+public function Editadmin($id){
+
+    $user = User::findOrFail($id);
+    $Role = Role::all();
+
+    return view('admin.role.adminsetup.Editadmin',compact('user','Role'));
+
+}
+
+public function Updateadmin(Request $request ,$id){
+
+    $user = User::findOrFail($id);
+    $user->update([
+
+
+        'firstname' => $request->firstname,
+        'lastname' => $request->lastname,
+        'mat'=> $request->mat,
+        'email' => $request->email,
+        'phone' => $request->phone,
+    ]);
+
+    $user->roles()->detach();
+
+    if ($request->roles) {
+        $role = Role::find($request->roles);
+        if ($role) {
+            $user->save(); 
+            $user->assignRole($role); 
+            $notification = [
+                'message' => 'Admin created and role assigned successfully.',
+                'alert-type' => 'success'
+            ];
+        } else {
+            $notification = [
+                'message' => 'Role not found.',
+                'alert-type' => 'error'
+            ];
+        }
+    }
+
+    $notification = [
+        'message' => 'Admin inforamtion update',
+        'alert-type' => 'success'
+    ];
+
+
+    return redirect()->route('Our.admins')->with($notification);
+
+}
 
 
 };
