@@ -29,12 +29,12 @@ class Mission extends Model
 
     public function car(): BelongsTo
     {
-        return $this->belongsTo(Car::class, 'car_id', 'immatriculation');
+        return $this->belongsTo(Carsm::class, 'car_id', 'immatriculation');
     }
 
     public function driver()
     {
-        return $this->hasOneThrough(Driver::class, Car::class, 'immatriculation', 'voiture_id', 'car_id', 'immatriculation');
+        return $this->hasOneThrough(Driver::class, Carsm::class, 'immatriculation', 'voiture_id', 'car_id', 'immatriculation');
     }
 
     public function scopeStatus(Builder $query, string $status): Builder

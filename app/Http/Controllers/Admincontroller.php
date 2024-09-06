@@ -243,7 +243,13 @@ public function Saveadmin(Request $request) {
 
 public function Delateadmin($id) {
 
-    $Delateadmin = User::findOrFail($id)->delete();
+    $Delateadmin = User::findOrFail($id);
+    
+    if (!is_null($Delateadmin)) {
+        $Delateadmin->delete();
+    }
+    
+    
 
 
     $notification = [

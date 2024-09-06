@@ -6,48 +6,37 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Missions</h6>
+                <div class="card-body bg-dark">
+                    <h6 class="card-title fs-4">Missions</h6>
+                    <hr>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                    
                                 <th>Name</th>
-                                <th>Type</th>
-                                <th>Description</th>
                                 <th>Mission Start</th>
                                 <th>Mission End</th>
-                                <th>Crew Leader</th>
-                                <th>Crew Name</th>
                                 <th>Status</th>
-                                <th>Fuel Tokens</th>
                                 <th>Distance</th>
                                 <th>Cars</th>
                                 <th>Drivers</th>
+                                <th>action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($missions as $mission)
                                 @if($mission->type != 'transportation')
                                     <tr>
-                                        <td>{{ $mission->id }}</td>
                                         <td>{{ $mission->name }}</td>
-                                        <td>{{ $mission->type }}</td>
-                                        <td>{{ $mission->description }}</td>
+                                  
                                         <td>{{ $mission->mission_start }}</td>
                                         <td>{{ $mission->mission_end }}</td>
-                                        <td>{{ $mission->crew_leader }}</td>
-                                        <td>{{ $mission->crew_name }}</td>
                                         <td>{{ $mission->status }}</td>
-                                        <td>{{ $mission->fuel_tokens }}</td>
                                         <td>{{ $mission->distance }}</td>
-                                        <td>
-                                            {{ $mission->car->immatriculation ?? 'N/A' }}<br>
-                                        </td>
-                                        <td>
-                                            {{ $mission->driver->nom ?? 'N/A' }}<br>
-                                        </td>
-                                        <td>
+                                        <td>{{ $mission->car->immatriculation ?? 'N/A' }}</td>  
+                                         <td> {{ $mission->driver->nom ?? 'N/A' }}<br> </td> 
+                                         
+                                         <td>
                                             <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
                                             <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">
                                                 @csrf
