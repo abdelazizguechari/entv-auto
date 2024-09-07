@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('categorie_panne')->nullable();
             $table->decimal('cost', 8, 2)->nullable();
             $table->timestamps();
-
+            $table->enum('statue', ['completed', 'inwork'])->default('inwork');
             $table->foreign('immatriculation')->references('immatriculation')->on('cars')->onDelete('cascade');
         });
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,6 @@ class Maintenance extends Model
 
     protected $table = 'maintenance';
 
-  
     protected $fillable = [
         'immatriculation',
         'driver_id',
@@ -21,10 +19,9 @@ class Maintenance extends Model
         'end_date',
         'description',
         'categorie_panne',
-        'cost'
+        'cost',
+        'status'
     ];
-
-    
 
     public function car()
     {
@@ -33,18 +30,13 @@ class Maintenance extends Model
 
     public function stock()
     {
-         return $this->belongsTo(stock::class, 'stock_id');
-     }
+        return $this->belongsTo(Stock::class, 'stock_id');
+    }
 
-     public function driver()
+    public function driver()
     {
-         return $this->belongsTo(Driver::class, 'driver_id');
-     }
-
-
-
-
-
+        return $this->belongsTo(Driver::class, 'driver_id');
+    }
 
     protected static function boot()
     {
@@ -60,9 +52,26 @@ class Maintenance extends Model
                 $car->save();
             }
         });
-    }
 
-  
-    
-     
+        static::updated(function ($maintenance) {
+            // Check if the status has changed to 'completed'
+            if ($maintenance->isDirty('status') && $maintenance->status === 'completed') {
+                // Archive the data using the MaintenanceArchive model
+                \App\Models\MaintenanceArchive::create([
+                    'maintenance_id' => $maintenance->id,
+                    'maintenance_type' => $maintenance->maintenance_type,
+                    'start_date' => $maintenance->start_date,
+                    'end_date' => $maintenance->end_date,
+                    'description' => $maintenance->description,
+                    'categorie_panne' => $maintenance->categorie_panne,
+                    'cost' => $maintenance->cost,
+                    'created_at' => $maintenance->created_at,
+                    'updated_at' => $maintenance->updated_at,
+                ]);
+
+                // Optionally, you can delete the original record or mark it as archived
+                // $maintenance->delete();
+            }
+        });
+    }
 }

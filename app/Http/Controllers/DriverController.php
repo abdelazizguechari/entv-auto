@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use App\Models\Carsm;
+use App\Models\ConducteurConger;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -135,5 +136,12 @@ class DriverController extends Controller
         ];
 
         return redirect()->route('our.drivers', $id)->with($notification);
+    }
+
+
+    public function conducteurconge($id) {
+    
+        $driverdata = Driver::findOrFail($id);
+        return view ('admin.webapp.conducteurconge',compact('driverdata'));
     }
 }

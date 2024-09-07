@@ -157,7 +157,7 @@
                 <a href="pages/advanced-ui/cropper.html" class="nav-link">mission archive</a>
               </li>
               <li class="nav-item">
-                <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">maintenance archive</a>
+                <a href="{{route('maintenance.archive')}}" class="nav-link">maintenance archive</a>
               </li>
             </ul>
           </div>

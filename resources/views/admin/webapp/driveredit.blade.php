@@ -130,14 +130,17 @@
                                     </div>
                                 </div><!-- Col -->
                             </div><!-- Row -->
-
+                            @endif
                             <button type="submit" class="btn btn-inverse-primary">mis a jour les information</button>
                             &nbsp;&nbsp;
-                            <button type="submit" class="btn btn-inverse-info">Ajouter le conducteur en congé </button>
-                            &nbsp;&nbsp;
+                           
+                            <a class="btn btn-inverse-info" href="{{route('conducteur.conge', $driver->id)}}">  Ajouter le conducteur en congé </a>    
+         &nbsp;&nbsp;
                             <button type="submit" class="btn btn-inverse-danger">Ajouter le conducteur au questionnaire </button>
                         </form>
-                    @endif
+                 
+
+                    
                 </div>
             </div>
         </div>

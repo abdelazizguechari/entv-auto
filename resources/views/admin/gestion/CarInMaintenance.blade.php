@@ -49,7 +49,8 @@
             <td>{{$item ->categorie_panne}}</td>
             <td>
                 <a class="btn btn-secondary" href="{{ route('maintenance.print', $item->id) }}">telecharger</a>
-            <a class="btn btn-success" href="{{ route('edit.driver', $item->id)}}">fin Mantenance</a>
+                <a class="btn btn-success" href="{{ route('complete.maintenance', $item->id) }}">Finish Maintenance</a>
+
 </td>
           </tr>
 

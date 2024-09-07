@@ -9,8 +9,9 @@
     
     </style>
 
-<div class="page-content d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="col-md-6">
+<div class="page-content d-flex justify-content-center" >
+
+    <div class="col-md-8">
         <div class="card">
             <div class="card-body bg-dark">
                 <h6 class="card-title fs-4">Ajouter un administrateur</h6>
@@ -71,5 +72,6 @@
         </div>
     </div>
 </div>
+
 
 @endsection

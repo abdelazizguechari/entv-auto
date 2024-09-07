@@ -23,14 +23,134 @@
   </div>
 </div>
 
+<hr>
+
+<div class="row">
+
+  <div class="col-12 col-xl-12 stretch-card">
+    <div class="row flex-grow-1">
+      <div class="col-md-4 grid-margin stretch-card">
+        <div style="background-image: url('{{ asset('img/car2.jpg') }}'); background-size: cover; width: 20px; height: 140px;" class="card">
+    
+          <div  class="card-body">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <h6 class="card-title mb-0">voiteur en service</h6>
+            </div>
+            <div class="row mt-4" >
+              <div class="">
+                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body bg-dark">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <h6 class="card-title mb-0">conducteur en service</h6>
+            </div>
+            <div class="row mt-4" >
+              <div class="">
+                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body bg-dark">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <h6 class="card-title mb-0">number mission non complete</h6>
+            </div>
+            <div class="row mt-4" >
+              <div class="">
+                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body bg-dark">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <h6 class="card-title mb-0">number mission non complete</h6>
+            </div>
+            <div class="row mt-4" >
+              <div class="">
+                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body bg-dark">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <h6 class="card-title mb-0">number mission non complete</h6>
+            </div>
+            <div class="row mt-4" >
+              <div class="">
+                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body bg-dark">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <h6 class="card-title mb-0">number mission non complete</h6>
+            </div>
+            <div class="row mt-4" >
+              <div class="">
+                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+      
+    </div>
+  </div>
+</div> <!-- row -->
+
+
 <div class="row">
   <div class="col-12 col-xl-12 stretch-card">
     <div class="row flex-grow-1">
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">CARS</h6>
+
               <div class="dropdown mb-2">
                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -63,7 +183,7 @@
       </div>
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">oil consumption</h6>
               <div class="dropdown mb-2">
@@ -98,7 +218,7 @@
       </div>
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">Growth</h6>
               <div class="dropdown mb-2">
@@ -114,6 +234,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-6 col-md-12 col-xl-5">
                 <h3 class="mb-2">89.87%</h3>
@@ -135,10 +256,12 @@
   </div>
 </div> <!-- row -->
 
+<hr>
+
 <div class="row">
   <div class="col-12 col-xl-12 grid-margin stretch-card">
     <div class="card overflow-hidden">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
           <h6 class="card-title mb-0">Revenue</h6>
           <div class="dropdown">
@@ -319,7 +442,7 @@
             </div>
           </a>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
   <div class="col-lg-7 col-xl-8 stretch-card">
@@ -362,54 +485,7 @@
                 <td>00251555</td>
               </tr>
               <tr>
-                <td>2</td>
-                <td>AKRAM MOHOUD</td>
-                <td>01/01/2022</td>
-                <td>26/04/2022</td>
-                <td><span class="badge bg-success">Review</span></td>
-                <td>15085866</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>NobleUI ReactJs</td>
-                <td>01/05/2022</td>
-                <td>10/09/2022</td>
-                <td><span class="badge bg-info">Pending</span></td>
-                <td>8566478</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>NobleUI VueJs</td>
-                <td>01/01/2022</td>
-                <td>31/11/2022</td>
-                <td><span class="badge bg-warning">Work in Progress</span>
-                </td>
-                <td>25647520</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>NobleUI Laravel</td>
-                <td>01/01/2022</td>
-                <td>31/12/2022</td>
-                <td><span class="badge bg-danger">Coming soon</span></td>
-                <td>15402687</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>NobleUI NodeJs</td>
-                <td>01/01/2022</td>
-                <td>31/12/2022</td>
-                <td><span class="badge bg-primary">Coming soon</span></td>
-                <td>251898621</td>
-              </tr>
-              <tr>
-                <td class="border-bottom">3</td>
-                <td class="border-bottom">NobleUI EmberJs</td>
-                <td class="border-bottom">01/05/2022</td>
-                <td class="border-bottom">10/11/2022</td>
-                <td class="border-bottom"><span class="badge bg-info">Pending</span></td>
-                <td class="border-bottom">2548620</td>
-              </tr>
+          
             </tbody>
           </table>
         </div>

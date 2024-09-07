@@ -46,4 +46,22 @@ class EventController extends Controller
         $event = Event::with('missions')->findOrFail($id);
         return view('admin.webapp.eventdetails', compact('event'));
     }
+
+    public function indexx()
+    {
+        $events = Event::all();
+        return response()->json($events);
+    }
+
+    public function store(Request $request)
+    {
+        $event = Event::create([
+            'name' => $request->input('title'),
+            'description' => $request->input('description'),
+            'event_start' => $request->input('start'),
+            'event_end' => $request->input('end')
+        ]);
+
+        return response()->json($event);
+    }
 }

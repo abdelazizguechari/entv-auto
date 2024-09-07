@@ -40,6 +40,7 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function () {
 
+
     
 
 route::get('/admin/addcar',[AdminController::class , 'Addcar' ]) -> name('add.car');
@@ -63,6 +64,11 @@ Route::get('admin/our/drivers', [DriverController::class, 'ourdrivers'])->name('
 Route::get('admin/delete/drivers/{id}', [DriverController::class, 'deletedriver'])->name('delete.driver');
 Route::get('admin/edit/drivers/{id}', [DriverController::class, 'editdriver'])->name('edit.driver');
 Route::put('admin/upadte/drivers/{id}', [DriverController::class, 'updatedriver'])->name('update.driver');
+
+Route::get('admin/conducteur/conge/{id}', [DriverController::class, 'conducteurconge'])->name('conducteur.conge');
+
+
+
 
 
 route::get('/admin/addadmin',[AdminController::class , 'addadmin' ]) -> name('add.admin');
@@ -133,6 +139,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
     Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
     Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
+ Route::get('/events', [EventController::class, 'indexx'])->name('events.index');
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
 });
 
 
@@ -174,8 +182,8 @@ Route::controller(MaintenanceController::class)->group(function() {
     Route::post('/maintenance/store', [MaintenanceController::class, 'store'])->name('maintenance.store');
     Route::get('/Datain/maintenance', [MaintenanceController::class, 'Datainmaintenance'])->name('Datain.maintenance');
     Route::get('/maintenance/print/{id}', [MaintenanceController::class, 'print'])->name('maintenance.print');
-
-    // Route::get('ad/change/permission/{id}', [MaintenanceController::class, 'editpermission'])->name('edit.permission');
+    Route::get('/maintenance/{id}/complete', [MaintenanceController::class, 'complete'])->name('complete.maintenance');
+    Route::get('/maintenance/archive', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive');
     // Route::post('/permission/update', [MaintenanceController::class, 'updatepermission'])->name('update.permission');
     // Route::get('/permission/delate/{id}', [MaintenanceController::class, 'delatepermission'])->name('delate.permission');
 

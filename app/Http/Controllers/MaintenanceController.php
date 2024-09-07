@@ -10,6 +10,8 @@ use App\Models\Maintenance;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use App\Models\MaintenanceArchive;
+use Carbon\Carbon;
 
 
 
@@ -37,6 +39,7 @@ public function store(Request $request)
         'end_date' => $request->end_date,
         'description' => $request->description,
         'cost' => $request->cost,
+        $user->status = 'active'
     ]);
 
    
@@ -58,10 +61,11 @@ public function store(Request $request)
  public function Datainmaintenance () {
  
     
-
     $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
-    ->select('maintenance.*', 'drivers.nom as driver_name') 
+    ->select('maintenance.*', 'drivers.nom as driver_name')
+    ->where('maintenance.status', 'inwork') 
     ->get();
+
 
     return view('admin.gestion.CarInMaintenance',compact('data'));
  }
@@ -75,5 +79,47 @@ public function store(Request $request)
      $pdf = PDF::loadView('admin.gestion.maintenanceprint', compact('maintenance'));
      return $pdf->download('maintenance_report.pdf'); // This will download the PDF
  }
+
+
+ public function complete($id)
+ {
+     
+     $maintenance = Maintenance::findOrFail($id);
+
+    
+     $maintenance->status = 'completed';
+     $maintenance->end_date = Carbon::now();
+     $maintenance->save();
+
+ 
+     MaintenanceArchive::create([
+         'maintenance_id' => $maintenance->id,
+         'maintenance_type' => $maintenance->maintenance_type,
+         'start_date' => $maintenance->start_date,
+         'end_date' => $maintenance->end_date,
+         'description' => $maintenance->description,
+         'categorie_panne' => $maintenance->categorie_panne,
+         'cost' => $maintenance->cost,
+         'created_at' => $maintenance->created_at,
+         'updated_at' => $maintenance->updated_at,
+     ]);
+
+
+     $notification = [
+        'message' => 'car ajouter on maintenance success.',
+        'alert-type' => 'success'
+    ];
+
+     
+    
+     return redirect()->back()->with($notification);
+ }
+
+
+ public function maintenancearchive() {
+    $Marchive = MaintenanceArchive::all();
+    return view ('admin.gestion.archive.MaintenanceArchive',compact('Marchive'));
+ }
+
 
 }
