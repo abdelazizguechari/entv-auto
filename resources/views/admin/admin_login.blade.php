@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
+    <style> div .form-control{background-color: transparent;
+    border: 1px solid #0C1427}</style>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -38,18 +41,14 @@
 <body>
 	<div class="main-wrapper">
 		<div class="page-wrapper full-page">
-			<div class="page-content bg-dark d-flex align-items-center justify-content-center">
+            
+			<div style="background-image: url('{{ asset('img/car15.jpg') }}'); background-size: cover;"  class="page-content d-flex align-items-center justify-content-center">
 
 				<div class="row w-100 mx-0 auth-page">
-					<div class="col-md-8 col-xl-6 mx-auto">
+					<div class="col-md-12 col-xl-6 mx-auto">
 						<div class="card  bg-transparent">
 							<div class="row">
-                                <div class="col-md-4 pe-md-0">
-                                    <div class="">
-                                        <img src="{{ asset('img/car1.jpg') }}" width="215" height="560" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-md-8 ps-md-0">
+                                <div class="col-md-12 ps-md-0">
                                     <div class="auth-form-wrapper   px-4 py-5">
                                         <a href="#" class="noble-ui-logo logo-light d-block mb-2">DMT<span style="color: green">ENTV</span></a>
                                         <h5 class="text-muted fw-normal mb-4">Bienvenue ! Connectez-vous à votre compte.</h5>
@@ -71,7 +70,7 @@
                                                 <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Connexion</button>
                                             </div>
 
-                                            <a href={{route('signe.admin')}} class="d-block mt-3 text-muted">Pas encore inscrit ? <span class="link-primary">S'inscrire</span> </a>
+                                            {{-- <a href={{route('signe.admin')}} class="d-block mt-3 text-muted">Pas encore inscrit ? <span class="link-primary">S'inscrire</span> </a> --}}
                                         </form>
 
                                         {{-- <a href="{{route('google_auth')}}"> --}}

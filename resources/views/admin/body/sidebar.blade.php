@@ -114,7 +114,7 @@
                 <a href="{{route('Datain.maintenance')}}" class="nav-link">Voiture en Maitenance</a>
               </li>
               <li class="nav-item">
-                <a href="pages/ui-components/alerts.html" class="nav-link">Gestion Mantenance intern</a>
+                <a href="{{route('man.intern')}}" class="nav-link">Gestion Mantenance intern</a>
               </li>
             </ul>
           </div>

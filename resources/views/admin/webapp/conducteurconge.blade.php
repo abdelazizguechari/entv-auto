@@ -14,14 +14,15 @@
             <div class="card-body bg-dark">
                 <h4 class="card-title fs-4">Formulaire de Congé</h4>
                 <hr>
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form method="POST" action="{{route('add.conger',$driverdata->id)}}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                      
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label">Nom du Conducteur</label>
-                                <input type="text" class="form-control" name="nom" value="{{ $driverdata->nom }}" readonly required>
+                                <input type="text" class="form-control" value="{{ $driverdata->nom }}" readonly required>
+                                <input type="hidden" class="form-control" name="driver_id" value="{{ $driverdata->id }}" readonly required>
                             </div>
                         </div>
 
@@ -29,7 +30,7 @@
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label class="form-label">Prénom du Conducteur</label>
-                                <input type="text" class="form-control" name="prenom" value="{{ $driverdata->prenom }}" readonly required>
+                                <input type="text" class="form-control" value="{{ $driverdata->prenom }}" readonly required>
                             </div>
                         </div>
                     </div>

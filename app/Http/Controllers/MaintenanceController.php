@@ -39,7 +39,7 @@ public function store(Request $request)
         'end_date' => $request->end_date,
         'description' => $request->description,
         'cost' => $request->cost,
-        $user->status = 'active'
+       
     ]);
 
    
@@ -121,5 +121,25 @@ public function store(Request $request)
     return view ('admin.gestion.archive.MaintenanceArchive',compact('Marchive'));
  }
 
+
+ public function Manintern() {
+
+
+ 
+    $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
+    ->select('maintenance.*', 'drivers.nom as driver_name')
+    ->where('maintenance.status', 'inwork') 
+    ->where('maintenance_type', 'inside')
+    ->get();
+
+
+    return view ('admin.gestion.Manintern',compact('data'));
+ }
+
+
+ public function maintenacegestion($id){
+    $data = Maintenance::findOrFail($id);
+    return view('admin.gestion.Maintenance',compact('data'));
+ }
 
 }

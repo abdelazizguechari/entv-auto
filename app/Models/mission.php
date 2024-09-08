@@ -14,6 +14,8 @@ class Mission extends Model
     protected $fillable = [
         'type',
         'name',
+        'lieu_mission',
+        'mission_type',
         'description',
         'mission_start',
         'mission_end',

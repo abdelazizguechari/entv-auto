@@ -12,6 +12,8 @@ class CreateMissionsTable extends Migration
             $table->id();
             $table->enum('type', ['transportation', 'mission']);
             $table->string('name');
+            $table->string('mission_type')->nullable();
+            $table->string('lieu_mission')->nullable();
             $table->text('description')->nullable();
             $table->datetime('mission_start')->nullable();
             $table->datetime('mission_end')->nullable();

@@ -28,24 +28,34 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Nom</label>
+                                    <label for="name">Le sujet de mission </label>
                                     <input type="text" class="form-control" id="name" name="name" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4"> 
-                                <div class="form-group">
-                                    <label for="mission_start">Début de la Mission</label>
-                                    <input type="datetime-local" class="form-control" id="mission_start" name="mission_start">
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="mission_end">Fin de la Mission</label>
-                                    <input type="datetime-local" class="form-control" id="mission_end" name="mission_end">
+                                    <label for="mission-type">Type de mission</label>
+         <select class="form-control" id="mission-type" name="mission_type" required>
+            <option value="" disabled selected>Choisissez un type de mission</option>
+            <option value="politique">Politique</option>
+            <option value="ministerial">Ministériel</option>
+            <option value="sportif">Sportif</option>
+            <option value="culturel">Culturel</option>
+            <option value="divertissement">Divertissement</option>
+            <option value="documentaire">Documentaire</option>
+        </select>
                                 </div>
                             </div>
+
+                            
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Lieu de mission</label>
+                                    <input type="text" class="form-control" id="name" name="lieu_mission" required>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row mt-3">
@@ -103,6 +113,23 @@
                             </div>
                         </div>
 
+                        <div class="row mt-3 mb-3">
+                            
+                            <div class="col-md-4"> 
+                                <div class="form-group">
+                                    <label for="mission_start">Début de la Mission</label>
+                                    <input type="datetime-local" class="form-control" id="mission_start" name="mission_start">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="mission_end">Fin de la Mission</label>
+                                    <input type="datetime-local" class="form-control" id="mission_end" name="mission_end">
+                                </div>
+                            </div>
+                        </div>
+                    
                         <div class="form-group mb-3">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description"></textarea>

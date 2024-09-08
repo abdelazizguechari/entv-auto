@@ -74,6 +74,8 @@ class MissionsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'mission_type' => 'nullable|string',
+            'lieu_mission' => 'nullable|string',
             'mission_start' => 'nullable|date',
             'mission_end' => 'nullable|date',
             'crew_leader' => 'nullable|string|max:255',
@@ -95,7 +97,15 @@ class MissionsController extends Controller
             return redirect()->back()->with('success', 'Mission added to event successfully. You can add more missions.');
         }
 
-        return redirect()->route('missions.index')->with('success', 'Mission created successfully.');
+
+        $notification = [
+            'message' => 'mission create successfully.',
+            'alert-type' => 'success'
+        ];
+
+
+
+        return redirect()->route('missions.index')->with($notification);
     }
     public function storeEvents(Request $request)
     {
@@ -119,12 +129,12 @@ class MissionsController extends Controller
     public function edit($id)
     {
         $mission = Mission::findOrFail($id);
-        $cars = Carsm::with('driver')->get(); 
+        // $cars = Carsm::with('driver')->get(); 
 
         if ($mission->type == 'transportation') {
             return view('admin.webapp.edittransportation', compact('mission', 'cars'));
         } else {
-            return view('admin.webapp.editmission', compact('mission', 'cars'));
+            return view('admin.webapp.editmission', compact('mission'));
         }
     }
 

@@ -67,6 +67,11 @@ Route::put('admin/upadte/drivers/{id}', [DriverController::class, 'updatedriver'
 
 Route::get('admin/conducteur/conge/{id}', [DriverController::class, 'conducteurconge'])->name('conducteur.conge');
 
+Route::post('admin/conducteur/addconger/{id}', [DriverController::class, 'addconger'])->name('add.conger');
+
+
+
+
 
 
 
@@ -133,14 +138,25 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::resource('events', EventController::class);
+// Route::resource('events', EventController::class);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
-    Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
-    Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
- Route::get('/events', [EventController::class, 'indexx'])->name('events.index');
+Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
+Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
+Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
+
+});
+
+
+Route::controller(EventController::class)->group(function()  {
+
+
+Route::get('/events', [EventController::class, 'indexx'])->name('events.index');
+Route::get('/events/edit', [EventController::class, 'edit'])->name('events.edit');
+Route::get('/events/show/{id}', [EventController::class, 'show'])->name('events.details');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
+
+
 });
 
 
@@ -184,8 +200,9 @@ Route::controller(MaintenanceController::class)->group(function() {
     Route::get('/maintenance/print/{id}', [MaintenanceController::class, 'print'])->name('maintenance.print');
     Route::get('/maintenance/{id}/complete', [MaintenanceController::class, 'complete'])->name('complete.maintenance');
     Route::get('/maintenance/archive', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive');
-    // Route::post('/permission/update', [MaintenanceController::class, 'updatepermission'])->name('update.permission');
-    // Route::get('/permission/delate/{id}', [MaintenanceController::class, 'delatepermission'])->name('delate.permission');
+
+    Route::post('/maintenace/gestion/{id}', [MaintenanceController::class, 'maintenacegestion'])->name('maintenace.gestion');
+    Route::get('/intern/man/', [MaintenanceController::class, 'Manintern'])->name('man.intern');
 
 });
 

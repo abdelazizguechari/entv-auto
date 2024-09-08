@@ -28,7 +28,6 @@
                                 @if($mission->type != 'transportation')
                                     <tr>
                                         <td>{{ $mission->name }}</td>
-                                  
                                         <td>{{ $mission->mission_start }}</td>
                                         <td>{{ $mission->mission_end }}</td>
                                         <td>{{ $mission->status }}</td>
@@ -37,7 +36,7 @@
                                          <td> {{ $mission->driver->nom ?? 'N/A' }}<br> </td> 
                                          
                                          <td>
-                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-danger">Edit</a>
                                             <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 @method('DELETE')

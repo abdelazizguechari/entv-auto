@@ -6,34 +6,34 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Events</h6>
+                <div class="card-body bg-dark">
+                    <h6 class="card-title fs-4">Events</h6>
+                    <hr>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+        
                                 <th>Name</th>
-                                <th>Description</th>
+            
                                 <th>Event Start</th>
                                 <th>Event End</th>
+                                <th>Description</th>
+                                <th>action</th>
+                            
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($events as $event)
                                 <tr>
-                                    <td>{{ $event->id }}</td>
+                
                                     <td>{{ $event->name }}</td>
-                                    <td>{{ $event->description }}</td>
                                     <td>{{ $event->event_start }}</td>
                                     <td>{{ $event->event_end }}</td>
+                                    <th> {{$event->description}}</th>
                                     <td>
-                                        <a href="{{ route('events.edit', ['event' => $event->id]) }}" class="btn btn-warning">Edit</a>
-                                        <form action="{{ route('events.destroy', ['event' => $event->id]) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
-                                        </form>
-                                        <a href="{{ route('events.show', ['event' => $event->id]) }}" class="btn btn-info">Details</a>
+                                         <a href="{{ route('events.edit', ['event' => $event->id]) }}" class="btn btn-warning">Edit</a> 
+                                         <a href="{{ route('events.edit', ['event' => $event->id]) }}" class="btn btn-danger">Delete</a> 
+                                         <a href="{{ route('events.details', ['event' => $event->id]) }}" class="btn btn-success">Details</a> 
                                     </td>
                                 </tr>
                             @endforeach
