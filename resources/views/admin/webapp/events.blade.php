@@ -31,9 +31,9 @@
                                     <td>{{ $event->event_end }}</td>
                                     <th> {{$event->description}}</th>
                                     <td>
-                                         <a href="{{ route('events.edit', ['event' => $event->id]) }}" class="btn btn-warning">Edit</a> 
-                                         <a href="{{ route('events.edit', ['event' => $event->id]) }}" class="btn btn-danger">Delete</a> 
-                                         <a href="{{ route('events.details', ['event' => $event->id]) }}" class="btn btn-success">Details</a> 
+                                         <a href="{{ route('events.edit',$event->id) }}" class="btn btn-warning">Edit</a> 
+                                         <a href="{{ route('events.Delete', $event->id)}}" class="btn btn-danger">Delete</a> 
+                                         <a href="{{ route('events.details',$event->id)}}" class="btn btn-success">Details</a> 
                                     </td>
                                 </tr>
                             @endforeach

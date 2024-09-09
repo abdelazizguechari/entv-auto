@@ -30,4 +30,11 @@ class Stock extends Model
     {
         return $this->quantity * $this->price;
     }
+
+    public function maintenances()
+    {
+        return $this->belongsToMany(Maintenance::class, 'maintenance_stock')
+                    ->withPivot('quantity')
+                    ->withTimestamps();
+    }
 }

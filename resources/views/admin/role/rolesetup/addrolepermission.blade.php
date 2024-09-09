@@ -9,13 +9,13 @@
     <div class="row">
         <div class="col-md-12 col-xl-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Ajouter des rôles aux permissions</h6>
-
+                <div class="card-body bg-dark">
+                    <h6 class="card-title fs-4">Ajouter des rôles aux permissions</h6>
+<hr>
                     <form action="{{ route('role.permission.save') }}" method="post" class="forms-sample">
                         @csrf
                         <div class="mb-3">
-                            <label for="exampleFormControlSelect1" class="form-label">Nom du rôle</label>
+                            <label for="exampleFormControlSelect1" class="form-label fs-5">Nom du rôle</label>
                             <select name="role_id" class="form-select" id="exampleFormControlSelect1" required>
                                 <option selected disabled>Sélectionnez un groupe</option>
                                 @foreach ($roles as $role)
@@ -80,7 +80,7 @@
                                 });
                             });
                         </script>
-                        
+                        <hr>
                         <button type="submit" class="btn btn-primary me-2">Soumettre</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Annuler</a>
                     </form>

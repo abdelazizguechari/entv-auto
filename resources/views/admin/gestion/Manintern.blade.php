@@ -19,7 +19,7 @@
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card bg-transparent ">
   <div class="card-body bg-dark">
-    <h6 class="card-title  fs-4">TABLEAU DES maintenance</h6>
+    <h6 class="card-title  fs-4">TABLEAU DES maintenance intern</h6>
     <hr>
     <div class="table-responsive">
       <table id="dataTableExample" class="table">

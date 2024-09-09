@@ -1,8 +1,7 @@
 @php
-// Get all drivers who are not on leave
+
 $activeDrivers = App\Models\Driver::where('status', 'active')->pluck('voiture_id');
 
-// Get all cars that are not assigned to any active drivers
 $cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('immatriculation');
 @endphp
 
@@ -130,7 +129,7 @@ $cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('
                                     </div>
                                 </div><!-- Col -->
                             </div><!-- Row -->
-                            <button type="submit" class="btn btn-primary">Soumettre le formulaire</button>
+                            <button type="submit" class="btn btn-inverse-primary">Soumettre le formulaire</button>
                         </form>
                     @endif
                 </div>

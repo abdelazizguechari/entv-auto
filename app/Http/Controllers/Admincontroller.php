@@ -38,6 +38,12 @@ public function Addmission() {
 }
 
 
+
+public function draiveradd() {
+
+    return view('admin.adding.draiveradd');
+}
+
 public function Adminlogin() {
     return view ('admin.admin_login');
 
@@ -118,11 +124,6 @@ public function changpassword () {
 }
 
 
-
-public function draiveradd() {
-
-    return view('admin.draiveradd');
-}
 
 
 public function adminsigne() {

@@ -26,7 +26,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'event_start' => 'nullable|date',
             'event_end' => 'nullable|date',
-        ]);
+        ]); 
 
         $event = Event::findOrFail($id);
         $event->update($request->all());

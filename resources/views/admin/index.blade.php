@@ -46,15 +46,13 @@
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                  <a class="dropdown-item d-flex align-items-center" href="">
                     <i data-feather="eye" class="icon-sm me-2"></i> <span class="">Voir</span>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="javascript:;">
                     <i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Modifier</span>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
-                    <i data-feather="trash" class="icon-sm me-2"></i> <span class="">Supprimer</span>
-                  </a>
+                 
                   <a class="dropdown-item d-flex align-items-center" href="javascript:;">
                     <i data-feather="printer" class="icon-sm me-2"></i> <span class="">Imprimer</span>
                   </a>
@@ -70,17 +68,17 @@
               
                 <hr pt-3>
 
-              <h6>Nombre d'employés dans ce département : <span style="font-weight: 100"> 150 employés</span ></h6>
+              <h6>Nombre d'employés dans ce département : <span style="font-weight: 100" > 150 employés</span ></h6>
              
                 <hr pt-3>
-              <h6>Responsable du département : Monsieur Ahmed Benali</h6>
-              
+              <h6>Responsable du département :<span style="font-weight: 100"> Monsieur Ahmed Benali </span ></h6>
+              <hr pt-3>
 
-              <h6>Localisation du département :Bureau 3, Bâtiment principal</h6>
-              
+              <h6>Localisation du département :<span style="font-weight: 100">Bureau 3, Bâtiment principal </span ></h6>
+              <hr pt-3>
 
-              <h6>Contact du département :contact@entreprise.com | +213 123 456 789</h6>
-              
+              <h6>Contact du département :<span style="font-weight: 100">contact@entreprise.com | +213 123 456 789 </span ></h6>
+              <hr pt-3>
             </div>
           </div>
         </div>
@@ -94,7 +92,7 @@
         <div class="card-body bg-dark">
           <div class="row">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h4 class="mb-3 mb-md-0 fs-3">Informations générales sur le département</h4>
+              <h4 class="mb-3 mb-md-0 fs-3">introduction</h4>
               <div class="dropdown mb-2">
                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -122,6 +120,9 @@
             <div class="col-12">
               <h6>Nom du département :</h6>
               <p>Direction des transports</p>
+
+             <h6>Nom du département :</h6>
+            
 
               <h6>Nombre d'employés dans ce département :</h6>
               <p>150 employés</p>
@@ -422,9 +423,9 @@
 <div class="row">
   <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Monthly sales</h6>
+          <h6 class="card-title  mb-0">Monthly sales</h6>
           <div class="dropdown mb-2">
             <a type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -439,13 +440,13 @@
           </div>
         </div>
         <p class="text-muted">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
-        <div id="monthlySalesChart"></div>
+        <div class="bg-dark" id="monthlySalesChart"></div>
       </div> 
     </div>
   </div>
   <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline">
           <h6 class="card-title mb-0">Cloud storage</h6>
           <div class="dropdown mb-2">
@@ -485,9 +486,9 @@
 </div> <!-- row -->
 
 <div class="row">
-  <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
+  <div class="col-lg-5 col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h6 class="card-title mb-0">Inbox</h6>
           <div class="dropdown mb-2">
@@ -568,11 +569,12 @@
       </div> 
     </div>
   </div>
-  <div class="col-lg-7 col-xl-8 stretch-card">
+
+  <div class="col-lg-7 col-xl-6 stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">missions</h6>
+          <h6 class="card-title mb-0">mission de jour</h6>
           <div class="dropdown mb-2">
             <a type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -595,7 +597,7 @@
                 <th class="pt-0">Start Date</th>
                 <th class="pt-0">Due Date</th>
                 <th class="pt-0">Status</th>
-                <th class="pt-0">registration number</th>
+            
               </tr>
             </thead>
             <tbody>
@@ -605,7 +607,6 @@
                 <td>01/01/2022</td>
                 <td>26/04/2022</td>
                 <td><span class="badge bg-danger">Released</span></td>
-                <td>00251555</td>
               </tr>
               <tr>
           
