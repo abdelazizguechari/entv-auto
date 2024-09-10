@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('maintenance_id'); // Foreign key to the original maintenance record
             $table->enum('maintenance_type', ['inside', 'outside']);
             $table->date('start_date');
+            $table->date('categorie_panne')->nullable();
             $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->decimal('cost', 8, 2)->nullable();

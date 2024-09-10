@@ -191,4 +191,23 @@ class DriverController extends Controller
         return redirect()->back()->with($notification);
     }
     
+    public function driverconger() {
+
+        $data = ConducteurConger::join('drivers', 'conducteur_conger.driver_id', '=', 'drivers.id')
+                ->select(
+                    'conducteur_conger.*', 
+                    'drivers.nom', 
+                    'drivers.prenom', 
+                    'drivers.assurance_num', 
+                    'drivers.permis_conduire', 
+                    'drivers.telephone', 
+                    'drivers.email', 
+                    'drivers.status', 
+                    'drivers.adresse'
+                )
+                ->get();
+
+        return view ('admin.gestion.driver.Congerdriver',compact('data'));
+    }
+    
 }

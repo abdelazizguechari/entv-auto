@@ -52,28 +52,25 @@
                                     <div class="auth-form-wrapper   px-4 py-5">
                                         <a href="#" class="noble-ui-logo logo-light d-block mb-2">DMT<span style="color: green">ENTV</span></a>
                                         <h5 class="text-muted fw-normal mb-4">Bienvenue ! Connectez-vous à votre compte.</h5>
-
-                                        <form class="forms-sample" method="POST" action="{{ route('login') }}">
+                                        
+                                        <form class="forms-sample" method="POST" action="{{ route('admin.login.post') }}">
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="login" class="form-label">Adresse e-mail</label>
                                                 <input type="text" class="form-control" id="login" placeholder="Email" name="email" required>
                                             </div>
-
+                                        
                                             <div class="mb-3">
                                                 <label for="Password" class="form-label">Mot de passe</label>
                                                 <input type="password" class="form-control" id="Password" name="password" autocomplete="current-password" placeholder="Mot de passe" required>
                                             </div>
-                                            
-
+                                        
                                             <div>
                                                 <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Connexion</button>
                                             </div>
-
-                                            {{-- <a href={{route('signe.admin')}} class="d-block mt-3 text-muted">Pas encore inscrit ? <span class="link-primary">S'inscrire</span> </a> --}}
                                         </form>
 
-                                        {{-- <a href="{{route('google_auth')}}"> --}}
+                                     
                                             <div class="d-flex justify-content-center pt-7">
                                                 <button type="submit" class="btn btn-outline-primary btn-icon-text">
                                                     Continuer avec Google <img src="{{ asset('backend/assets/images/google.svg') }}" alt="Google" style="width: 20px; height: 20px; margin-left: 8px;">

@@ -27,12 +27,12 @@
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flag-icon flag-icon-fr mt-1" title="us"></i> <span class="ms-1 me-1 d-none d-md-inline-block">Fracais</span>
+								<i class=" mt-1" title="us"></i> <span class="ms-1 me-1 d-none d-md-inline-block">Fr</span>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="languageDropdown">
                 {{-- <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ms-1"> French </span></a> --}}
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> <span class="ms-1"> English </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-dz" title="de" id="de"></i> <span class="ms-1"> Arabe </span></a>
+                <a href="javascript:;" class="dropdown-item py-2"><i class="" title="us" id="us"></i> <span class="ms-1"> En </span></a>
+                <a href="javascript:;" class="dropdown-item py-2"><i class="" title="de" id="de"></i> <span class="ms-1"> Ar </span></a>
 
 							</div>
             </li>
@@ -208,10 +208,16 @@
                     </a>
                   </li>
                   <li class="dropdown-item py-2">
-                    <a href="{{route('admin.logout')}}" class="text-body ms-0">
-                      <i class="me-2 icon-md" data-feather="log-out"></i>
-                      <span>Log Out</span>
-                    </a>
+                    
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                      @csrf
+                      <button type="submit" class="dropdown-item py-2 text-body ms-0">
+                          <i class="me-2 icon-md" data-feather="log-out"></i>
+                          <span>Log Out</span>
+                      </button>
+                  </form>
+                  
+
                   </li>
                 </ul>
 							</div>

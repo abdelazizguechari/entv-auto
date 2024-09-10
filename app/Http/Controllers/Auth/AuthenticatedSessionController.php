@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -8,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('admin.admin_login'); // Adjust the view as necessary
     }
 
     /**
@@ -25,36 +26,29 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
-        $request->session()->regenerate();
-
-        $url = '' ;
-
-    if ($request->user()-> role === 'admin') {
-        $url = '/admin/dashboard' ;
-    }elseif ($request -> user() -> role === 'agent') {
-        $url = '/agent/dashboard' ;
-    }elseif ($request -> user() -> role === 'user') {
-        $url = '/dashboard' ;
-    }
-
-        return redirect()->intended($url);
-    }
-
-
     
+        $request->session()->regenerate();
+    
+        // Define redirection based on user role (optional)
+        $url = '/admin/home'; // Change this as needed
+    
+        \Log::info('User authenticated. Redirecting to: ' . $url);
+    
+        return redirect()->to($url); 
+    }
 
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
+    
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
-        return redirect('/');
+    
+        \Log::info('Session invalidated: ', $request->session()->all());
+    
+        return redirect('/admin/login'); 
     }
+
+    
+
 }

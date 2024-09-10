@@ -140,6 +140,28 @@
           </div>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#conducteur" role="button" aria-expanded="false" aria-controls="conducteur">
+            <i class="link-icon" data-feather="chevron-down"></i>
+            <span class="link-title">conducteur gestion</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse" id="conducteur">
+            <ul class="nav sub-menu">
+              <li class="nav-item">
+                <a href="{{route('driver.conger')}}" class="nav-link">Conducteur en conges</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('man.intern')}}" class="nav-link">Conducteur en questionnaires</a>
+              </li>
+
+              {{-- <li class="nav-item">
+                <a href="{{route('nos.intern')}}" class="nav-link">nos Mantenance intern</a>
+              </li> --}}
+            </ul>
+          </div>
+        </li>
+
 
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#stock-pages" role="button" aria-expanded="false" aria-controls="stock-pages">

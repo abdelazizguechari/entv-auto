@@ -15,6 +15,7 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\FaQController ;
+use App\Http\Controllers\DashboardController ;
 
 
 
@@ -41,9 +42,6 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
 
-    
-
-
 
     Route::controller(CarController::class)->group(function(){
 
@@ -59,10 +57,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/vehicles/updaqqte/{immatriculation}', [CarController::class, 'update'])->name('cars.update'); // Changed /cars/update/{immatriculation} to /vehicles/update/{immatriculation}
     
     });
+  
+
     
-
-
-
     Route::controller(DriverController::class)->group(function(){
 
         Route::get('/operator/register', [DriverController::class, 'create'])->name('driver.create'); // Changed /driver/create to /operator/register
@@ -73,6 +70,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/modify/update/{id}', [DriverController::class, 'updatedriver'])->name('update.driver'); // Changed /upadte/drivers/{id} to /modify/update/{id}
         Route::get('/operator/leave/{id}', [DriverController::class, 'conducteurconge'])->name('conducteur.conge'); // Changed /conducteur/conge/{id} to /operator/leave/{id}
         Route::post('/operator/addleave/{id}', [DriverController::class, 'addconger'])->name('add.conger'); // Changed /conducteur/addconger/{id} to /operator/addleave/{id}
+        Route::get('/operator/driverconger', [DriverController::class, 'driverconger'])->name('driver.conger');
+
+     
     
     });
 
@@ -93,12 +93,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update'); // Kept /admin/profile/update as is
         Route::post('/admin/password/update', [AdminController::class, 'passwordupdate'])->name('password.change'); // Changed /admin/update/password to /admin/password/update
         Route::get('/admin/profile', [AdminController::class, 'Adminprofile'])->name('admin.profile'); // Kept /admin/profile as is
-        Route::get('/admin/home', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard'); // Changed /admin/dashboard to /admin/home
+        Route::get('/admin/home', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard'); // Changed /admin/dashboard to  
         Route::get('/agent/home', [Agentcontroller::class, 'AgentDashboard'])->name('agent.dashboard'); // Changed /agent/dashboard to /agent/home
-        Route::get('/admin/logout', [AdminController::class, 'Adminlogout'])->name('admin.logout'); // Kept /admin/logout as is
         Route::get('/admin/sign-up', [AdminController::class, 'adminsigne'])->name('signe.admin'); // Changed /admin/signe to /admin/sign-up
-        Route::post('/admin/sign-up/create', [AdminController::class, 'usersigne'])->name('user.admin'); // Changed /admin/signe/create to /admin/sign-up/create
-        Route::get('/admin/login', [AdminController::class, 'Adminlogin'])->name('admin.login'); // Kept /admin/login as is
+        Route::post('/admin/sign-up/create', [AdminController::class, 'usersigne'])->name('user.admin'); 
+       
     
     });
     
@@ -120,6 +119,13 @@ Route::controller(MissionsController::class)->group(function() {
     Route::get('/edit/{id}-', [MissionsController::class, 'edit'])->name('missions.edit'); // Changed /mission/edit/{id} to /task/edit/{id}
     Route::put('/update/{id}', [MissionsController::class, 'update'])->name('missions.update'); // Changed /mission/update/{id} to /task/update/{id}
     Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy'); // Changed /mission/delete/{id} to /task/delete/{id}
+
+});
+
+Route::controller(DashboardController::class)->group(function(){
+    Route::get('/update/section',[DashboardController::class,'updatesection'])->name('update.section');
+    Route::put('/departments/section/{id}', [DashboardController::class, 'update'])->name('departments.update');
+
 
 });
 
@@ -150,9 +156,9 @@ Route::controller(EventController::class)->group(function()  {
         Route::get('/all/permission', [roleController::class, 'allPermission'])->name('all.permission');
         Route::get('/add/permission', [roleController::class, 'addpermission'])->name('add.permission');
         Route::post('/permission/store', [roleController::class, 'storepermission'])->name('store.permission');
-        Route::get('ad/change/permission/{id}', [roleController::class, 'editpermission'])->name('edit.permission');
+        Route::get('ad/change/permission/{id}*/', [roleController::class, 'editpermission'])->name('edit.permission');
         Route::post('/permission/update', [roleController::class, 'updatepermission'])->name('update.permission');
-        Route::get('/permission/delate/{id}', [roleController::class, 'delatepermission'])->name('delate.permission');
+        Route::get('/permission/delate/{id}*/', [roleController::class, 'delatepermission'])->name('delate.permission');
     
     });
     
@@ -165,7 +171,7 @@ Route::controller(EventController::class)->group(function()  {
         Route::get('/details/maintenance', [MaintenanceController::class, 'Datainmaintenance'])->name('Datain.maintenance'); // Updated to /details/maintenance
         Route::get('/maintenance/report/{id}', [MaintenanceController::class, 'print'])->name('maintenance.print'); // Updated to /maintenance/report/{id}
         Route::get('/maintenance/{id}/finalize', [MaintenanceController::class, 'complete'])->name('complete.maintenance'); // Updated to /maintenance/{id}/finalize
-        Route::get('/archive/maintenance', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive'); // Updated to /archive/maintenance
+        Route::get('/maintenance/archive', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive'); // Updated to /archive/maintenance
     
         Route::get('/manages/{id}*', [MaintenanceController::class, 'maintenacegestion'])->name('maintenace.gestion'); // Updated to /maintenance/manage/{id}
         Route::get('/staff/internal', [MaintenanceController::class, 'Manintern'])->name('man.intern'); // Updated to /staff/internal
@@ -202,9 +208,9 @@ Route::controller(roleController::class)->group(function() {
     Route::get('/permission/role', [roleController::class, 'addrolespermission'])->name('add.roles.permission'); 
     Route::post('/role/store', [roleController::class, 'storerole'])->name('save.role');
     Route::get('/all/permission/role', [roleController::class, 'allrolespermission'])->name('all.roles.permission');
-    Route::get('admin/role/editing/{id}', [roleController::class, 'admineditrole'])->name('admin.edit.role');
-    Route::post('admin/role/update/{id}', [roleController::class, 'adminroleupdate'])->name('admin.role.update');
-    Route::get('admin/role/delete/{id}', [roleController::class, 'admindeleterole'])->name('admin.delete.role');
+    Route::get('admin/role/editing/{id}*/*', [roleController::class, 'admineditrole'])->name('admin.edit.role');
+    Route::post('admin/role/update/{id}*//*', [roleController::class, 'adminroleupdate'])->name('admin.role.update');
+    Route::get('admin/role/delete/{id}**', [roleController::class, 'admindeleterole'])->name('admin.delete.role');
 });
 
 

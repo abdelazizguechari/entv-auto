@@ -14,7 +14,6 @@
                             <tr>
         
                                 <th>Name</th>
-            
                                 <th>Event Start</th>
                                 <th>Event End</th>
                                 <th>Description</th>

@@ -1,3 +1,9 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
+
+
 @extends('admin.dash')
 
 @section('admin')
@@ -34,6 +40,7 @@
                                 <div class="col-3">
 
                                     @php
+                               
                                     $permission_name = App\Models\User::getPermissionname($group->group_name);
                                     @endphp
 
