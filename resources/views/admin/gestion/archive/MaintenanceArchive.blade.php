@@ -45,7 +45,7 @@
             <td>{{$key + 1}}</td>
             <td>{{$item ->immatriculation}}</td>
             <td>{{$item ->start_date}}</td>
-            <td>{{$item ->end _date}}</td>
+            <td>{{$item ->end_date}}</td>
             <td>{{$item ->categorie_panne}}</td>
             <td>
                 <a class="btn btn-secondary" href="{{ route('maintenance.print', $item->id) }}">telecharger</a>
