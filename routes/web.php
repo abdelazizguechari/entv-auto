@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/vehicles/deletfe/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete'); // Changed /cars/delete/{immatriculation} to /vehicles/delete/{immatriculation}
         Route::get('/vehicles/eddist/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit'); // Changed /cars/edit/{immatriculation} to /vehicles/edit/{immatriculation}
         Route::put('/vehicles/updaqqte/{immatriculation}', [CarController::class, 'update'])->name('cars.update'); // Changed /cars/update/{immatriculation} to /vehicles/update/{immatriculation}
+        Route::get('/vehicles/{immatriculation}/carsdetails', [CarController::class, 'carsdetails'])->name('cars.details');
     
     });
   

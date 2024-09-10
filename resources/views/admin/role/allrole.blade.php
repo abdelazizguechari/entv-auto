@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card">
-  <div class="card-body">
+  <div class="card-body bg-dark">
     <h6 class="card-title">TABLEAU DES role</h6>
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -31,7 +31,7 @@
           <tr>
             <th>#</th>
             <th>role name</th>
-            <th>group name</th>
+   
             <th>action</th>
           
           </tr>
@@ -46,8 +46,10 @@
           <tr>
             <td>{{$key+1}}</td>
             <td>{{$item -> name}}</td>
-            <td> <a class="btn btn-danger"  href="{{route('delate.role',$item->id)}}" id="delete">supprimer</a>
-                <a class="btn btn-success" href="{{route('edit.role',$item->id)}}">Edit</a></td>
+            <td> <a class="btn btn-danger btn-icon"  href="{{route('delate.role',$item->id)}}" id="delete"><i data-feather="trash"></i></a>
+
+                <a class="btn btn-info btn-icon" href="{{route('edit.role',$item->id)}}"><i data-feather="edit"></a>
+                </td>
             
              
 

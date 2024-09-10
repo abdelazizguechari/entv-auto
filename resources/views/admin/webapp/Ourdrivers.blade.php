@@ -48,8 +48,8 @@
             <td>{{$item ->telephone}}</td>
             <td>{{$item ->voiture_id}}</td>
             <td>
-                <a class="btn btn-danger" href="{{ route('delete.driver', $item->id) }}" id="delete">Supprimer</a>
-            <a class="btn btn-success" href="{{ route('edit.driver', $item->id)}}">Edit</a>
+                <a class="btn btn-danger btn-icon" href="{{ route('delete.driver', $item->id) }}" id="delete"><i data-feather="trash"> </i></a>
+            <a class="btn btn-info btn-icon" href="{{ route('edit.driver', $item->id)}}"><i data-feather="edit"> </i></a>
 </td>
           </tr>
 

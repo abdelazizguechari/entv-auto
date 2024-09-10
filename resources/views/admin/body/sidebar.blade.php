@@ -56,6 +56,7 @@
             <span class="link-title">Missions</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
+          
           <div class="collapse" id="event">
             <ul class="nav sub-menu">
               <li class="nav-item">
@@ -142,7 +143,7 @@
 
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#conducteur" role="button" aria-expanded="false" aria-controls="conducteur">
-            <i class="link-icon" data-feather="chevron-down"></i>
+            <i class="link-icon" data-feather="clipboard"></i>
             <span class="link-title">conducteur gestion</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>

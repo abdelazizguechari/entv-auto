@@ -37,6 +37,7 @@ class AuthenticatedSessionController extends Controller
     
         return redirect()->to($url); 
     }
+    
 
     public function destroy(Request $request): RedirectResponse
     {

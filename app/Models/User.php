@@ -8,9 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
 class User extends Authenticatable
 {
-    use HasApiTokens,HasRoles, HasFactory, Notifiable;
+    use HasApiTokens,HasRoles, HasFactory, Notifiable,LogsActivity;
 
     protected $guarded = [];
 
@@ -27,6 +30,7 @@ class User extends Authenticatable
         ];
     }
 
+    protected $fillable = ['name', 'text'];
 
     public static function getPermissionGroup(){
         return DB::table('permissions')
@@ -52,6 +56,13 @@ class User extends Authenticatable
             return $haspermission ;
         }
 
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['name', 'text']);
+        // Chain fluent methods for configuration options
     }
     
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Log;
-
+use id;
 
 class Admincontroller extends Controller
 {
