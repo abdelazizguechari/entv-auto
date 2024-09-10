@@ -13,7 +13,7 @@
 
     <div class="col-md-8">
         <div class="card">
-            <div class="card-body bg-dark">
+            <div class="card-body">
                 <h6 class="card-title fs-4">Ajouter un administrateur</h6>
                 <hr>
                 <form action="{{route('save.admin')}}" method="post" class="forms-sample">

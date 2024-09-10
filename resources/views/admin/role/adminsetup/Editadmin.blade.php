@@ -13,7 +13,7 @@
 <div class="page-content d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-body bg-dark">
+            <div class="card-body">
                 <h6 class="card-title fs-4">Update inforamtion administrateur</h6>
                 <hr>
                 <form action="{{route('Update.admin',$user->id)}}" method="post" class="forms-sample">

@@ -1,7 +1,13 @@
+@php
+	       $theme = session('theme', 'dark');
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="csrf-token" content="{{ csrf_token() }}">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
@@ -42,14 +48,25 @@
 	<link rel="stylesheet" href="{{asset('backend/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
 	<!-- endinject -->
 
-  <!-- Layout styles -->  
-	<link rel="stylesheet" href="{{asset('backend/assets/css/demo2/style.css')}}">
-  <!-- End layout styles -->
+ <!-- Layout styles -->
+
+
+   <!-- Layout styles -->
+   <link id="theme-style" rel="stylesheet" href="{{ $theme === 'light' ? asset('backend/assets/css/demo1/style.css') : asset('backend/assets/css/demo2/style.css') }}">
+   <!-- End layout styles --
+
 
   <link rel="shortcut icon" href="{{asset('backend/assets/images/entvlogo.png')}}" sizes="48x48" type="image/png"/>
 
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+
+  <style>
+	/* Inline styles to handle initial theme */
+	:root {
+		--default-theme: url("{{ asset('backend/assets/css/demo2/style.css') }}"); /* Dark mode */
+	}
+</style>
 
 </head>
 <body>
@@ -145,6 +162,57 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="{{asset('backend/assets/js/code/code.js')}}"></script>
+
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    const themeSwitcher = document.getElementById('theme-switcher');
+    const themeStyle = document.getElementById('theme-style');
+    const themeIcon = document.getElementById('theme-icon');
+
+    function setTheme(theme) {
+        console.log('Setting theme to:', theme); // Debugging line
+        if (theme === 'light') {
+            themeStyle.href = "{{ asset('backend/assets/css/demo1/style.css') }}"; // Light mode
+            themeIcon.setAttribute('data-feather', 'sun'); // Light mode icon
+        } else {
+            themeStyle.href = "{{ asset('backend/assets/css/demo2/style.css') }}"; // Dark mode
+            themeIcon.setAttribute('data-feather', 'moon'); // Dark mode icon
+        }
+        feather.replace(); // Re-render feather icons
+    }
+
+    // Set the initial theme based on server-side value
+    setTheme("{{ $theme }}");
+
+    // Event listener to switch themes
+    themeSwitcher.addEventListener('click', function () {
+        console.log('Button clicked'); // Debugging line
+        const newTheme = themeStyle.href.includes('demo2/style.css') ? 'light' : 'dark';
+        
+        // Update theme in session
+        fetch("{{ route('theme.switch') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ theme: newTheme })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Theme switched successfully:', data); // Debugging line
+            setTheme(newTheme);
+        })
+        .catch(error => {
+            console.error('Error switching theme:', error); // Error handling
+        });
+    });
+});
+
+    </script>
 
 </body>
 </html>    

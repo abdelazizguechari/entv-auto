@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-12 stretch-card">
             <div class="card bg-transparent">
-                <div class="card-body bg-dark">
+                <div class="card-body">
                     <h4 class="card-title fs-4">Formulaire de Voiture</h4>
                     <hr>
 

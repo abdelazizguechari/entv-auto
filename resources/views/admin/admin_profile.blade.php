@@ -13,11 +13,11 @@
   <div class="row profile-body">
     <!-- left wrapper start -->
     <div class="d-none d-md-block col-md-4 col-xl-4 left-wrapper">
-      <div class="card rounded bg-dark">
-        <div class="card-body bg-dark">
+      <div class="card ">
+        <div class="card-body">
           <div class="d-flex align-items-center justify-content-between mb-2">
             <div>
-              <img class="wd-100 rounded-circle" src="{{!empty($profiledata->photo) 
+              <img class="profile-img-smalll" src="{{!empty($profiledata->photo) 
               ? url('uplode/admin_images/' . $profiledata->photo) : url('uplode/no_image.jpg')
             }}" alt="profil">
               <span class="h4 ms-3"> <?php echo $profiledata->name; ?> </span>
@@ -66,8 +66,8 @@
 
     <div class="col-md-8 col-xl-8 middle-wrapper">
       <div class="row">
-        <div class="card bg-dark">
-          <div class="card-body bg-dark">
+        <div class="card ">
+          <div class="card-body ">
               <h6 class="card-title fs-4">Mettre à jour le profil</h6>
               <hr>
               <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="forms-sample">
@@ -104,7 +104,7 @@
                   </div>
       
                   <div class="mb-3">
-                      <img class="wd-80 rounded-circle" src="{{ !empty($profiledata->photo) 
+                      <img class="profile-img-smalll" src="{{ !empty($profiledata->photo) 
                           ? url('uplode/admin_images/' . $profiledata->photo) 
                           : url('uplode/no_image.jpg') }}" alt="profil" id="show">
                   </div> 

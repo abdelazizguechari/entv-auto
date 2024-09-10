@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 grid-margin">
             <div class="card">
-                <div class="card-body bg-dark">
+                <div class="card-body ">
                     <h6 class="card-title fs-4">Mise à jour des informations de la section</h6>
                     <hr>
 

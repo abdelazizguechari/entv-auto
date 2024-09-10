@@ -18,7 +18,7 @@
         <div class="col-md-12 grid-margin stretch-card">
 
             <div class="card">
-                <div class="card-body bg-dark">
+                <div class="card-body ">
 
                     <h6 class="card-title fs-4">Créer une Mission</h6>
                     <hr>

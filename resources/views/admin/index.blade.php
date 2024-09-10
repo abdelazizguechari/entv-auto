@@ -10,10 +10,7 @@
 
 
   <div class="d-flex align-items-center flex-wrap text-nowrap">
-    <div class="input-group flatpickr wd-200 me-2 mb-2 mb-md-0" id="dashboardDate">
-      <span class="input-group-text input-group-addon bg-transparent border-primary" data-toggle><i data-feather="calendar" class="text-primary"></i></span>
-      <input type="text" class="form-control bg-transparent border-primary" placeholder="Select date" data-input>
-    </div>
+  
     <button type="button" class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0">
       <i class="btn-icon-prepend" data-feather="printer"></i>
       Print
@@ -37,7 +34,7 @@
   <div class="col-8">
     <div class="mb-5">
       <div class="card">
-        <div style="background-image: url('{{ asset('img/car44.jpg') }}'); background-size: cover;" class="card-body ">
+        <div  class="card-body ">
           <div class="row">
             <div class="d-flex justify-content-between align-items-baseline">
               <h4 class="mb-3 mb-md-0 fs-3">Informations générales sur le département</h4>
@@ -89,7 +86,7 @@
   <div class="col-4">
     <div class="mb-5">
       <div class="card">
-        <div style="background-image: url('{{ asset('img/car124.jpg') }}'); background-size: cover;"   class="card-body ">
+        <div class="card-body ">
           <div class="row">
             <div class="d-flex justify-content-between align-items-baseline">
               <h4 class="mb-3 mb-md-0 fs-3">introduction</h4>
@@ -154,7 +151,7 @@
   <div class="col-12 col-xl-12 stretch-card">
     <div class="row flex-grow-1">
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car3.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div  class="card">
     
           <div  class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
@@ -172,7 +169,7 @@
       </div>
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car5.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0"></h6>
@@ -190,7 +187,7 @@
       
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car10.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
@@ -208,7 +205,7 @@
       
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car6.png') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
@@ -225,7 +222,7 @@
       </div>
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car7.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
@@ -243,7 +240,7 @@
 
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car8.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div  class="card">
           <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
@@ -270,7 +267,7 @@
   <div class="col-12 col-xl-12 stretch-card">
     <div class="row flex-grow-1">
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car11.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">CARS</h6>
@@ -306,7 +303,7 @@
         </div>
       </div>
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car9.png') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+        <div  class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">oil consumption</h6>
@@ -342,7 +339,7 @@
       </div>
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body bg-dark">
+          <div class="card-body ">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">Growth</h6>
               <div class="dropdown mb-2">
@@ -385,7 +382,7 @@
 <div class="row">
   <div class="col-12 col-xl-12 grid-margin stretch-card">
     <div class="card overflow-hidden">
-      <div class="card-body bg-dark">
+      <div class="card-body ">
         <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
           <h6 class="card-title mb-0">Revenue</h6>
           <div class="dropdown">
@@ -423,7 +420,7 @@
 <div class="row">
   <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body bg-dark">
+      <div class="card-body">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h6 class="card-title  mb-0">Monthly sales</h6>
           <div class="dropdown mb-2">
@@ -440,13 +437,13 @@
           </div>
         </div>
         <p class="text-muted">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
-        <div class="bg-dark" id="monthlySalesChart"></div>
+        <div class="" id="monthlySalesChart"></div>
       </div> 
     </div>
   </div>
   <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body bg-dark">
+      <div class="card-body">
         <div class="d-flex justify-content-between align-items-baseline">
           <h6 class="card-title mb-0">Cloud storage</h6>
           <div class="dropdown mb-2">
@@ -488,7 +485,7 @@
 <div class="row">
   <div class="col-lg-5 col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
     <div class="card">
-      <div class="card-body bg-dark">
+      <div class="card-body ">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h6 class="card-title mb-0">Inbox</h6>
           <div class="dropdown mb-2">
@@ -572,7 +569,7 @@
 
   <div class="col-lg-7 col-xl-6 stretch-card">
     <div class="card">
-      <div class="card-body bg-dark">
+      <div class="card-body ">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h6 class="card-title mb-0">mission de jour</h6>
           <div class="dropdown mb-2">

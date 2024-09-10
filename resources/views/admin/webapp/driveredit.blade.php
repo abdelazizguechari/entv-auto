@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-12 stretch-card">
             <div class="card bg-transparent">
-                <div class="card-body bg-dark">
+                <div class="card-body">
                     <h6 class="card-title fs-4">Mis a Jour Formulaire du Conducteur</h6>
                     <hr>
                     @if($cars->isEmpty())

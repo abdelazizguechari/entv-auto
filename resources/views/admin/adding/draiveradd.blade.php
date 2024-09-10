@@ -18,8 +18,8 @@ $cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('
 <div class="page-content">
     <div class="row">
         <div class="col-md-12 stretch-card">
-            <div class="card bg-transparent">
-                <div class="card-body bg-dark">
+            <div class="card ">
+                <div class="card-body">
                     <h6 class="card-title fs-4">Formulaire du Conducteur</h6>
                     <hr>
                     @if($cars->isEmpty())

@@ -16,6 +16,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\FaQController ;
 use App\Http\Controllers\DashboardController ;
+use App\Http\Controllers\ThemeController;
+
 
 
 
@@ -76,6 +78,10 @@ Route::middleware(['auth'])->group(function () {
      
     
     });
+
+
+    // In routes/web.php
+Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.switch');
 
 
     Route::controller(AdminController::class)->group(function(){

@@ -57,8 +57,8 @@
 </style>
 
 <div class="page-content">
-    <div class="card bg-transparent">
-        <div class="card-body bg-dark">
+    <div class="card">
+        <div class="card-body ">
             <h4 class="card-title fs-4">information sur voiteur </h4>
             <hr>
 

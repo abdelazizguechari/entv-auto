@@ -16,6 +16,14 @@ use id;
 class Admincontroller extends Controller
 {
 
+    public function AdminDash() {
+        $theme = $request->session()->get('theme', 'dark');
+        return view ('admin.dash',compact('theme'));
+    
+    }
+
+
+
     
 public function AdminDashboard() {
     $data = Department::where('id', 2)->first();
