@@ -18,6 +18,21 @@ class DriverController extends Controller
 
     public function store(Request $request)
     {
+
+
+        if (!$request->has(['nom', 'email', 'permis_conduire', 'voiture_id'])) {
+         
+            $notification = [
+                'message' => 'Driver information was not sent. Please fill out the required fields.',
+                'alert-type' => 'error'
+            ];
+    
+          
+            return back()->with($notification);
+        }
+
+
+
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'nullable|string|max:255',
@@ -33,6 +48,7 @@ class DriverController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'voiture_id' => 'required|string|exists:cars,immatriculation',
         ]);
+        
     
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');
@@ -42,12 +58,14 @@ class DriverController extends Controller
         Driver::create($validatedData);
     
         $notification = [
-            'message' => 'Driver created successfully.', // Updated message
+            'message' => 'Driver created successfully.',
             'alert-type' => 'success'
         ];
     
-        return redirect()->back()->with($notification);
+        return redirect()->route('our.drivers')->with($notification);
     }
+
+
 
     public function create()
     {
@@ -59,7 +77,8 @@ class DriverController extends Controller
 
     public function ourdrivers() {
 
-       $drivers = Driver::all();
+        $drivers = Driver::where('status', 'active')->get();
+
        return view('admin.webapp.Ourdrivers',compact('drivers'));
     
     }
@@ -131,7 +150,7 @@ class DriverController extends Controller
         $driver->save();
 
         $notification = [
-            'message' => 'car deleted successfully.',
+            'message' => 'driver update successfully.',
             'alert-type' => 'success'
         ];
 
@@ -144,4 +163,51 @@ class DriverController extends Controller
         $driverdata = Driver::findOrFail($id);
         return view ('admin.webapp.conducteurconge',compact('driverdata'));
     }
+
+    public function addconger(Request $request, $id) {
+       
+        $driver = Driver::findOrFail($id);
+    
+     
+        $driver->update([
+            'status' => 'inactive',
+            'voiture_id' => null 
+        ]);
+    
+      
+        $addconger = new ConducteurConger();
+        $addconger->driver_id = $request->driver_id;
+        $addconger->type_conger = $request->type_conger;
+        $addconger->start_date = $request->start_date;
+        $addconger->end_date = $request->end_date;
+        $addconger->save();
+    
+     
+        $notification = [
+            'message' => 'Driver added to leave successfully and car has been freed up.',
+            'alert-type' => 'success'
+        ];
+    
+        return redirect()->back()->with($notification);
+    }
+    
+    public function driverconger() {
+
+        $data = ConducteurConger::join('drivers', 'conducteur_conger.driver_id', '=', 'drivers.id')
+                ->select(
+                    'conducteur_conger.*', 
+                    'drivers.nom', 
+                    'drivers.prenom', 
+                    'drivers.assurance_num', 
+                    'drivers.permis_conduire', 
+                    'drivers.telephone', 
+                    'drivers.email', 
+                    'drivers.status', 
+                    'drivers.adresse'
+                )
+                ->get();
+
+        return view ('admin.gestion.driver.Congerdriver',compact('data'));
+    }
+    
 }

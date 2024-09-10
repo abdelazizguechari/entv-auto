@@ -159,7 +159,8 @@
                             </div><!-- Col -->
                         </div><!-- Row -->
 
-                        <button type="submit" class="btn btn-primary">Soumettre le Formulaire</button>
+                        <button type="submit" class="btn btn-inverse-primary">Soumettre le Formulaire</button>	&nbsp;
+                        <button type="reset" value="Reset" class="btn btn-inverse-danger">Reset</button>
                     </form>
                 </div>
             </div>

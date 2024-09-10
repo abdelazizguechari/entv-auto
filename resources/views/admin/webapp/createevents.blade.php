@@ -5,10 +5,9 @@
     
     select.form-control option {
         background-color: #060C17;
-        color: #fff; /* Pour garantir la lisibilité du texte */
+        color: #fff; /* Ensure text is readable */
     }
 </style>
-
 
 @extends('admin.dash')
 
@@ -61,11 +60,10 @@
 <script>
     function submitFormAndAddMission() {
         const form = document.getElementById('eventForm');
-        const action = form.action;
-        form.action = action + '?redirect_to_add_mission=true';
+        const originalAction = form.action;
+        form.action = `${originalAction}?redirect_to_add_mission=true`;
         form.submit();
     }
 </script>
 
 @endsection
-    

@@ -5,17 +5,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Department;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Log;
+
 
 class Admincontroller extends Controller
 {
 
     
 public function AdminDashboard() {
-    return view ('admin.index');
+    $data = Department::where('id', 2)->first();
+    return view ('admin.index',compact('data'));
 
 }
 
@@ -37,6 +41,12 @@ public function Addmission() {
 
 }
 
+
+
+public function draiveradd() {
+
+    return view('admin.adding.draiveradd');
+}
 
 public function Adminlogin() {
     return view ('admin.admin_login');
@@ -119,11 +129,6 @@ public function changpassword () {
 
 
 
-public function draiveradd() {
-
-    return view('admin.draiveradd');
-}
-
 
 public function adminsigne() {
 
@@ -163,18 +168,50 @@ public function usersigne(Request $request) {
         return redirect()->route('admin.login');
     }
 
+    public function newlogin(Request $request): RedirectResponse
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        $credentials = ['email' => $request->email, 'password' => $request->password];
+    
+        // Log the attempted credentials (for debugging purposes)
+        Log::info('Attempting login with credentials: ', $credentials);
+    
+        if (Auth::attempt($credentials)) {
+            // Check if the user is an admin
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('/admin/home');
+            }
+    
+            // Log out if not an admin
+            Auth::logout();
+            return back()->withErrors(['email' => 'Unauthorized']);
+        }
+    
+        // Authentication failed
+        return back()->withErrors(['email' => 'Invalid login credentials']);
+    }
+    
+    // public function Adminlogout(Request $request): RedirectResponse
+    // {
  
+    //     Auth::logout();
 
-public function Adminlogout(Request $request): RedirectResponse
-{
-    Auth::guard('web')->logout();
 
-    $request->session()->invalidate();
+    //     $request->session()->invalidate();
 
-    $request->session()->regenerateToken();
+       
+    //     $request->session()->regenerateToken();
 
-    return redirect('/admin/login');
-}
+     
+    //     return redirect()->route('admin.login');
+    // }
+    
 
 
 public function addadmin() {
@@ -192,9 +229,7 @@ public function Ouradmins() {
         where('id' ,'!=' ,auth()->id())
         ->get();
     
-    
-       
-    
+
     
     return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
 }
@@ -235,6 +270,13 @@ public function Saveadmin(Request $request) {
     } else {
         $user->save(); 
     }
+
+    
+    $notification = [
+        'message' => 'User Create .',
+        'alert-type' => 'success'
+    ];
+
 
     return redirect()->route('Our.admins')->with($notification);
 }

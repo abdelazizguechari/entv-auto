@@ -1,5 +1,8 @@
 @php
-$cars = App\Models\Carsm::whereNotIn('immatriculation', App\Models\Driver::pluck('voiture_id'))->pluck('immatriculation');
+
+$activeDrivers = App\Models\Driver::where('status', 'active')->pluck('voiture_id');
+
+$cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('immatriculation');
 @endphp
 
 @extends('admin.dash')
@@ -126,7 +129,7 @@ $cars = App\Models\Carsm::whereNotIn('immatriculation', App\Models\Driver::pluck
                                     </div>
                                 </div><!-- Col -->
                             </div><!-- Row -->
-                            <button type="submit" class="btn btn-primary">Soumettre le formulaire</button>
+                            <button type="submit" class="btn btn-inverse-primary">Soumettre le formulaire</button>
                         </form>
                     @endif
                 </div>

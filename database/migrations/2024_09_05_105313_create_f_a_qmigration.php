@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fAQTABLE', function (Blueprint $table) {
+        Schema::create('faqmodels', function (Blueprint $table) {
             $table->id();
             $table->string('question');
             $table->string('reponse');
+            $table->date('updated_at');
+            $table->date('created_at');
 
         });
     }

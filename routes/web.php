@@ -15,6 +15,7 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\FaQController ;
+use App\Http\Controllers\DashboardController ;
 
 
 
@@ -41,206 +42,210 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
 
+
+    Route::controller(CarController::class)->group(function(){
+
+        Route::get('admin/vehicle/createw', [CarController::class, 'create'])->name('car.create'); // Changed /admin/car/create to /admin/vehicle/create
+        Route::post('admin/vehicle/reez', [CarController::class, 'store'])->name('car.store'); // Changed /admin/car/store to /admin/vehicle/store
+        Route::get('/admin/vehicles/flizst', [CarController::class, 'ourcars'])->name('admin.ourcars'); // Changed /admin/ourcars to /admin/vehicles/list
+        Route::get('/admin/vehicles/qedit/{immatriculation}', [CarController::class, 'edit'])->name('edit.car'); // Changed /admin/ourcars/edit/{immatriculation} to /admin/vehicles/edit/{immatriculation}
+        Route::get('/admin/vehicles/dfselete/{immatriculation}', [CarController::class, 'deleteCar'])->name('delete.car'); // Changed /admin/ourcars/delete/{immatriculation} to /admin/vehicles/delete/{immatriculation}
+        Route::put('/admin/vehicles/updqsate/{immatriculation}', [CarController::class, 'updateCar'])->name('update.car'); // Changed /admin/ourcars/update/{immatriculation} to /admin/vehicles/update/{immatriculation}
+        Route::get('admin/webapp/vehifcles/data', [CarController::class, 'cardata'])->name('car.data'); // Changed /admin/webapp/Ourcars/data to /admin/webapp/vehicles/data
+        Route::get('/vehicles/deletfe/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete'); // Changed /cars/delete/{immatriculation} to /vehicles/delete/{immatriculation}
+        Route::get('/vehicles/eddist/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit'); // Changed /cars/edit/{immatriculation} to /vehicles/edit/{immatriculation}
+        Route::put('/vehicles/updaqqte/{immatriculation}', [CarController::class, 'update'])->name('cars.update'); // Changed /cars/update/{immatriculation} to /vehicles/update/{immatriculation}
+    
+    });
+  
+
+    
+    Route::controller(DriverController::class)->group(function(){
+
+        Route::get('/operator/register', [DriverController::class, 'create'])->name('driver.create'); // Changed /driver/create to /operator/register
+        Route::post('/operator/save', [DriverController::class, 'store'])->name('driver.store'); // Changed /driver/store to /operator/save
+        Route::get('/admin/operatives', [DriverController::class, 'ourdrivers'])->name('our.drivers'); // Changed /admin/drivers to /admin/operatives
+        Route::get('/remove/operatives/{id}', [DriverController::class, 'deletedriver'])->name('delete.driver'); // Changed /delete/drivers/{id} to /remove/operatives/{id}
+        Route::get('/modify/operatives/{id}', [DriverController::class, 'editdriver'])->name('edit.driver'); // Changed /edit/drivers/{id} to /modify/operatives/{id}
+        Route::put('/modify/update/{id}', [DriverController::class, 'updatedriver'])->name('update.driver'); // Changed /upadte/drivers/{id} to /modify/update/{id}
+        Route::get('/operator/leave/{id}', [DriverController::class, 'conducteurconge'])->name('conducteur.conge'); // Changed /conducteur/conge/{id} to /operator/leave/{id}
+        Route::post('/operator/addleave/{id}', [DriverController::class, 'addconger'])->name('add.conger'); // Changed /conducteur/addconger/{id} to /operator/addleave/{id}
+        Route::get('/operator/driverconger', [DriverController::class, 'driverconger'])->name('driver.conger');
+
+     
+    
+    });
+
+
+    Route::controller(AdminController::class)->group(function(){
+
+        Route::get('/admin/register', [AdminController::class, 'addadmin'])->name('add.admin'); // Changed /admin/addadmin to /admin/register
+        Route::get('/admin/manage', [AdminController::class, 'Ouradmins'])->name('Our.admins'); // Changed /admin/Ouradmins to /admin/manage
+        Route::post('/admin/store', [AdminController::class, 'Saveadmin'])->name('save.admin'); // Changed /admin/saveadmin to /admin/store
+        Route::get('/admin/remove/{id}', [AdminController::class, 'Delateadmin'])->name('delate.admin'); // Changed /admin/Delateadmin/{id} to /admin/remove/{id}
+        Route::get('/admin/edit/{id}', [AdminController::class, 'Editadmin'])->name('edit.admin'); // Changed /admin/Editadmin/{id} to /admin/edit/{id}
+        Route::post('/admin/modify/{id}', [AdminController::class, 'Updateadmin'])->name('Update.admin'); // Changed /admin/Updateadmin/{id} to /admin/modify/{id}
+        Route::get('/admin/vehicle', [AdminController::class, 'Addcar'])->name('add.car'); // Changed /admin/addcar to /admin/add-vehicle
+        Route::get('/admin/calendar', [AdminController::class, 'caladner'])->name('caladner.add'); // Changed /admin/calander to /admin/calendar
+        Route::get('/driver/try', [AdminController::class, 'draiveradd'])->name('add'); // Changed /driver to /driver/add
+        Route::get('/admin/task', [AdminController::class, 'Addmission'])->name('add.mission'); // Changed /admin/missi/ to /admin/task
+        Route::get('/admin/change-password', [AdminController::class, 'changpassword'])->name('change.password'); // Changed /admin/changpass to /admin/change-password
+        Route::post('/admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update'); // Kept /admin/profile/update as is
+        Route::post('/admin/password/update', [AdminController::class, 'passwordupdate'])->name('password.change'); // Changed /admin/update/password to /admin/password/update
+        Route::get('/admin/profile', [AdminController::class, 'Adminprofile'])->name('admin.profile'); // Kept /admin/profile as is
+        Route::get('/admin/home', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard'); // Changed /admin/dashboard to  
+        Route::get('/agent/home', [Agentcontroller::class, 'AgentDashboard'])->name('agent.dashboard'); // Changed /agent/dashboard to /agent/home
+        Route::get('/admin/sign-up', [AdminController::class, 'adminsigne'])->name('signe.admin'); // Changed /admin/signe to /admin/sign-up
+        Route::post('/admin/sign-up/create', [AdminController::class, 'usersigne'])->name('user.admin'); 
+       
+    
+    });
     
 
-route::get('/admin/addcar',[AdminController::class , 'Addcar' ]) -> name('add.car');
-route::get('/admin/calander',[AdminController::class , 'caladner' ]) -> name('caladner.add');
-
-Route::get('/admin/driver', [AdminController::class, 'draiveradd'])->name('add.driver');
-Route::get('/admin/missison', [AdminController::class, 'Addmission'])->name('add.mission');
-Route::get('admin/changpass',[Admincontroller::class , 'changpassword'])-> name('change.password');
-Route::post('admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update');
-Route::post('admin/update/password', [AdminController::class, 'passwordupdate'])->name('password.change');
-Route::get('admin/car/create', [CarController::class, 'create'])->name('car.create');
-Route::post('admin/car/store', [CarController::class, 'store'])->name('car.store');
-route::get('/admin/ourcars',[CarController::class , 'ourcars' ]) -> name('admin.ourcars');
-route::get('/admin/ourcars/edit/{immatriculation}',[CarController::class , 'edit' ]) -> name('edit.car');
-route::get('/admin/ourcars/delete/{immatriculation}',[CarController::class , 'deleteCar' ]) -> name('delete.car');
-Route::put('/admin/ourcars/update/{immatriculation}', [CarController::class, 'updateCar'])->name('update.car');
-Route::get('admin/webapp/Ourcars/data' , [Carcontroller::class , 'cardata']) ->name('car.data');
-Route::get('admin/driver/create', [DriverController::class, 'create'])->name('driver.create');
-Route::post('admin/driver/store', [DriverController::class, 'store'])->name('driver.store');
-Route::get('admin/our/drivers', [DriverController::class, 'ourdrivers'])->name('our.drivers');
-Route::get('admin/delete/drivers/{id}', [DriverController::class, 'deletedriver'])->name('delete.driver');
-Route::get('admin/edit/drivers/{id}', [DriverController::class, 'editdriver'])->name('edit.driver');
-Route::put('admin/upadte/drivers/{id}', [DriverController::class, 'updatedriver'])->name('update.driver');
-
-Route::get('admin/conducteur/conge/{id}', [DriverController::class, 'conducteurconge'])->name('conducteur.conge');
-
-
-
-
-
-route::get('/admin/addadmin',[AdminController::class , 'addadmin' ]) -> name('add.admin');
-route::get('/admin/Ouradmins',[AdminController::class , 'Ouradmins' ])-> name('Our.admins');
-
-route::post('/admin/saveadmin',[AdminController::class , 'Saveadmin' ])-> name('save.admin');
-
-route::get('/admin/Delateadmin/{id}',[AdminController::class , 'Delateadmin' ])-> name('delate.admin');
-
-
-
-route::get('/admin/Editadmin/{id}',[AdminController::class , 'Editadmin' ])-> name('edit.admin');
-
-route::post('/admin/Updateadmin/{id}',[AdminController::class , 'Updateadmin' ])-> name('Update.admin');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
-
-
-
-
-
-
-Route::get('/admin/profile', [AdminController::class, 'Adminprofile'])->name('admin.profile');
-Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');   
-Route::get('/agent/dashboard',[Agentcontroller::class , 'AgentDashboard']) -> name('agent.dashboard');
-Route::get('/admin/logout',[AdminController::class , 'Adminlogout' ]) -> name('admin.logout'); 
-Route::get('admin/signe', [AdminController::class, 'adminsigne'])->name('signe.admin');
-Route::post('admin/signe/create', [AdminController::class, 'usersigne'])->name('user.admin');
-route::get('/admin/login',[AdminController::class , 'Adminlogin' ]) -> name('admin.login');
 Route::get('/auth/redirect', function () {  return Socialite::driver('google')->redirect();});
 // Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
 // Route::get('/auth/google/call-back',[googleauth::class , 'callback']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/missions', [MissionsController::class, 'index'])->name('missions.index');
-    Route::get('/missions/transportation', [MissionsController::class, 'indexTransportation'])->name('missions.index.transportation');
-    Route::get('/missions/create/transportation', [MissionsController::class, 'createTransportation'])->name('missions.create.transportation');
-    Route::get('/missions/create/mission', [MissionsController::class, 'createMission'])->name('missions.create.mission');
-    Route::get('/missions/create/events', [MissionsController::class, 'createEvents'])->name('missions.create.events');
-    Route::post('/missions/store/transportation', [MissionsController::class, 'storeTransportation'])->name('missions.store.transportation');
-    Route::post('/missions/store/mission', [MissionsController::class, 'storeMission'])->name('missions.store.mission');
-    Route::post('/missions/store/events', [MissionsController::class, 'storeEvents'])->name('missions.store.events');
-    Route::get('/missions/edit/{id}', [MissionsController::class, 'edit'])->name('missions.edit');
-    Route::put('/missions/update/{id}', [MissionsController::class, 'update'])->name('missions.update');
-    Route::delete('/missions/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
+Route::controller(MissionsController::class)->group(function() {
+
+    Route::get('/tasks', [MissionsController::class, 'index'])->name('missions.index'); // Changed /missions to /tasks
+    Route::get('/transport', [MissionsController::class, 'indexTransportation'])->name('missions.index.transportation'); // Changed /missions/transportation to /tasks/transport
+    Route::get('/addnewrecord', [MissionsController::class, 'createTransportation'])->name('missions.create.transportation'); // Changed /missions/create/transportation to /tasks/create/transport
+    Route::get('/create/activity', [MissionsController::class, 'createMission'])->name('missions.create.mission'); // Changed /missions/create/mission to /tasks/create/activity
+    Route::get('/create/celebration', [MissionsController::class, 'createEvents'])->name('missions.create.events'); // Changed /missions/create/events to /tasks/create/celebration
+    Route::post('/stores/transport', [MissionsController::class, 'storeTransportation'])->name('missions.store.transportation'); // Changed /mission/store/transportation to /task/store/transport
+    Route::post('/storesr/activity', [MissionsController::class, 'storeMission'])->name('missions.store.mission'); // Changed /mission/store/mission to /task/store/activity
+    Route::post('/store/celebration', [MissionsController::class, 'storeEvents'])->name('missions.store.events'); // Changed /mission/store/events to /task/store/celebration
+    Route::get('/edit/{id}-', [MissionsController::class, 'edit'])->name('missions.edit'); // Changed /mission/edit/{id} to /task/edit/{id}
+    Route::put('/update/{id}', [MissionsController::class, 'update'])->name('missions.update'); // Changed /mission/update/{id} to /task/update/{id}
+    Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy'); // Changed /mission/delete/{id} to /task/delete/{id}
+
+});
+
+Route::controller(DashboardController::class)->group(function(){
+    Route::get('/update/section',[DashboardController::class,'updatesection'])->name('update.section');
+    Route::put('/departments/section/{id}', [DashboardController::class, 'update'])->name('departments.update');
+
+
+});
+
+
+Route::controller(EventController::class)->group(function()  {
+
+
+    Route::get('/events', [EventController::class, 'indexx'])->name('events.index');
+    Route::get('/edit/{id}/events', [EventController::class, 'edit'])->name('events.edit');
+    Route::get('/events/Delete/{id}', [EventController::class, 'destroy'])->name('events.Delete');
+    Route::get('/show/{id}/events', [EventController::class, 'show'])->name('events.details');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::post('/events/update', [EventController::class, 'update'])->name('events.update');
+    });
+    
+    Route::controller(FaQController::class)->group(function() {
+
+        Route::get('/admin/faq', [FaQController::class, 'faq'])->name('admin.faq');
+        Route::get('/add/faq', [FaQController::class, 'addFaq'])->name('add.Faq');
+        Route::post('/save/faq', [FaQController::class, 'savefaq'])->name('save.faq');
+    });
+    
+
+
+
+    Route::controller(roleController::class)->group(function() {
+
+        Route::get('/all/permission', [roleController::class, 'allPermission'])->name('all.permission');
+        Route::get('/add/permission', [roleController::class, 'addpermission'])->name('add.permission');
+        Route::post('/permission/store', [roleController::class, 'storepermission'])->name('store.permission');
+        Route::get('ad/change/permission/{id}*/', [roleController::class, 'editpermission'])->name('edit.permission');
+        Route::post('/permission/update', [roleController::class, 'updatepermission'])->name('update.permission');
+        Route::get('/permission/delate/{id}*/', [roleController::class, 'delatepermission'])->name('delate.permission');
+    
+    });
+    
 
     
-});
+    Route::controller(MaintenanceController::class)->group(function() {
 
+        Route::get('/vehicle/add-maintenance/{immatriculation}', [MaintenanceController::class, 'addCarmantenance'])->name('addCar.mantenance'); // Updated to /vehicle/add-maintenance/{immatriculation}
+        Route::post('/maintenance/record', [MaintenanceController::class, 'store'])->name('maintenance.store'); // Updated to /maintenance/record
+        Route::get('/details/maintenance', [MaintenanceController::class, 'Datainmaintenance'])->name('Datain.maintenance'); // Updated to /details/maintenance
+        Route::get('/maintenance/report/{id}', [MaintenanceController::class, 'print'])->name('maintenance.print'); // Updated to /maintenance/report/{id}
+        Route::get('/maintenance/{id}/finalize', [MaintenanceController::class, 'complete'])->name('complete.maintenance'); // Updated to /maintenance/{id}/finalize
+        Route::get('/maintenance/archive', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive'); // Updated to /archive/maintenance
+    
+        Route::get('/manages/{id}*', [MaintenanceController::class, 'maintenacegestion'])->name('maintenace.gestion'); // Updated to /maintenance/manage/{id}
+        Route::get('/staff/internal', [MaintenanceController::class, 'Manintern'])->name('man.intern'); // Updated to /staff/internal
+        Route::post('/maintenance/add-stock', [MaintenanceController::class, 'addStockToMaintenance'])->name('maintenance.addStock');
+        Route::get('/maintenance/nosintern', [MaintenanceController::class, 'nosintern'])->name('nos.intern');
 
-Route::resource('events', EventController::class);
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/cars/delete/{immatriculation}', [CarController::class, 'delete'])->name('cars.delete');
-    Route::get('/cars/edit/{immatriculation}', [CarController::class, 'edit'])->name('cars.edit');
-    Route::put('/cars/update/{immatriculation}', [CarController::class, 'update'])->name('cars.update');
- Route::get('/events', [EventController::class, 'indexx'])->name('events.index');
-Route::post('/events', [EventController::class, 'store'])->name('events.store');
-});
-
-
-
-
-
-
-
-Route::controller(FaQController::class)->group(function() {
-
-    Route::get('/admin/faq', [FaQController::class, 'faq'])->name('admin.faq');
-    Route::get('/add/faq', [FaQController::class, 'addFaq'])->name('add.Faq');
-    Route::post('/save/faq', [FaQController::class, 'savefaq'])->name('save.faq');
-
+       
 
     
-  
-
-});
-
-Route::controller(roleController::class)->group(function() {
-
-    Route::get('/all/permission', [roleController::class, 'allPermission'])->name('all.permission');
-    Route::get('/add/permission', [roleController::class, 'addpermission'])->name('add.permission');
-    Route::post('/permission/store', [roleController::class, 'storepermission'])->name('store.permission');
-    Route::get('ad/change/permission/{id}', [roleController::class, 'editpermission'])->name('edit.permission');
-    Route::post('/permission/update', [roleController::class, 'updatepermission'])->name('update.permission');
-    Route::get('/permission/delate/{id}', [roleController::class, 'delatepermission'])->name('delate.permission');
-
-});
-
-
-
-
-
-Route::controller(MaintenanceController::class)->group(function() {
-
-    Route::get('/addCar/mantenance{immatriculation}', [MaintenanceController::class, 'addCarmantenance'])->name('addCar.mantenance');
-    Route::post('/maintenance/store', [MaintenanceController::class, 'store'])->name('maintenance.store');
-    Route::get('/Datain/maintenance', [MaintenanceController::class, 'Datainmaintenance'])->name('Datain.maintenance');
-    Route::get('/maintenance/print/{id}', [MaintenanceController::class, 'print'])->name('maintenance.print');
-    Route::get('/maintenance/{id}/complete', [MaintenanceController::class, 'complete'])->name('complete.maintenance');
-    Route::get('/maintenance/archive', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive');
-    // Route::post('/permission/update', [MaintenanceController::class, 'updatepermission'])->name('update.permission');
-    // Route::get('/permission/delate/{id}', [MaintenanceController::class, 'delatepermission'])->name('delate.permission');
-
-});
+    });
+    
 
 
 
 Route::controller(StockController::class)->group(function() {
 
-    Route::get('/addCar/add/stock', [StockController::class, 'addstock'])->name('add.stock');
-    Route::post('/store/store', [StockController::class, 'store'])->name('stocks.store');
-    Route::get('/all/stock', [StockController::class, 'allstock'])->name('all.stock');
-    Route::get('/stock/delete/{id}', [StockController::class, 'delete'])->name('delete.stock');
-
-    Route::get('/impost/stock', [StockController::class, 'impoststock'])->name('impost.stock');
-    Route::get('/stock/export', [StockController::class, 'export'])->name('export');
-    // Route::get('/permission/delate/{id}', [StockController::class, 'delatepermission'])->name('delate.permission');
+    Route::get('/inventorya/add/stoers', [StockController::class, 'addstock'])->name('add.stock'); // Changed /addCar/add/stock to /inventory/add/stock
+    Route::post('/inventoryza/save', [StockController::class, 'store'])->name('stocks.store'); // Changed /store/store to /inventory/save
+    Route::get('/inventoryr/list', [StockController::class, 'allstock'])->name('all.stock'); // Changed /all/stock to /inventory/list
+    Route::get('/inventorys/remove/{id}', [StockController::class, 'delete'])->name('delete.stock'); // Changed /stock/delete/{id} to /inventory/remove/{id}
+    Route::get('/inventorye/new', [StockController::class, 'impoststock'])->name('impost.stock'); // Changed /impost/stock to /inventory/initialize
+    Route::get('/inventoryr/down', [StockController::class, 'export'])->name('export'); // Changed /stock/export to /inventory/download
 
 });
-
-
-
-
 
 Route::controller(roleController::class)->group(function() {
 
     Route::get('/all/role', [roleController::class, 'allrole'])->name('all.role');
     Route::get('/add/role', [roleController::class, 'addrole'])->name('add.role');
-    
     Route::get('ad/change/role/{id}', [roleController::class, 'editrole'])->name('edit.role');
     Route::post('/role/update', [roleController::class, 'updaterole'])->name('update.role');
     Route::get('/role/delate/{id}', [roleController::class, 'delaterole'])->name('delate.role');
-
-
-
-  
     Route::post('/role/save', [roleController::class, 'rolePermissionStore'])->name('role.permission.save');
-    Route::get('/permission/role', [roleController::class, 'addrolespermission'])->name('add.roles.permission');
-    
-
-    
+    Route::get('/permission/role', [roleController::class, 'addrolespermission'])->name('add.roles.permission'); 
     Route::post('/role/store', [roleController::class, 'storerole'])->name('save.role');
-
     Route::get('/all/permission/role', [roleController::class, 'allrolespermission'])->name('all.roles.permission');
-
-
-    Route::get('admin/role/editing/{id}', [roleController::class, 'admineditrole'])->name('admin.edit.role');
-
-    Route::post('admin/role/update/{id}', [roleController::class, 'adminroleupdate'])->name('admin.role.update');
-
-
-    Route::get('admin/role/delete/{id}', [roleController::class, 'admindeleterole'])->name('admin.delete.role');
-
- 
-   
-   
+    Route::get('admin/role/editing/{id}*/*', [roleController::class, 'admineditrole'])->name('admin.edit.role');
+    Route::post('admin/role/update/{id}*//*', [roleController::class, 'adminroleupdate'])->name('admin.role.update');
+    Route::get('admin/role/delete/{id}**', [roleController::class, 'admindeleterole'])->name('admin.delete.role');
 });
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+// Route::resource('events', EventController::class);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

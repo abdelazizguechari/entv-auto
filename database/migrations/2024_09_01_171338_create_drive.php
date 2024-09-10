@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('num_cas_urgance')->nullable();
             $table->string('nom_cas_urgance')->nullable();
             $table->string('email')->unique();
-            $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('adresse')->nullable();
             $table->date('date_naissance')->nullable();
             $table->string('photo')->nullable();

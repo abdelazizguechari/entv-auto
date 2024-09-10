@@ -5,8 +5,10 @@
 
 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
   <div>
-    <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
+    <h4 class="mb-3 mb-md-0 fs-3">Welcome to Dashboard</h4>
   </div>
+
+
   <div class="d-flex align-items-center flex-wrap text-nowrap">
     <div class="input-group flatpickr wd-200 me-2 mb-2 mb-md-0" id="dashboardDate">
       <span class="input-group-text input-group-addon bg-transparent border-primary" data-toggle><i data-feather="calendar" class="text-primary"></i></span>
@@ -25,16 +27,138 @@
 
 <hr>
 
+<style>h6{margin: 10px  0 10px 0;}</style>
+
+<div class="row d-flex justify-content-between">
+  <!-- Left Column -->
+
+
+  <!-- Right Column -->
+  <div class="col-8">
+    <div class="mb-5">
+      <div class="card">
+        <div style="background-image: url('{{ asset('img/car44.jpg') }}'); background-size: cover;" class="card-body ">
+          <div class="row">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h4 class="mb-3 mb-md-0 fs-3">Informations générales sur le département</h4>
+              <div class="dropdown mb-2">
+                <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item d-flex align-items-center" href="">
+                    <i data-feather="eye" class="icon-sm me-2"></i> <span class="">Voir</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="{{route('update.section')}}">
+                    <i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Modifier</span>
+                  </a>
+                 
+                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                    <i data-feather="printer" class="icon-sm me-2"></i> <span class="">Imprimer</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                    <i data-feather="download" class="icon-sm me-2"></i> <span class="">Télécharger</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="col-12">
+              <h6>Nom du département : <span style="font-weight: 100">{{ $data->nom }}</span></h6>
+              <hr pt-3>
+              
+              <h6>Nombre d'employés dans ce département : <span style="font-weight: 100">{{ $data->nb_employes }} employés</span></h6>
+              <hr pt-3>
+              
+              <h6>Responsable du département :<span style="font-weight: 100">{{ $data->responsable }}</span></h6>
+              <hr pt-3>
+              
+              <h6>Localisation du département :<span style="font-weight: 100">{{ $data->localisation }}</span></h6>
+              <hr pt-3>
+              
+              <h6>Contact du département :<span style="font-weight: 100">{{ $data->email }} | {{ $data->telephone }}</span></h6>
+              <hr pt-3>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="mb-5">
+      <div class="card">
+        <div style="background-image: url('{{ asset('img/car124.jpg') }}'); background-size: cover;"   class="card-body ">
+          <div class="row">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h4 class="mb-3 mb-md-0 fs-3">introduction</h4>
+              <div class="dropdown mb-2">
+                <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                    <i data-feather="eye" class="icon-sm me-2"></i> <span class="">Voir</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" >
+                    <i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Modifier</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                    <i data-feather="trash" class="icon-sm me-2"></i> <span class="">Supprimer</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                    <i data-feather="printer" class="icon-sm me-2"></i> <span class="">Imprimer</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="javascript:;">
+                    <i data-feather="download" class="icon-sm me-2"></i> <span class="">Télécharger</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="col-12">
+              <h6>Nom du département :</h6>
+              <p>Direction des transports</p>
+
+             <h6>Nom du département :</h6>
+            
+
+              <h6>Nombre d'employés dans ce département :</h6>
+              <p>150 employés</p>
+
+              <h6>Responsable du département :</h6>
+              <p>Monsieur Ahmed Benali</p>
+
+              <h6>Localisation du département :</h6>
+              <p>Bureau 3, Bâtiment principal</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<h4 class="mb-3  fs-3">statistce</h4>
+
+<hr>
+
+
+
 <div class="row">
 
   <div class="col-12 col-xl-12 stretch-card">
     <div class="row flex-grow-1">
       <div class="col-md-4 grid-margin stretch-card">
-        <div style="background-image: url('{{ asset('img/car2.jpg') }}'); background-size: cover; width: 20px; height: 140px;" class="card">
+        <div style="background-image: url('{{ asset('img/car3.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
     
           <div  class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
-              <h6 class="card-title mb-0">voiteur en service</h6>
+              <h6 class="card-title mb-0 fs-4">voiteur en service</h6>
             </div>
             <div class="row mt-4" >
               <div class="">
@@ -48,10 +172,10 @@
       </div>
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car5.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
-              <h6 class="card-title mb-0">conducteur en service</h6>
+              <h6 class="card-title mb-0"></h6>
             </div>
             <div class="row mt-4" >
               <div class="">
@@ -66,8 +190,8 @@
       
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car10.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
             </div>
@@ -84,8 +208,8 @@
       
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car6.png') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
             </div>
@@ -101,8 +225,8 @@
       </div>
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car7.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
             </div>
@@ -119,8 +243,8 @@
 
 
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car8.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
               <h6 class="card-title mb-0">number mission non complete</h6>
             </div>
@@ -146,8 +270,8 @@
   <div class="col-12 col-xl-12 stretch-card">
     <div class="row flex-grow-1">
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car11.jpg') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">CARS</h6>
 
@@ -182,8 +306,8 @@
         </div>
       </div>
       <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body bg-dark">
+        <div style="background-image: url('{{ asset('img/car9.png') }}'); background-size: cover; width: 20px; height: 140xpx;" class="card">
+          <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
               <h6 class="card-title mb-0">oil consumption</h6>
               <div class="dropdown mb-2">
@@ -299,9 +423,9 @@
 <div class="row">
   <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Monthly sales</h6>
+          <h6 class="card-title  mb-0">Monthly sales</h6>
           <div class="dropdown mb-2">
             <a type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -316,13 +440,13 @@
           </div>
         </div>
         <p class="text-muted">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
-        <div id="monthlySalesChart"></div>
+        <div class="bg-dark" id="monthlySalesChart"></div>
       </div> 
     </div>
   </div>
   <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline">
           <h6 class="card-title mb-0">Cloud storage</h6>
           <div class="dropdown mb-2">
@@ -362,9 +486,9 @@
 </div> <!-- row -->
 
 <div class="row">
-  <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
+  <div class="col-lg-5 col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
           <h6 class="card-title mb-0">Inbox</h6>
           <div class="dropdown mb-2">
@@ -445,11 +569,12 @@
       </div> 
     </div>
   </div>
-  <div class="col-lg-7 col-xl-8 stretch-card">
+
+  <div class="col-lg-7 col-xl-6 stretch-card">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">missions</h6>
+          <h6 class="card-title mb-0">mission de jour</h6>
           <div class="dropdown mb-2">
             <a type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -472,7 +597,7 @@
                 <th class="pt-0">Start Date</th>
                 <th class="pt-0">Due Date</th>
                 <th class="pt-0">Status</th>
-                <th class="pt-0">registration number</th>
+            
               </tr>
             </thead>
             <tbody>
@@ -482,7 +607,6 @@
                 <td>01/01/2022</td>
                 <td>26/04/2022</td>
                 <td><span class="badge bg-danger">Released</span></td>
-                <td>00251555</td>
               </tr>
               <tr>
           

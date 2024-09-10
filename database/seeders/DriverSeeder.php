@@ -4,27 +4,38 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Driver;
+use App\Models\Carsm;
+use Faker\Factory as Faker;
 
 class DriverSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        Driver::create([
-            'nom' => 'John',
-            'prenom' => 'Doe',
-            'assurance_num' => '123456789',
-            'permis_conduire' => 'ABC12345',
-            'telephone' => '0123456789',
-            'num_cas_urgance' => '0987654321',
-            'nom_cas_urgance' => 'Jane Doe',
-            'email' => 'johndoe@example.com',
-            'status' => 'active',
-            'adresse' => '123 Main St',
-            'date_naissance' => '1990-01-01',
-            'photo' => 'path',
-            'voiture_id' => 'XYZ98765',
-        ]);
+        $faker = Faker::create();
+        
+        
+        $carIds = Carsm::pluck('immatriculation')->toArray();
 
-        // Add more entries as needed
+ 
+        for ($i = 0; $i < 50; $i++) {
+            Driver::create([
+                'nom' => $faker->lastName,
+                'prenom' => $faker->firstName,
+                'assurance_num' => $faker->unique()->bothify('ASS##??'),
+                'permis_conduire' => $faker->unique()->bothify('PC##??'),
+                'telephone' => $faker->phoneNumber,
+                'num_cas_urgance' => $faker->phoneNumber,
+                'nom_cas_urgance' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'status' => $faker->randomElement(['active', 'inactive']),
+                'adresse' => $faker->address,
+                'date_naissance' => $faker->date,
+                'photo' => null, 
+                'voiture_id' => $faker->randomElement($carIds), 
+            ]);
+        }
     }
 }

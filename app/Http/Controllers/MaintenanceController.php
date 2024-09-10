@@ -6,12 +6,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Carsm;
 use App\Models\Driver;
+use App\Models\Stock;
 use App\Models\Maintenance;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\MaintenanceArchive;
 use Carbon\Carbon;
+use App\Models\MaintenanceStock;
 
 
 
@@ -39,7 +41,7 @@ public function store(Request $request)
         'end_date' => $request->end_date,
         'description' => $request->description,
         'cost' => $request->cost,
-        $user->status = 'active'
+       
     ]);
 
    
@@ -121,5 +123,88 @@ public function store(Request $request)
     return view ('admin.gestion.archive.MaintenanceArchive',compact('Marchive'));
  }
 
+
+ public function Manintern() {
+
+
+ 
+    $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
+    ->select('maintenance.*', 'drivers.nom as driver_name')
+    ->where('maintenance.status', 'inwork') 
+    ->where('maintenance_type', 'inside')
+    ->get();
+
+
+    return view ('admin.gestion.Manintern',compact('data'));
+ }
+
+
+ public function maintenacegestion($id){
+    $data = Maintenance::findOrFail($id);
+    $stock = Stock::all();
+    return view('admin.gestion.Maintenance',compact('data','stock'));
+ }
+
+ public function addStockToMaintenance(Request $request)
+ {
+   
+     $request->validate([
+         'maintenance_id' => 'required|exists:maintenance,id',
+         'stocks' => 'required|array',
+         'stocks.*.quantity' => 'required|integer|min:1',
+     ]);
+ 
+     $maintenanceId = $request->input('maintenance_id');
+     $totalCost = 0;
+ 
+     // Loop through selected stocks
+     foreach ($request->input('stocks') as $stockId => $stockData) {
+         $quantity = $stockData['quantity'];
+ 
+         // Fetch the stock item from the database
+         $stockItem = Stock::find($stockId);
+ 
+         // Ensure there is enough stock available
+         if ($stockItem->quantity < $quantity) {
+             return back()->withErrors("Insufficient stock for item: " . $stockItem->name);
+         }
+ 
+         // Calculate total cost for the selected stock
+         $itemCost = $stockItem->price * $quantity;
+         $totalCost += $itemCost;
+ 
+         // Decrease the stock quantity in the database
+         $stockItem->quantity -= $quantity;
+         $stockItem->save();
+ 
+         // Record the stock usage in the maintenance record (if needed)
+         MaintenanceStock::create([
+             'maintenance_id' => $maintenanceId,
+             'stock_id' => $stockId,
+             'quantity' => $quantity,
+             'price' => $stockItem->price,
+             'total_cost' => $itemCost,
+         ]);
+     }
+ 
+     // Update the total cost for the maintenance record
+     $maintenance = Maintenance::find($maintenanceId);
+     $maintenance->cost = $totalCost;
+     $maintenance->save();
+ 
+     return redirect()->back()->with('success', 'Stock added to maintenance successfully!');
+ }
+
+ public function nosintern(){
+
+  
+    $data = MaintenanceStock::join('maintenance', 'maintenance_stocks.maintenance_id', '=', 'maintenance.id')
+    ->join('stock', 'maintenance_stocks.stock_id', '=', 'stock.id') // Correct table name here
+    ->select('maintenance_stocks.*', 'maintenance.immatriculation', 'stock.name as stock_name', 'stock.category', 'stock.price')
+    ->get();
+return view('admin.gestion.nosintern', compact('data'));
+        return view('admin.gestion.nosintern', compact('data'));
+    
+ }
 
 }

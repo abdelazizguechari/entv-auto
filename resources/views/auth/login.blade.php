@@ -13,9 +13,7 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        @php
-        use Illuminate\Support\Facades\Route;
-    @endphp
+    
     
     
 

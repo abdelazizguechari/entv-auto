@@ -74,4 +74,15 @@ class Maintenance extends Model
             }
         });
     }
+
+    public function stocks()
+    {
+        return $this->belongsToMany(Stock::class, 'maintenance_stock')
+                    ->withPivot('quantity')
+                    ->withTimestamps();
+    }
+
+
+
+
 }

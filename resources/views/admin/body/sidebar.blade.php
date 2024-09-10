@@ -20,6 +20,8 @@
         <span></span>
       </div>
     </div>
+
+
     <div class="sidebar-body">
       <ul class="nav">
         <li style="" class="nav-item nav-category  mb-2">Principal</li>
@@ -36,41 +38,50 @@
             <span class="link-title">Ajouter une voiture</span>
           </a>
         </li>
+
+        
+        
         <li class="nav-item">
-          <a href="{{ route('add.driver') }}" class="nav-link">
+          <a href="{{ route('add') }}" class="nav-link">
             <i class="link-icon" data-feather="user"></i>
             <span class="link-title">Ajouter un conducteur</span>
           </a>
         </li>
 
+
+
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#mission" role="button" aria-expanded="false" aria-controls="mission">
+          <a class="nav-link" data-bs-toggle="collapse" href="#event" role="button" aria-expanded="false" aria-controls="event">
             <i class="link-icon" data-feather="layout"></i>
             <span class="link-title">Missions</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
-          <div class="collapse" id="mission">
+          <div class="collapse" id="event">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{ route('missions.create.transportation') }}" class="nav-link">transportation</a>
+                <a href="{{ route('missions.create.transportation') }}" class="nav-link">Transportation</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('missions.create.mission') }}" class="nav-link">mission</a>
+                <a href="{{ route('missions.create.mission') }}" class="nav-link">Mission</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('missions.create.events') }}" class="nav-link">événement</a>
+                <a href="{{ route('missions.create.events') }}" class="nav-link">Événement</a>
               </li>
             </ul>
           </div>
         </li>
+        
+
 
         <li class="nav-item nav-category mt-2 mb-2">Applications Web</li>
+
         <li class="nav-item">
           <a href="{{route('admin.ourcars')}}" class="nav-link">
             <i class="link-icon" data-feather="activity"></i>
-            <span class="link-title">Nos voitures</span>
+            <p class="link-title">Nos voitures</p>
           </a>
         </li>
+
         <li class="nav-item">
           <a href="{{route('our.drivers')}}" class="nav-link">
             <i class="link-icon" data-feather="users"></i>
@@ -78,23 +89,28 @@
           </a>
         </li>
 
+
+
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#missionsDisplay" role="button" aria-expanded="false" aria-controls="missionsDisplay">
+          <a class="nav-link" data-bs-toggle="collapse" href="#missions" role="button" aria-expanded="false" aria-controls="missions">
             <i class="link-icon" data-feather="check-square"></i>
             <span class="link-title">Missions & Evenement</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
-          <div class="collapse" id="missionsDisplay">
+          <div class="collapse" id="missions">
             <ul class="nav sub-menu">
-              <li class="nav-item">
-                <a href="{{ route('missions.index') }}" class="nav-link">Missions </a>
-              </li>
+
               <li class="nav-item">
                 <a href="{{ route('missions.index.transportation') }}" class="nav-link">Transportation</a>
               </li>
 
+
               <li class="nav-item">
-                <a href="{{route('events.index')}}" class="nav-link">Evenement</a>
+                <a href="{{ route('missions.index') }}" class="nav-link">Missions</a>
+              </li>
+     
+              <li class="nav-item">
+                <a href="{{ route('events.index') }}" class="nav-link">Événement</a>
               </li>
             </ul>
           </div>
@@ -114,8 +130,34 @@
                 <a href="{{route('Datain.maintenance')}}" class="nav-link">Voiture en Maitenance</a>
               </li>
               <li class="nav-item">
-                <a href="pages/ui-components/alerts.html" class="nav-link">Gestion Mantenance intern</a>
+                <a href="{{route('man.intern')}}" class="nav-link">Gestion Mantenance intern</a>
               </li>
+
+              <li class="nav-item">
+                <a href="{{route('nos.intern')}}" class="nav-link">nos Mantenance intern</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#conducteur" role="button" aria-expanded="false" aria-controls="conducteur">
+            <i class="link-icon" data-feather="chevron-down"></i>
+            <span class="link-title">conducteur gestion</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse" id="conducteur">
+            <ul class="nav sub-menu">
+              <li class="nav-item">
+                <a href="{{route('driver.conger')}}" class="nav-link">Conducteur en conges</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('man.intern')}}" class="nav-link">Conducteur en questionnaires</a>
+              </li>
+
+              {{-- <li class="nav-item">
+                <a href="{{route('nos.intern')}}" class="nav-link">nos Mantenance intern</a>
+              </li> --}}
             </ul>
           </div>
         </li>

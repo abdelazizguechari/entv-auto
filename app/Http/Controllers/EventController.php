@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index()
+    public function indexx()
     {
-        $events = Event::all();
-        return view('admin.webapp.events', compact('events'));
+       $events = Event::all();
+        return view('admin.webapp.events',compact('events'));
     }
 
     public function edit($id)
@@ -26,7 +26,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'event_start' => 'nullable|date',
             'event_end' => 'nullable|date',
-        ]);
+        ]); 
 
         $event = Event::findOrFail($id);
         $event->update($request->all());
@@ -47,11 +47,11 @@ class EventController extends Controller
         return view('admin.webapp.eventdetails', compact('event'));
     }
 
-    public function indexx()
-    {
-        $events = Event::all();
-        return response()->json($events);
-    }
+    // public function indexx()
+    // {
+    //     $events = Event::all();
+    //     return response()->json($events);
+    // }
 
     public function store(Request $request)
     {

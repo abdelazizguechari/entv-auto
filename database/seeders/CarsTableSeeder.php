@@ -13,7 +13,7 @@ class CarsTableSeeder extends Seeder
         $faker = Faker::create();
 
         // Insert multiple records
-        foreach (range(1, 10) as $index) {
+        foreach (range(1, 50) as $index) {
             DB::table('cars')->insert([
                 'immatriculation' => $faker->unique()->bothify('??###'), // Unique registration number
                 'marque' => $faker->word(),

@@ -2,23 +2,51 @@
 
 @section('admin')
 
+<style>
+    .form-control {
+        background-color: transparent !important;
+    }
+    
+    select.form-control option {
+        background-color: #060C17;
+        color: #fff; /* Pour garantir la lisibilité du texte */
+    }
+</style>
+
 <div class="page-content">
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body bg-dark">
                     <h6 class="card-title">Edit Mission</h6>
                     <form action="{{ route('missions.update', ['id' => $mission->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
+
+
+                        <div class="row">
+                            <div class="col-md-4">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Le sujet de mission</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $mission->name }}" required>
                         </div>
+                    </div>
+
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description">{{ $mission->description }}</textarea>
+                            <label for="name">Type de mission</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $mission->name }}" required>
                         </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="name">Lieu de mission</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $mission->name }}" required>
+                        </div>
+                    </div>
+
+                    </div>
                         <div class="form-group">
                             <label for="mission_start">Mission Start</label>
                             <input type="datetime-local" class="form-control" id="mission_start" name="mission_start" value="{{ $mission->mission_start }}">
@@ -44,7 +72,7 @@
                             <input type="number" class="form-control" id="distance" name="distance" value="{{ $mission->distance }}">
                         </div>
                         <div class="form-group">
-                            <label for="car_id">Car</label>
+                            {{-- <label for="car_id">Car</label>
                             <select class="form-control" id="car_id" name="car_id" required>
                                 <option value="">Select a car</option>
                                 @foreach($cars as $car)
@@ -52,7 +80,12 @@
                                         {{ $car->immatriculation }}
                                     </option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" id="description" name="description">{{ $mission->description }}</textarea>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Update Mission</button>
                     </form>
