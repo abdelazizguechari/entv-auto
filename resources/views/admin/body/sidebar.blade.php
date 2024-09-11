@@ -35,7 +35,7 @@
         <li class="nav-item">
           <a href="{{route('add.car')}}" class="nav-link">
             <i class="link-icon" data-feather="plus"></i>
-            <span class="link-title">Ajouter une voiture</span>
+            <span class="link-title">nouvelle voiture</span>
           </a>
         </li>
 
@@ -44,7 +44,7 @@
         <li class="nav-item">
           <a href="{{ route('add') }}" class="nav-link">
             <i class="link-icon" data-feather="user"></i>
-            <span class="link-title">Ajouter un conducteur</span>
+            <span class="link-title">nouveau conducteur</span>
           </a>
         </li>
 
@@ -53,7 +53,7 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#event" role="button" aria-expanded="false" aria-controls="event">
             <i class="link-icon" data-feather="layout"></i>
-            <span class="link-title">Missions</span>
+            <span class="link-title">Gestion des missions</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           
@@ -66,7 +66,7 @@
                 <a href="{{ route('missions.create.mission') }}" class="nav-link">Mission</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('missions.create.events') }}" class="nav-link">Événement</a>
+                <a href="{{ route('missions.create.events') }}" class="nav-link">Organiser un événement</a>
               </li>
             </ul>
           </div>
@@ -79,14 +79,14 @@
         <li class="nav-item">
           <a href="{{route('admin.ourcars')}}" class="nav-link">
             <i class="link-icon" data-feather="activity"></i>
-            <p class="link-title">Nos voitures</p>
+            <p class="link-title">les voitures disponibles</p>
           </a>
         </li>
 
         <li class="nav-item">
           <a href="{{route('our.drivers')}}" class="nav-link">
             <i class="link-icon" data-feather="users"></i>
-            <span class="link-title">Nos conducteurs</span>
+            <span class="link-title">les conducteurs enregistrés</span>
           </a>
         </li>
 
@@ -117,21 +117,21 @@
           </div>
         </li>
 
-        <li class="nav-item nav-category mt-2 mb-2">Gestion</li>
+        <li class="nav-item nav-category mt-2 mb-2">Section de gestion</li>
 
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false" aria-controls="uiComponents">
             <i class="link-icon" data-feather="settings"></i>
-            <span class="link-title">Maintenance</span>
+            <span class="link-title">maintenance des voitures</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse" id="uiComponents">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{route('Datain.maintenance')}}" class="nav-link">Voiture en Maitenance</a>
+                <a href="{{route('Datain.maintenance')}}" class="nav-link">actuellement en maintenance</a>
               </li>
               <li class="nav-item">
-                <a href="{{route('man.intern')}}" class="nav-link">Gestion Mantenance intern</a>
+                <a href="{{route('man.intern')}}" class="nav-link">Gérer la maintenance interne</a>
               </li>
 
               <li class="nav-item">
@@ -144,21 +144,19 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#conducteur" role="button" aria-expanded="false" aria-controls="conducteur">
             <i class="link-icon" data-feather="clipboard"></i>
-            <span class="link-title">conducteur gestion</span>
+            <span class="link-title">Gérer les conducteurs</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse" id="conducteur">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{route('driver.conger')}}" class="nav-link">Conducteur en conges</a>
+                <a href="{{route('driver.conger')}}" class="nav-link">Conducteurs en congé</a>
               </li>
               <li class="nav-item">
-                <a href="{{route('man.intern')}}" class="nav-link">Conducteur en questionnaires</a>
+                <a href="" class="nav-link">Conducteurs questionnaires</a>
               </li>
 
-              {{-- <li class="nav-item">
-                <a href="{{route('nos.intern')}}" class="nav-link">nos Mantenance intern</a>
-              </li> --}}
+            
             </ul>
           </div>
         </li>
@@ -167,23 +165,18 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#stock-pages" role="button" aria-expanded="false" aria-controls="stock-pages">
             <i class="link-icon" data-feather="folder"></i>
-            <span class="link-title">stock</span>
+            <span class="link-title">Gestion des stocks</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse" id="stock-pages">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="{{route('add.stock')}}" class="nav-link">add element to stock</a>
+                <a href="{{route('add.stock')}}" class="nav-link">Ajouter un élément au stock</a>
               </li>
               <li class="nav-item">
-                <a href="{{route('all.stock')}}" class="nav-link">nos stock</a>
+                <a href="{{route('all.stock')}}" class="nav-link">Voir les stocks actuels</a>
               </li>
-              {{-- <li class="nav-item">
-                <a href="{{route('add.roles.permission')}}" class="nav-link">Rôle dans Permission</a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('all.roles.permission')}}" class="nav-link">Tous les rôles dans Permission</a>
-              </li> --}}
+          
             </ul>
           </div>
         </li>
@@ -191,14 +184,16 @@
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#advancedUI" role="button" aria-expanded="false" aria-controls="advancedUI">
             <i class="link-icon" data-feather="archive"></i>
-            <span class="link-title">Archives</span>
+            <span class="link-title">Gérer les archives</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse" id="advancedUI">
             <ul class="nav sub-menu">
+
               <li class="nav-item">
-                <a href="pages/advanced-ui/cropper.html" class="nav-link">mission archive</a>
+                <a href="pages/advanced-ui/cropper.html" class="nav-link">Archives des missions</a>
               </li>
+              
               <li class="nav-item">
                 <a href="{{route('maintenance.archive')}}" class="nav-link">maintenance archive</a>
               </li>

@@ -13,10 +13,11 @@ $(function() {
     light          : "#e9ecef",
     dark           : "#060c17",
     muted          : "#7987a1",
-    gridBorder     : "rgba(77, 138, 240, .15)",
+    gridBorder     : "rgba(77, 138, 240, .3)", // Darker grid border
     bodyColor      : "#b8c3d9",
-    cardBg         : "#0c1427"
+    cardBg         : "#fff" 
   }
+
 
   var fontFamily = "'Roboto', Helvetica, sans-serif"
 
@@ -185,6 +186,143 @@ $(function() {
 
 
 
+
+
+
+  // Revenue Chart
+
+  function getColors(theme) {
+    if (theme === 'light') {
+      return {
+        primary: "#6571ff",
+        secondary: "#7987a1",
+        success: "#05a34a",
+        info: "#66d1d1",
+        warning: "#fbbc06",
+        danger: "#ff3366",
+        light: "#e9ecef",
+        dark: "#060c17",
+        muted: "#7987a1",
+        gridBorder: "rgba(77, 138, 240, .15)", // Lighter grid border for light mode
+        bodyColor: "#b8c3d9",
+        cardBg: "#ffffff" // Light background
+      };
+    } else {
+      return {
+        primary: "#6571ff",
+        secondary: "#7987a1",
+        success: "#05a34a",
+        info: "#66d1d1",
+        warning: "#fbbc06",
+        danger: "#ff3366",
+        light: "#e9ecef",
+        dark: "#060c17",
+        muted: "#7987a1",
+        gridBorder: "rgba(77, 138, 240, .3)", // Darker grid border for dark mode
+        bodyColor: "#b8c3d9",
+        cardBg: "#060c17" // Dark background
+      };
+    }
+  }
+
+
+
+  if ($('#revenueChart').length) {
+    var lineChartOptions = {
+      chart: {
+        type: "line",
+        height: '400',
+        parentHeightOffset: 0,
+        foreColor: colors.bodyColor,
+        background: theme.cardBg,
+        toolbar: {
+          show: false
+        },
+      },
+      theme: {
+        mode: 'light'
+      },
+      tooltip: {
+        theme: 'light'
+      },
+      colors: [colors.primary, colors.danger, colors.warning],
+      grid: {
+        padding: {
+          bottom: -4,
+        },
+        borderColor: colors.gridBorder,
+        xaxis: {
+          lines: {
+            show: true
+          }
+        }
+      },
+      series: [
+        {
+          name: "Revenue",
+          data: revenueChartData
+        },
+      ],
+      xaxis: {
+        type: "datetime",
+        categories: revenueChartCategories,
+        lines: {
+          show: true
+        },
+        axisBorder: {
+          color: colors.gridBorder,
+        },
+        axisTicks: {
+          color: colors.gridBorder,
+        },
+        crosshairs: {
+          stroke: {
+            color: colors.secondary,
+          },
+        },
+      },
+      yaxis: {
+        title: {
+          text: 'Revenue ( $1000 x )',
+          style:{
+            size: 9,
+            color: colors.muted
+          }
+        },
+        tickAmount: 4,
+        tooltip: {
+          enabled: true
+        },
+        crosshairs: {
+          stroke: {
+            color: colors.secondary,
+          },
+        },
+      },
+      markers: {
+        size: 0,
+      },
+      stroke: {
+        width: 2,
+        curve: "straight",
+      },
+    };
+    var apexLineChart = new ApexCharts(document.querySelector("#revenueChart"), lineChartOptions);
+    apexLineChart.render();
+  }
+    
+  
+    
+ 
+
+
+
+  // Revenue Chart - END
+
+
+
+  
+
   // Date Picker
   if($('#dashboardDate').length) {
     flatpickr("#dashboardDate", {
@@ -299,98 +437,6 @@ $(function() {
 
 
 
-
-
-  // Revenue Chart
-  if ($('#revenueChart').length) {
-    var lineChartOptions = {
-      chart: {
-        type: "line",
-        height: '400',
-        parentHeightOffset: 0,
-        foreColor: colors.bodyColor,
-        background: colors.cardBg,
-        toolbar: {
-          show: false
-        },
-      },
-      theme: {
-        mode: 'light'
-      },
-      tooltip: {
-        theme: 'light'
-      },
-      colors: [colors.primary, colors.danger, colors.warning],
-      grid: {
-        padding: {
-          bottom: -4,
-        },
-        borderColor: colors.gridBorder,
-        xaxis: {
-          lines: {
-            show: true
-          }
-        }
-      },
-      series: [
-        {
-          name: "Revenue",
-          data: revenueChartData
-        },
-      ],
-      xaxis: {
-        type: "datetime",
-        categories: revenueChartCategories,
-        lines: {
-          show: true
-        },
-        axisBorder: {
-          color: colors.gridBorder,
-        },
-        axisTicks: {
-          color: colors.gridBorder,
-        },
-        crosshairs: {
-          stroke: {
-            color: colors.secondary,
-          },
-        },
-      },
-      yaxis: {
-        title: {
-          text: 'Revenue ( $1000 x )',
-          style:{
-            size: 9,
-            color: colors.muted
-          }
-        },
-        tickAmount: 4,
-        tooltip: {
-          enabled: true
-        },
-        crosshairs: {
-          stroke: {
-            color: colors.secondary,
-          },
-        },
-      },
-      markers: {
-        size: 0,
-      },
-      stroke: {
-        width: 2,
-        curve: "straight",
-      },
-    };
-    var apexLineChart = new ApexCharts(document.querySelector("#revenueChart"), lineChartOptions);
-    apexLineChart.render();
-  }
-  // Revenue Chart - END
-
-
-
-
-
   // Revenue Chart - RTL
   if ($('#revenueChartRTL').length) {
     var lineChartOptions = {
@@ -495,7 +541,7 @@ $(function() {
         height: '318',
         parentHeightOffset: 0,
         foreColor: colors.bodyColor,
-        background: colors.cardBg,
+        background: theme.cardBg,
         toolbar: {
           show: false
         },

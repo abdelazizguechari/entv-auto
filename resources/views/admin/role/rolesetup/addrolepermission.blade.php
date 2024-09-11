@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12 col-xl-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body bg-dark">
+                <div class="card-body">
                     <h6 class="card-title fs-4">Ajouter des rôles aux permissions</h6>
 <hr>
                     <form action="{{ route('role.permission.save') }}" method="post" class="forms-sample">

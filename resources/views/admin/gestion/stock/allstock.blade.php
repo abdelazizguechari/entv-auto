@@ -14,15 +14,18 @@
 
 <div class="page-content">
 
-
+ 
     <nav class="page-breadcrumb">
-        <ol class="breadcrumb">
-            <a href="{{route('impost.stock')}}" class="btn btn-inverse-info"> import from excele</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="{{route('add.permission')}}" class="btn btn-inverse-info"> export INTO excele</a>
-        </ol>
+      <ol class="breadcrumb">
+        <!-- Import Button -->
+        <a href="{{ route('import.stock') }}" class="btn btn-inverse-info">Importer depuis Excel</a>
+        &nbsp;&nbsp;&nbsp;
+        <!-- Export Button -->
+        <a href="{{ route('export.stock') }}" class="btn btn-inverse-info">Exporter vers Excel</a>
+      </ol>
     </nav>
 
+  
   
 
 

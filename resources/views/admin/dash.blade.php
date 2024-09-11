@@ -72,7 +72,7 @@
 <body>
 	
 
-		<!-- partial:partials/_sidebar.html -->
+		<-- partial:partials/_sidebar.html -->
    @include('admin.body.sidebar')
 		<!-- partial -->
 	
@@ -115,7 +115,7 @@
 	<!-- End plugin js for this page -->
 
 	<!-- Custom js for this page -->
-  <script src="{{asset('backend/assets/js/dashboard-dark.js')}}"></script>
+  
 	<!-- End custom js for this page -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -167,6 +167,9 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/feather-icons"></script>
     <script>
+
+var theme = "{{ $theme }}"; 
+
       document.addEventListener('DOMContentLoaded', function () {
     const themeSwitcher = document.getElementById('theme-switcher');
     const themeStyle = document.getElementById('theme-style');
@@ -213,6 +216,14 @@
 });
 
     </script>
+
+
+<script>
+
+	
+  </script>
+
+  <script src="{{asset('backend/assets/js/dashboard-dark.js')}}"></script>
 
 </body>
 </html>    

@@ -69,8 +69,85 @@ class StockController extends Controller
         return view('admin.gestion.stock.impoststock');
     }
 
-    public function export() {
-        return Excel::download(new StockExport, 'Stock.xlsx');
+   
+
+    public function exportExcel()
+    {
+        $stocks = Stock::all();
+        
+        $csvFileName = 'stock_export_' . date('Ymd') . '.csv';
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$csvFileName",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        );
+        
+        $handle = fopen('php://output', 'w');
+        
+        // Add headers to the CSV
+        fputcsv($handle, ['ID', 'Name', 'Category', 'Quantity', 'Price', 'Total Price', 'Description', 'Created At', 'Updated At']);
+        
+        // Add data to the CSV
+        foreach ($stocks as $stock) {
+            fputcsv($handle, [
+                $stock->id,
+                $stock->name,
+                $stock->category,
+                $stock->quantity,
+                $stock->price,
+                $stock->prix_total,
+                $stock->description,
+                $stock->created_at,
+                $stock->updated_at,
+            ]);
+        }
+        
+        fclose($handle);
+        
+        return response()->stream(
+            function() {},
+            200,
+            $headers
+        );
+    }
+    
+    // Show import form
+    public function showImportForm()
+    {
+        return view('admin.gestion.stock.impoststock'); // Create this view for the import form
+    }
+
+    // Import stock data from Excel (CSV)
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('file');
+        $handle = fopen($file, 'r');
+        
+        // Skip the header row
+        fgetcsv($handle);
+        
+        while (($row = fgetcsv($handle)) !== false) {
+            Stock::updateOrCreate(
+                ['id' => $row[0]], // Update if ID matches
+                [
+                    'name' => $row[1],
+                    'category' => $row[2],
+                    'quantity' => $row[3],
+                    'price' => $row[4],
+                    'description' => $row[6],
+                    // Note: `prix_total` is a virtual column, so it will be computed based on `quantity` and `price`
+                ]
+            );
+        }
+        
+        fclose($handle);
+        
+        return redirect()->route('import.stock')->with('success', 'Données importées avec succès');
     }
 
     

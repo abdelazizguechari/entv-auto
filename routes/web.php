@@ -69,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/operator/save', [DriverController::class, 'store'])->name('driver.store'); // Changed /driver/store to /operator/save
         Route::get('/admin/operatives', [DriverController::class, 'ourdrivers'])->name('our.drivers'); // Changed /admin/drivers to /admin/operatives
         Route::get('/remove/operatives/{id}', [DriverController::class, 'deletedriver'])->name('delete.driver'); // Changed /delete/drivers/{id} to /remove/operatives/{id}
-        Route::get('/modify/operatives/{id}', [DriverController::class, 'editdriver'])->name('edit.driver'); // Changed /edit/drivers/{id} to /modify/operatives/{id}
+        Route::get('/modify/{id}/operatives', [DriverController::class, 'editdriver'])->name('edit.driver'); // Changed /edit/drivers/{id} to /modify/operatives/{id}
         Route::put('/modify/update/{id}', [DriverController::class, 'updatedriver'])->name('update.driver'); // Changed /upadte/drivers/{id} to /modify/update/{id}
         Route::get('/operator/leave/{id}', [DriverController::class, 'conducteurconge'])->name('conducteur.conge'); // Changed /conducteur/conge/{id} to /operator/leave/{id}
         Route::post('/operator/addleave/{id}', [DriverController::class, 'addconger'])->name('add.conger'); // Changed /conducteur/addconger/{id} to /operator/addleave/{id}
@@ -175,13 +175,13 @@ Route::controller(EventController::class)->group(function()  {
 
         Route::get('/vehicle/add-maintenance/{immatriculation}', [MaintenanceController::class, 'addCarmantenance'])->name('addCar.mantenance'); // Updated to /vehicle/add-maintenance/{immatriculation}
         Route::post('/maintenance/record', [MaintenanceController::class, 'store'])->name('maintenance.store'); // Updated to /maintenance/record
-        Route::get('/details/maintenance', [MaintenanceController::class, 'Datainmaintenance'])->name('Datain.maintenance'); // Updated to /details/maintenance
+        Route::get('/details/for', [MaintenanceController::class, 'Datainmaintenance'])->name('Datain.maintenance'); // Updated to /details/maintenance
         Route::get('/maintenance/report/{id}', [MaintenanceController::class, 'print'])->name('maintenance.print'); // Updated to /maintenance/report/{id}
         Route::get('/maintenance/{id}/finalize', [MaintenanceController::class, 'complete'])->name('complete.maintenance'); // Updated to /maintenance/{id}/finalize
         Route::get('/maintenance/archive', [MaintenanceController::class, 'maintenancearchive'])->name('maintenance.archive'); // Updated to /archive/maintenance
     
         Route::get('/manages/{id}*', [MaintenanceController::class, 'maintenacegestion'])->name('maintenace.gestion'); // Updated to /maintenance/manage/{id}
-        Route::get('/staff/internal', [MaintenanceController::class, 'Manintern'])->name('man.intern'); // Updated to /staff/internal
+        Route::get('/internal/end', [MaintenanceController::class, 'Manintern'])->name('man.intern'); // Updated to /staff/internal
         Route::post('/maintenance/add-stock', [MaintenanceController::class, 'addStockToMaintenance'])->name('maintenance.addStock');
         Route::get('/maintenance/nosintern', [MaintenanceController::class, 'nosintern'])->name('nos.intern');
 
@@ -201,6 +201,11 @@ Route::controller(StockController::class)->group(function() {
     Route::get('/inventorys/remove/{id}', [StockController::class, 'delete'])->name('delete.stock'); // Changed /stock/delete/{id} to /inventory/remove/{id}
     Route::get('/inventorye/new', [StockController::class, 'impoststock'])->name('impost.stock'); // Changed /impost/stock to /inventory/initialize
     Route::get('/inventoryr/down', [StockController::class, 'export'])->name('export'); // Changed /stock/export to /inventory/download
+    // web.php
+Route::get('/export-stock', [StockController::class, 'exportExcel'])->name('export.stock');
+Route::get('/import-stock', [StockController::class, 'showImportForm'])->name('import.stock');
+Route::post('/import-stock', [StockController::class, 'importExcel']);
+
 
 });
 
