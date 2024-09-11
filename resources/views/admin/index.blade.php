@@ -1,3 +1,12 @@
+@php
+    $carnumber = App\Models\Carsm::count();
+
+@endphp
+
+
+
+
+
 @extends('admin.dash')
 
 @section('admin') 
@@ -37,7 +46,8 @@
         <div  class="card-body ">
           <div class="row">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h4 class="mb-3 mb-md-0 fs-3">Informations générales sur le département</h4>
+              <h4 class="mb-3 mb-md-0 fs-3">Informations générales sur le département  
+                </h4>
               <div class="dropdown mb-2">
                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -155,11 +165,11 @@
     
           <div  class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
-              <h6 class="card-title mb-0 fs-4">voiteur en service</h6>
+              <h6 class="card-title mb-0">voiteur en service</h6>
             </div>
             <div class="row mt-4" >
               <div class="">
-                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <h3 style="text-align: center"  class="mb-2">{{ $carnumber }}</h3>
                 <div class="d-flex align-items-baseline">
                 </div>
               </div>
@@ -172,7 +182,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-center align-items-baseline">
-              <h6 class="card-title mb-0"></h6>
+              <h6 class="card-title mb-0">condecteur en servic</h6>
             </div>
             <div class="row mt-4" >
               <div class="">
@@ -184,8 +194,10 @@
           </div>
         </div>
       </div>
-      
 
+   
+
+      
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -202,7 +214,8 @@
           </div>
         </div>
       </div>
-      
+
+      <hr>
 
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
@@ -261,6 +274,10 @@
     </div>
   </div>
 </div> <!-- row -->
+
+
+<hr>
+
 
 
 <div class="row">

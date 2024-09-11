@@ -1,4 +1,3 @@
-
 @extends('admin.dash')
 
 @section('admin') 

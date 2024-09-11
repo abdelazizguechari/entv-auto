@@ -209,5 +209,11 @@ class DriverController extends Controller
 
         return view ('admin.gestion.driver.Congerdriver',compact('data'));
     }
+
+    public function driver() {
+
+        $driver = Driver::count();
+        return view('admin.index',compact('driver'));
+    }
     
 }

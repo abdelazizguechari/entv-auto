@@ -24,6 +24,7 @@ use App\Http\Controllers\ThemeController;
 
 
 
+
 Route::get('/', function () {
     return view('admin.admin_login');
 });
