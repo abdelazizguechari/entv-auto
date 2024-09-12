@@ -6,13 +6,12 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body ">
+                <div class="card-body">
                     <h6 class="card-title fs-4">Missions</h6>
                     <hr>
                     <table class="table">
                         <thead>
                             <tr>
-                    
                                 <th>Name</th>
                                 <th>Mission Start</th>
                                 <th>Mission End</th>
@@ -20,7 +19,7 @@
                                 <th>Distance</th>
                                 <th>Cars</th>
                                 <th>Drivers</th>
-                                <th>action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,10 +32,9 @@
                                         <td>{{ $mission->status }}</td>
                                         <td>{{ $mission->distance }}</td>
                                         <td>{{ $mission->car->immatriculation ?? 'N/A' }}</td>  
-                                         <td> {{ $mission->driver->nom ?? 'N/A' }}<br> </td> 
-                                         
-                                         <td>
-                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-danger">Edit</a>
+                                        <td>{{ $mission->driver->nom ?? 'N/A' }}</td> 
+                                        <td>
+                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
                                             <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 @method('DELETE')

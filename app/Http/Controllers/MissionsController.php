@@ -66,7 +66,7 @@ class MissionsController extends Controller
 
         $mission = Mission::create($data);
 
-        return redirect()->route('missions.index')->with('success', 'Transportation mission created successfully.');
+        return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission created successfully.');
     }
 
     public function storeMission(Request $request)
@@ -107,6 +107,80 @@ class MissionsController extends Controller
 
         return redirect()->route('missions.index')->with($notification);
     }
+    public function updateMission(Request $request, $id)
+    {
+        $mission = Mission::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'mission_type' => 'nullable|string',
+            'lieu_mission' => 'nullable|string',
+            'mission_start' => 'nullable|date',
+            'mission_end' => 'nullable|date',
+            'crew_leader' => 'nullable|string|max:255',
+            'crew_name' => 'nullable|string|max:255',
+            'status' => 'required|in:ongoing,scheduled,completed',
+            'fuel_tokens' => 'required|integer|min:0',
+            'distance' => 'required|integer|min:0',
+            'car_id' => 'required|string|exists:cars,immatriculation',
+            'event_id' => 'nullable|exists:events,id',
+        ]);
+
+        $data = $request->all();
+        $data['type'] = 'mission'; 
+
+        $mission->update($data);
+
+        if ($request->input('action') == 'add_to_event' && $request->has('event_id') && $request->input('event_id')) {
+            $event = Event::find($request->input('event_id'));
+            $event->missions()->attach($mission->id);
+            return redirect()->back()->with('success', 'Mission updated and added to event successfully.');
+        }
+
+        return redirect()->route('missions.index')->with('success', 'Mission updated successfully.');
+    }
+
+    public function editMission($id)
+    {
+        $mission = Mission::findOrFail($id);
+        $cars = Carsm::all();
+
+        return view('admin.webapp.editmission', compact('mission', 'cars'));
+    }
+
+
+    public function updateTransportation(Request $request, $id)
+    {
+        $mission = Mission::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'mission_start' => 'nullable|date',
+            'mission_end' => 'nullable|date',
+            'status' => 'required|in:ongoing,scheduled,completed',
+            'fuel_tokens' => 'required|integer|min:0',
+            'distance' => 'required|integer|min:0',
+            'car_id' => 'required|string|exists:cars,immatriculation',
+        ]);
+
+        $data = $request->all();
+        $data['type'] = 'transportation'; 
+
+        $mission->update($data);
+
+        return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission updated successfully.');
+    } 
+    public function editTransportation($id)
+    {
+        $mission = Mission::findOrFail($id);
+        $cars = Carsm::all();
+
+        return view('admin.webapp.edittransportation', compact('mission', 'cars'));
+    }
+ 
+
     public function storeEvents(Request $request)
     {
         $request->validate([
@@ -126,45 +200,20 @@ class MissionsController extends Controller
         return redirect()->route('missions.index')->with('success', 'Event created successfully.');
     }
 
-    public function edit($id)
-    {
-        $mission = Mission::findOrFail($id);
-        // $cars = Carsm::with('driver')->get(); 
-
-        if ($mission->type == 'transportation') {
-            return view('admin.webapp.edittransportation', compact('mission', 'cars'));
-        } else {
-            return view('admin.webapp.editmission', compact('mission'));
-        }
-    }
-
-    public function update(Request $request, $id)
-    {
-        $mission = Mission::findOrFail($id);
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'mission_start' => 'nullable|date',
-            'mission_end' => 'nullable|date',
-            'status' => 'required|in:ongoing,scheduled,completed',
-            'fuel_tokens' => 'required|integer|min:0',
-            'distance' => 'required|integer|min:0',
-            'car_id' => 'required|string|exists:cars,immatriculation',
-        ]);
-
-        $mission->update($request->all());
-
-        return redirect()->route('missions.index')->with('success', 'Mission updated successfully.');
-    }
 
     public function destroy($id)
     {
         $mission = Mission::findOrFail($id);
+        $missionType = $mission->type; 
         $mission->delete();
-
-        return redirect()->route('missions.index')->with('success', 'Mission deleted successfully.');
+    
+        if ($missionType == 'transportation') {
+            return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission deleted successfully.');
+        } else {
+            return redirect()->route('missions.index')->with('success', 'Mission deleted successfully.');
+        }
     }
+    
 
     public function getDriversByCars(Request $request)
     {

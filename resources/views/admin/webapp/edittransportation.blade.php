@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Edit Transportation Mission</h6>
-                    <form action="{{ route('missions.update', ['id' => $mission->id]) }}" method="POST">
+                    <form action="{{ route('transportation.update', ['id' => $mission->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -54,7 +54,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update Mission</button>
+                        <button type="submit" class="btn btn-primary">Update transportation</button>
                     </form>
                 </div>
             </div>

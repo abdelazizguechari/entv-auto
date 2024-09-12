@@ -28,7 +28,7 @@ class EventController extends Controller
             'event_end' => 'nullable|date',
         ]); 
 
-        $event = Event::findOrFail($id);
+        $event = Event::findOrFail($id);    
         $event->update($request->all());
 
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
