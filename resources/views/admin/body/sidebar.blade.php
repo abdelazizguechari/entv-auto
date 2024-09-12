@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Auth;
         <li class="nav-item nav-category mt-2 mb-2">Ajout</li>
 
 
-        @if (Auth::user()->can('voiture.ajouter'))
+        {{-- @if (Auth::user()->can('voiture.ajouter')) --}}
             
        
 
@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\Auth;
           </a>
         </li>
 
-        @endif
+        {{-- @endif --}}
 
         {{-- @if (Auth::user()->can('add.voiture')) --}}
         
