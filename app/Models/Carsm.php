@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 class Carsm extends Model
-{a
+{
     use HasFactory;
     // LogsActivity;
 
