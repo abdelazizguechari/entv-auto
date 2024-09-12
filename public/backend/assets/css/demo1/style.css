@@ -11691,6 +11691,10 @@ div.tox .btn-group-vertical > .btn-group:not(:first-child) > .tox-button,
   }
 }
 
+.btn-icon {
+  color: #fff !important;
+}
+
 /* Buttons */
 .btn i, .wizard > .actions a i,
 .wizard > .actions a:active i,
@@ -11856,17 +11860,24 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   color: #fff;
 }
 
+
+
+
+
 .btn-inverse-primary {
-  background-color: rgba(101, 113, 255, 0.2);
+  color: #fff !important;
+  background-color:  #6571ff;
   background-image: none;
-  border-color: rgba(101, 113, 255, 0);
+  border-color: #6571ff;
 }
+
+
 .btn-inverse-primary:not(.btn-inverse-light) {
   color: #6571ff;
 }
 .btn-inverse-primary:hover, .btn-inverse-primary.active, .btn-inverse-primary:active, .show > .btn-inverse-primary.dropdown-toggle {
-  background-color: rgba(101, 113, 255, 0.3);
-  border-color: rgba(101, 113, 255, 0);
+  background-color: #5660d9;
+  border-color: #515acc;
 }
 .btn-inverse-primary.focus, .btn-inverse-primary:focus {
   background-color: rgba(101, 113, 255, 0.3);
@@ -11877,17 +11888,23 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   background-color: transparent;
 }
 
+
+
+
+
+
 .btn-inverse-secondary {
-  background-color: rgba(121, 135, 161, 0.2);
+  color: #fff !important;
+  background-color:  #7987a1;
   background-image: none;
-  border-color: rgba(121, 135, 161, 0);
+  border-color: #7987a1;
 }
 .btn-inverse-secondary:not(.btn-inverse-light) {
   color: #7987a1;
 }
 .btn-inverse-secondary:hover, .btn-inverse-secondary.active, .btn-inverse-secondary:active, .show > .btn-inverse-secondary.dropdown-toggle {
-  background-color: rgba(121, 135, 161, 0.3);
-  border-color: rgba(121, 135, 161, 0);
+  background-color: #677389;
+  border-color:  #616c81;
 }
 .btn-inverse-secondary.focus, .btn-inverse-secondary:focus {
   background-color: rgba(121, 135, 161, 0.3);
@@ -11898,17 +11915,19 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   background-color: transparent;
 }
 
+
 .btn-inverse-success {
-  background-color: rgba(5, 163, 74, 0.2);
+  color: #fff !important;
+  background-color:  #05a34a;
   background-image: none;
-  border-color: rgba(5, 163, 74, 0);
+  border-color: #05a34a;
 }
 .btn-inverse-success:not(.btn-inverse-light) {
   color: #05a34a;
 }
 .btn-inverse-success:hover, .btn-inverse-success.active, .btn-inverse-success:active, .show > .btn-inverse-success.dropdown-toggle {
-  background-color: rgba(5, 163, 74, 0.3);
-  border-color: rgba(5, 163, 74, 0);
+  background-color: #048b3f;
+  border-color: #04823b;
 }
 .btn-inverse-success.focus, .btn-inverse-success:focus {
   background-color: rgba(5, 163, 74, 0.3);
@@ -11919,17 +11938,21 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   background-color: transparent;
 }
 
+
+
 .btn-inverse-info {
-  background-color: rgba(102, 209, 209, 0.2);
+  color: #fff !important;
+  background-color:  #66d1d1;
   background-image: none;
-  border-color: rgba(102, 209, 209, 0);
+  border-color: #66d1d1;
 }
+
 .btn-inverse-info:not(.btn-inverse-light) {
   color: #66d1d1;
 }
 .btn-inverse-info:hover, .btn-inverse-info.active, .btn-inverse-info:active, .show > .btn-inverse-info.dropdown-toggle {
-  background-color: rgba(102, 209, 209, 0.3);
-  border-color: rgba(102, 209, 209, 0);
+  background-color: #7dd8d8;
+  border-color: #75d6d6;
 }
 .btn-inverse-info.focus, .btn-inverse-info:focus {
   background-color: rgba(102, 209, 209, 0.3);
@@ -11940,17 +11963,19 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   background-color: transparent;
 }
 
+
 .btn-inverse-warning {
-  background-color: rgba(251, 188, 6, 0.2);
+  color: #fff !important;
+  background-color:  #fbbc06;
   background-image: none;
-  border-color: rgba(251, 188, 6, 0);
+  border-color: #fbbc06;
 }
 .btn-inverse-warning:not(.btn-inverse-light) {
   color: #fbbc06;
 }
 .btn-inverse-warning:hover, .btn-inverse-warning.active, .btn-inverse-warning:active, .show > .btn-inverse-warning.dropdown-toggle {
-  background-color: rgba(251, 188, 6, 0.3);
-  border-color: rgba(251, 188, 6, 0);
+  background-color: #fcc62b;
+  border-color: #fbc31f;
 }
 .btn-inverse-warning.focus, .btn-inverse-warning:focus {
   background-color: rgba(251, 188, 6, 0.3);
@@ -11962,25 +11987,19 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
 }
 
 .btn-inverse-danger {
-  background-color: rgba(255, 51, 102, 0.2);
+  color: #fff !important;
+  background-color: #ff3366;
   background-image: none;
-  border-color: rgba(255, 51, 102, 0);
+  border-color: #fff;
 }
-.btn-inverse-danger:not(.btn-inverse-light) {
-  color: #ff3366;
-}
+
+
 .btn-inverse-danger:hover, .btn-inverse-danger.active, .btn-inverse-danger:active, .show > .btn-inverse-danger.dropdown-toggle {
-  background-color: rgba(255, 51, 102, 0.3);
-  border-color: rgba(255, 51, 102, 0);
+  background-color: #d92b57;
+  border-color: #cc2952;
 }
-.btn-inverse-danger.focus, .btn-inverse-danger:focus {
-  background-color: rgba(255, 51, 102, 0.3);
-  border-color: transparent;
-}
-.btn-inverse-danger.disabled, .btn-inverse-danger:disabled {
-  color: #ff3366;
-  background-color: transparent;
-}
+
+
 
 .profile-img-small {
   width: 30px;

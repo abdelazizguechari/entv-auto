@@ -16,7 +16,7 @@ use id;
 class Admincontroller extends Controller
 {
 
-    public function AdminDash() {
+    public function AdminDash(Request $request) {
         $theme = $request->session()->get('theme', 'dark');
         return view ('admin.dash',compact('theme'));
     

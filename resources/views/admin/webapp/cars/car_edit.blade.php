@@ -61,7 +61,7 @@
 
                         <button type="submit" class="btn btn-primary text-uppercase">Mettre à jour</button>
                         
-                        <a href="{{route('addCar.mantenance',$types->immatriculation)}}" class="btn btn-danger text-uppercase">Ajouter à maintenance</a>
+                       
                     </form>
                 </div>
             </div>

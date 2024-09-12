@@ -1,4 +1,5 @@
 @php
+
     $carnumber = App\Models\Carsm::count();
     $driverumber = App\Models\Driver::count();
 

@@ -1,3 +1,12 @@
+
+@php
+
+use Illuminate\Support\Facades\Auth;
+
+    
+@endphp
+
+
 <style>
 
 .nav-item .nav-category {margin-bottom: 10px};
@@ -25,13 +34,21 @@
     <div class="sidebar-body">
       <ul class="nav">
         <li style="" class="nav-item nav-category  mb-2">Principal</li>
+
         <li class="nav-item">
           <a href="{{route('admin.dashboard')}}" class="nav-link">
             <i class="link-icon" data-feather="box"></i>
             <span class="link-title">Tableau de bord</span>
           </a>
         </li>
+
         <li class="nav-item nav-category mt-2 mb-2">Ajout</li>
+
+
+        @if (Auth::user()->can('voiture.ajouter'))
+            
+       
+
         <li class="nav-item">
           <a href="{{route('add.car')}}" class="nav-link">
             <i class="link-icon" data-feather="plus"></i>
@@ -39,7 +56,9 @@
           </a>
         </li>
 
-        
+        @endif
+
+        {{-- @if (Auth::user()->can('add.voiture')) --}}
         
         <li class="nav-item">
           <a href="{{ route('add') }}" class="nav-link">
@@ -48,7 +67,10 @@
           </a>
         </li>
 
+        {{-- @endif --}}
 
+      
+        {{-- @if (Auth::user()->can('voiture.ajouter')) --}}
 
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#event" role="button" aria-expanded="false" aria-controls="event">
@@ -72,9 +94,15 @@
           </div>
         </li>
         
+{{-- 
+        @endif --}}
 
 
         <li class="nav-item nav-category mt-2 mb-2">Applications Web</li>
+
+
+        @if (Auth::user()->can('vouture.menu'))
+
 
         <li class="nav-item">
           <a href="{{route('admin.ourcars')}}" class="nav-link">
@@ -90,6 +118,7 @@
           </a>
         </li>
 
+        @endif  
 
 
         <li class="nav-item">

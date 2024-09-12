@@ -131,9 +131,9 @@ return [
 
 
     // Add your aliases here
-    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     'Route' => Illuminate\Support\Facades\Route::class,
     'str' => Illuminate\Support\Str::class,
+    'Auth' => Illuminate\Support\Facades\Auth::class,
 
 
 ],

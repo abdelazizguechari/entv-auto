@@ -8,7 +8,7 @@
         border: none !important;
         padding: 2px 5px;
         font-size: 14px;
-        color: #ffffff;
+     
     }
 
     .form-control[readonly] {
@@ -59,7 +59,7 @@
 <div class="page-content">
     <div class="card">
         <div class="card-body ">
-            <h4 class="card-title fs-4">information sur voiteur </h4>
+            <h4 class="card-title fs-4 text-center">information sur voiteur </h4>
             <hr>
 
             <form method="POST">

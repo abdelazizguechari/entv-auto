@@ -3,6 +3,7 @@
 $activeDrivers = App\Models\Driver::where('status', 'active')->pluck('voiture_id');
 
 $cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('immatriculation');
+
 @endphp
 
 @extends('admin.dash')
