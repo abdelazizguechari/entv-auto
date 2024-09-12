@@ -10,7 +10,7 @@ use App\Models\ConducteurConger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\Component;
+
 
 
 
@@ -48,19 +48,16 @@ class DashboardController extends Controller
     return redirect()->route('admin.dashboard')->with($notification);
 }
 
-public function index()
-{
-    $carnumber = Carsm::count();
+
+public function index() {
+
     
-    return view('admin.index', ['carnumber' => $carnumber]);
-}
+$carnumber = Carsm::count();
 
-public function driver() {
 
-    $driver = Driver::count();
-    return view('admin.indexc', ['driver' => $driver ]);
+return view ('admin.index' ,compact('carnumber'));
+
 }
 
 
 }
-

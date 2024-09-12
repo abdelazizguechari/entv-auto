@@ -1,5 +1,6 @@
 @php
     $carnumber = App\Models\Carsm::count();
+    $driverumber = App\Models\Driver::count();
 
 @endphp
 
@@ -169,7 +170,7 @@
             </div>
             <div class="row mt-4" >
               <div class="">
-                <h3 style="text-align: center"  class="mb-2">{{ $carnumber }}</h3>
+                <h3 style="text-align: center"  class="mb-2">{{  $carnumber }}</h3>
                 <div class="d-flex align-items-baseline">
                 </div>
               </div>
@@ -186,7 +187,7 @@
             </div>
             <div class="row mt-4" >
               <div class="">
-                <h3 style="text-align: center"  class="mb-2">25</h3>
+                <h3 style="text-align: center"  class="mb-2">{{$driverumber}}</h3>
                 <div class="d-flex align-items-baseline">
                 </div>
               </div>
@@ -195,7 +196,7 @@
         </div>
       </div>
 
-   
+
 
       
       <div class="col-md-4 grid-margin stretch-card">
