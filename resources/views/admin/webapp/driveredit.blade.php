@@ -136,7 +136,7 @@
                            
                             <a class="btn btn-inverse-info" href="{{route('conducteur.conge', $driver->id)}}">  Ajouter le conducteur en congé </a>    
          &nbsp;&nbsp;
-                            <button type="submit" class="btn btn-inverse-danger">Ajouter le conducteur au questionnaire </button>
+                            <a href="{{route('driver.qtr',$driver->id)}}" type="submit" class="btn btn-inverse-danger">Ajouter le conducteur au questionnaire </a>
                         </form>
                  
 

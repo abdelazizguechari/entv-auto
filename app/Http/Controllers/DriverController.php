@@ -215,5 +215,13 @@ class DriverController extends Controller
         $driver = Driver::count();
         return view('admin.index',compact('driver'));
     }
+
+
+    public function Addintoqtr($id) {
+    $data = Driver::findOrFail($id);
+
+    return view ('admin.webapp.driver.Qtrdriver',compact('data'));
+
+    }
     
 }

@@ -48,8 +48,8 @@
             <td>{{$item ->end_date}}</td>
             <td>{{$item ->categorie_panne}}</td>
             <td>
-                <a class="btn btn-secondary" href="{{ route('maintenance.print', $item->id) }}">telecharger</a>
-                <a class="btn btn-success" href="{{ route('complete.maintenance', $item->id) }}">Finish Maintenance</a>
+                <a class="btn btn-secondary" href="{{ route('maintenance.print', $item->id) }}"><i data-feather="eye"> </i></a>
+                {{-- <a class="btn btn-success" href="{{ route('complete.maintenance', $item->id) }}">Finish Maintenance</a> --}}
 
 </td>
           </tr>
@@ -59,7 +59,7 @@
         </tbody>
       </table>
     </div>
-    <button onclick="window.print()" class="btn btn-primary mt-3">Imprimer la Page</button>
+    <button id="delete" onclick="window.print()" class="btn btn-inverse-danger mt-3">suprimer tout</button>
   </div>
 </div>
         </div>

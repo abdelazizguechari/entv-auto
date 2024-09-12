@@ -170,6 +170,8 @@
 
 var theme = "{{ $theme }}"; 
 
+
+
       document.addEventListener('DOMContentLoaded', function () {
     const themeSwitcher = document.getElementById('theme-switcher');
     const themeStyle = document.getElementById('theme-style');
