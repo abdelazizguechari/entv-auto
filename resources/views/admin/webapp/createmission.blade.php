@@ -36,15 +36,15 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="mission-type">Type de mission</label>
-         <select class="form-control" id="mission-type" name="mission_type" required>
-            <option value="" disabled selected>Choisissez un type de mission</option>
-            <option value="politique">Politique</option>
-            <option value="ministerial">Ministériel</option>
-            <option value="sportif">Sportif</option>
-            <option value="culturel">Culturel</option>
-            <option value="divertissement">Divertissement</option>
-            <option value="documentaire">Documentaire</option>
-        </select>
+                                <select class="form-control" id="mission-type" name="mission_type" required>
+                                    <option value="" disabled selected>Choisissez un type de mission</option>
+                                    <option value="politique">Politique</option>
+                                    <option value="ministerial">Ministériel</option>
+                                    <option value="sportif">Sportif</option>
+                                    <option value="culturel">Culturel</option>
+                                    <option value="divertissement">Divertissement</option>
+                                    <option value="documentaire">Documentaire</option>
+                                </select>
                                 </div>
                             </div>
 
@@ -138,6 +138,7 @@
                         @if($fromEvent)
                             <input type="hidden" name="event_id" value="{{ $eventId }}">
                             <button type="submit" class="btn btn-secondary" name="action" value="add_to_event">Ajouter à l'Événement</button>
+                            <button type="button" class="btn btn-primary" onclick="goToEventsPage()">Voir les Événements</button>
                         @else
                             <button type="submit" class="btn btn-primary" name="action" value="create">Créer la Mission</button>
                         @endif
@@ -147,5 +148,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    function goToEventsPage() {
+        window.location.href = "{{ route('events.index') }}";
+    }
+</script>
 @endsection

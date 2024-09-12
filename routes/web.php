@@ -116,19 +116,26 @@ Route::get('/auth/redirect', function () {  return Socialite::driver('google')->
 
 Route::controller(MissionsController::class)->group(function() {
 
-    Route::get('/tasks', [MissionsController::class, 'index'])->name('missions.index'); // Changed /missions to /tasks
-    Route::get('/transport', [MissionsController::class, 'indexTransportation'])->name('missions.index.transportation'); // Changed /missions/transportation to /tasks/transport
-    Route::get('/addnewrecord', [MissionsController::class, 'createTransportation'])->name('missions.create.transportation'); // Changed /missions/create/transportation to /tasks/create/transport
-    Route::get('/create/activity', [MissionsController::class, 'createMission'])->name('missions.create.mission'); // Changed /missions/create/mission to /tasks/create/activity
-    Route::get('/create/celebration', [MissionsController::class, 'createEvents'])->name('missions.create.events'); // Changed /missions/create/events to /tasks/create/celebration
-    Route::post('/stores/transport', [MissionsController::class, 'storeTransportation'])->name('missions.store.transportation'); // Changed /mission/store/transportation to /task/store/transport
-    Route::post('/storesr/activity', [MissionsController::class, 'storeMission'])->name('missions.store.mission'); // Changed /mission/store/mission to /task/store/activity
-    Route::post('/store/celebration', [MissionsController::class, 'storeEvents'])->name('missions.store.events'); // Changed /mission/store/events to /task/store/celebration
-    Route::get('/edit/{id}-', [MissionsController::class, 'edit'])->name('missions.edit'); // Changed /mission/edit/{id} to /task/edit/{id}
-    Route::put('/update/{id}', [MissionsController::class, 'update'])->name('missions.update'); // Changed /mission/update/{id} to /task/update/{id}
-    Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy'); // Changed /mission/delete/{id} to /task/delete/{id}
+    Route::get('/tasks', [MissionsController::class, 'index'])->name('missions.index');
+    Route::get('/transport', [MissionsController::class, 'indexTransportation'])->name('missions.index.transportation');
+    Route::get('/addnewrecord', [MissionsController::class, 'createTransportation'])->name('missions.create.transportation');
+    Route::get('/create/activity', [MissionsController::class, 'createMission'])->name('missions.create.mission');
+    Route::get('/create/celebration', [MissionsController::class, 'createEvents'])->name('missions.create.events');
 
+    Route::post('/stores/transport', [MissionsController::class, 'storeTransportation'])->name('missions.store.transportation');
+    Route::post('/storesr/activity', [MissionsController::class, 'storeMission'])->name('missions.store.mission');
+    Route::post('/store/celebration', [MissionsController::class, 'storeEvents'])->name('missions.store.events');
+
+    Route::put('/update/mission/{id}', [MissionsController::class, 'updateMission'])->name('missions.update');
+    Route::get('/edit/mission/{id}', [MissionsController::class, 'editMission'])->name('missions.edit');
+    Route::put('/update/transportation/{id}', [MissionsController::class, 'updateTransportation'])->name('transportation.update');
+    Route::get('/edit/transportation/{id}', [MissionsController::class, 'editTransportation'])->name('transportation.edit');
+
+
+
+    Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
 });
+
 
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/update/section',[DashboardController::class,'updatesection'])->name('update.section');
@@ -146,7 +153,7 @@ Route::controller(EventController::class)->group(function()  {
     Route::get('/events/Delete/{id}', [EventController::class, 'destroy'])->name('events.Delete');
     Route::get('/show/{id}/events', [EventController::class, 'show'])->name('events.details');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
-    Route::post('/events/update', [EventController::class, 'update'])->name('events.update');
+    Route::put('/events/update/{id}', [EventController::class, 'update'])->name('events.update');
     });
     
     Route::controller(FaQController::class)->group(function() {
@@ -231,36 +238,3 @@ Route::controller(roleController::class)->group(function() {
 
 
 });
-
-
-
-
-
-
-
-
-// Route::resource('events', EventController::class);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

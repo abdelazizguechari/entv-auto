@@ -48,7 +48,6 @@
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Créer l'Événement</button>
                         <button type="button" class="btn btn-secondary" onclick="submitFormAndAddMission()">Ajouter une Mission</button>
                     </form>
                 </div>

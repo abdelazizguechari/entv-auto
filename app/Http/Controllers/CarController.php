@@ -37,13 +37,13 @@ class CarController extends Controller
             // other messages...
         ]);
     
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+        // if ($validator->fails()) {
+        //     return redirect()->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
 
               
-        }
+        // }
     
         // Store the data if validation passes
         $car = new Carsm();
@@ -69,17 +69,18 @@ class CarController extends Controller
     
 
         // Log the creation
-        activity()
-            ->performedOn($car)
-            ->withProperties($validator)
-            ->log('Car created');
+        // activity()
+        //     ->performedOn($car)
+        //     ->withProperties($validator)
+        //     ->log('Car created');
 
-        $notification = [
-            'message' => 'Car created successfully.',
-            'alert-type' => 'success'
-        ];
+        // $notification = [
+        //     'message' => 'Car created successfully.',
+        //     'alert-type' => 'success'
+        // ];
 
-        return redirect()->route('admin.ourcars')->with($notification);
+        // return redirect()->route('admin.ourcars')->with($notification);
+        return redirect()->route('admin.ourcars');
     }
 
     public function create()
@@ -108,25 +109,26 @@ class CarController extends Controller
     {
         $car = Carsm::findOrFail($immatriculation);
         
-        // Log the deletion
-        activity()
-            ->performedOn($car)
-            ->withProperties($car->toArray())
-            ->log('Car deleted');
+        // // Log the deletion
+        // activity()
+        //     ->performedOn($car)
+        //     ->withProperties($car->toArray())
+        //     ->log('Car deleted');
             
-        $car->delete();
+        // $car->delete();
 
-        $notification = [
-            'message' => 'Car deleted successfully.',
-            'alert-type' => 'success'
-        ];
+        // $notification = [
+        //     'message' => 'Car deleted successfully.',
+        //     'alert-type' => 'success'
+        // ];
 
-        return redirect()->back()->with($notification);
+        // return redirect()->back()->with($notification);
+        return redirect()->back();
     }
 
     public function updateCar(Request $request, $immatriculation)
     {
-        $car = Carsm::findOrFail($immatriculation);
+        $car = Carsm::findOrFail($immatriculation); 
 
         // Update the car data
         $car->update([
@@ -139,18 +141,19 @@ class CarController extends Controller
             'description' => $request->description,
         ]);
 
-        // Log the update
-        activity()
-            ->performedOn($car)
-            ->withProperties($request->all())
-            ->log('Car updated');
+        // // Log the update
+        // activity()
+        //     ->performedOn($car)
+        //     ->withProperties($request->all())
+        //     ->log('Car updated');
 
-        $notification = [
-            'message' => 'Car updated successfully.',
-            'alert-type' => 'success'
-        ];
+        // $notification = [
+        //     'message' => 'Car updated successfully.',
+        //     'alert-type' => 'success'
+        // ];
 
-        return redirect()->route('admin.ourcars')->with($notification);
+        // return redirect()->route('admin.ourcars')->with($notification);
+        return redirect()->route('admin.ourcars');
     }
 
 

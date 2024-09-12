@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Activitylog\LogOptions;
+// use Spatie\Activitylog\Traits\LogsActivity;
+// use Spatie\Activitylog\LogOptions;
 
 
 class Carsm extends Model
-{
-    use HasFactory,LogsActivity;
+{a
+    use HasFactory;
+    // LogsActivity;
 
     protected $table = 'cars'; 
 
@@ -40,11 +41,16 @@ class Carsm extends Model
         'status', 
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['immatriculation', 'marque', 'modele', 'etat', 'kilometrage'])
-            ->setDescriptionForEvent(fn(string $eventName) => "Car has been {$eventName}");
-        // Chain fluent methods for configuration options
-    }
+    public function driver()
+{
+    return $this->hasOne(Driver::class, 'voiture_id', 'immatriculation');
+}
+
+    // public function getActivitylogOptions(): LogOptions
+    // {
+    //     return LogOptions::defaults()
+    //         ->logOnly(['immatriculation', 'marque', 'modele', 'etat', 'kilometrage'])
+    //         ->setDescriptionForEvent(fn(string $eventName) => "Car has been {$eventName}");
+    //     // Chain fluent methods for configuration options
+    // }
 }

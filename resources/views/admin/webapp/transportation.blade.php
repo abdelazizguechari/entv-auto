@@ -19,7 +19,7 @@
                                 <th>Status</th>
                                 <th>Fuel Tokens</th>
                                 <th>Distance</th>
-                                <th>action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +34,7 @@
                                         <td>{{ $mission->fuel_tokens }}</td>
                                         <td>{{ $mission->distance }}</td>
                                         <td>
-                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('transportation.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
                                             <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 @method('DELETE')
