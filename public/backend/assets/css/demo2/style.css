@@ -19858,4 +19858,48 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   .email-aside-nav.collapse.show {
     display: block;
   }
+
+
+  /* Ensure the chat-content takes full height of its container */
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Make sure the chat-body takes up the remaining space */
+.chat-body {
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Keep the chat-footer fixed at the bottom */
+.chat-footer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #f8f9fa;
+}
+
+/* Style for messages */
+.messages {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure messages have a consistent height */
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background: #e9ecef;
+}
+
+
+
 }

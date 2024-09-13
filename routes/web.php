@@ -241,10 +241,8 @@ Route::controller(roleController::class)->group(function() {
 
 
 Route::get('/admin/chate',[PusherController::class,'index'])->name('chate.app');
-
-// Route::get('/chate', 'App\Http\Controllers\PusherController@index');
-Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
-Route::post('/receive', 'App\Http\Controllers\PusherController@receive');
+Route::post('/broadcast', [PusherController::class, 'broadcast']);
+Route::post('/receive', [PusherController::class, 'receive']);
 
 
 
