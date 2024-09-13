@@ -270,8 +270,9 @@ use Illuminate\Support\Facades\Auth;
               <li class="nav-item">
                 <a href="{{route('Our.admins')}}" class="nav-link">OUR admins</a>
               </li>
-              
-             
+              <li class="nav-item">
+                <a href="{{route('logs.index')}}" class="nav-link">logs</a>
+              </li>          
             </ul>
           </div>
         </li>

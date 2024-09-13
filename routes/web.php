@@ -17,6 +17,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\FaQController ;
 use App\Http\Controllers\DashboardController ;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\LogsController;
 
 use App\Http\Controllers\PusherController;
 
@@ -246,6 +247,8 @@ Route::get('/admin/chate',[PusherController::class,'index'])->name('chate.app');
 Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
 Route::post('/receive', 'App\Http\Controllers\PusherController@receive');
 
-
+Route::controller(LogsController::class)->group(function() {
+    Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
+});
 
 });

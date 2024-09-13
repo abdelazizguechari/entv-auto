@@ -5,7 +5,7 @@
     
     select.form-control option {
         background-color: #060C17;
-        color: #fff; /* Pour garantir la lisibilité du texte */
+        color: #fff; 
     }
 </style>
 

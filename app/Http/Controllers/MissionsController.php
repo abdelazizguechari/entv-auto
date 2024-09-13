@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Log;
 
 
 class MissionsController extends Controller
-{
+{   
     public function index()
     {
-        $missions = Mission::where('type', 'mission')->with(['car', 'driver'])->get();
+        $missions = Mission::whereDoesntHave('events')->get();
         return view('admin.webapp.missions', compact('missions'));
     }
+
 
     public function indexTransportation()
     {

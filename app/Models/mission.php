@@ -29,6 +29,11 @@ class Mission extends Model
         'driver_id',
     ];
 
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_mission');
+    }
+
     public function car(): BelongsTo
     {
         return $this->belongsTo(Carsm::class, 'car_id', 'immatriculation');
