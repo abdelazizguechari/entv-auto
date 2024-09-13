@@ -70,7 +70,7 @@ use Illuminate\Support\Facades\Auth;
         {{-- @endif --}}
 
       
-        {{-- @if (Auth::user()->can('voiture.ajouter')) --}}
+        <!-- {{-- @if (Auth::user()->can('voiture.ajouter')) --}} -->
 
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#event" role="button" aria-expanded="false" aria-controls="event">
@@ -118,7 +118,7 @@ use Illuminate\Support\Facades\Auth;
           </a>
         </li>
 
-        {{-- @endif   --}}
+        <!-- {{-- @endif   --}} -->
 
 
         <li class="nav-item">

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('adresse')->nullable();
             $table->date('date_naissance')->nullable();
             $table->string('photo')->nullable();
-            $table->string('voiture_id');
+            $table->string('voiture_id')->nullable();
             $table->foreign('voiture_id')->references('immatriculation')->on('cars')->onDelete('cascade');
             $table->timestamps();
         });

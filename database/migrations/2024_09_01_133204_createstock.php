@@ -15,7 +15,7 @@ class CreateStock extends Migration
     {
         Schema::create('stock', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
+            $table->string('name')->nullable(); 
             $table->string('category'); 
             $table->integer('quantity');
             $table->decimal('price', 10, 2); 

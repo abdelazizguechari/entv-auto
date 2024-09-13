@@ -18,7 +18,8 @@ use App\Http\Controllers\FaQController ;
 use App\Http\Controllers\DashboardController ;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\LogsController;
-
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
 
 
@@ -205,7 +206,7 @@ Route::controller(EventController::class)->group(function()  {
     });
     
 
-
+ 
 
 Route::controller(StockController::class)->group(function() {
 
@@ -247,8 +248,18 @@ Route::get('/admin/chate',[PusherController::class,'index'])->name('chate.app');
 Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
 Route::post('/receive', 'App\Http\Controllers\PusherController@receive');
 
-Route::controller(LogsController::class)->group(function() {
-    Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
-});
+Route::post('/send-message', [PusherController::class, 'sendMessage']);
+Route::post('/send-file', [PusherController::class, 'sendFile']);
+
+
+Route::get('/conversations/{conversation}/details', [ConversationController::class, 'getConversationDetails']);
+Route::post('/conversations', [ConversationController::class, 'createConversation']);
+Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages']);
+
+// Messages
+Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage']);
+Route::post('/conversations/{conversation}/send-file', [MessageController::class, 'sendFile']);
+
+Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
 
 });
