@@ -41,7 +41,9 @@
 	<!-- End plugin css for this page -->
 
 	
-	
+	  <!-- CSS -->
+	  <link rel="stylesheet" href={{asset('backend/assets/css/demo1/stylee.css')}}>
+	  <!-- End CSS -->
 
 	<!-- inject:css -->
 	<link rel="stylesheet" href="{{asset('backend/assets/fonts/feather-font/css/iconfont.css')}}">

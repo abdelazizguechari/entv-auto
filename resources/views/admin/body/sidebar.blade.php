@@ -100,8 +100,8 @@ use Illuminate\Support\Facades\Auth;
 
         <li class="nav-item nav-category mt-2 mb-2">Applications Web</li>
 
-
-        @if (Auth::user()->can('vouture.menu'))
+{{-- 
+        @if (Auth::user()->can('vouture.menu')) --}}
 
 
         <li class="nav-item">
@@ -118,7 +118,7 @@ use Illuminate\Support\Facades\Auth;
           </a>
         </li>
 
-        @endif  
+        {{-- @endif   --}}
 
 
         <li class="nav-item">
