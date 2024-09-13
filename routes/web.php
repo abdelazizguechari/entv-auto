@@ -205,7 +205,7 @@ Route::controller(EventController::class)->group(function()  {
     });
     
 
-
+ 
 
 Route::controller(StockController::class)->group(function() {
 
@@ -252,7 +252,7 @@ Route::post('/send-message', [PusherController::class, 'sendMessage']);
 Route::post('/send-file', [PusherController::class, 'sendFile']);
 
 
-
+Route::get('/conversations/{conversation}/details', [ConversationController::class, 'getConversationDetails']);
 Route::post('/conversations', [ConversationController::class, 'createConversation']);
 Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages']);
 

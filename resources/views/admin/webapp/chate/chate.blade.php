@@ -11,12 +11,16 @@
           <div class="d-flex justify-content-between align-items-center pb-2 mb-2">
             <div class="d-flex align-items-center">
               <figure class="me-2 mb-0">
-                <img src="https://via.placeholder.com/43x43" class="img-sm rounded-circle" alt="profile">
+                <img class="profile-img-small" src="{{ !empty($enligne->photo) ? url('uplode/admin_images/' . $enligne->photo) : url('uplode/no_image.jpg') }}" alt="profile">
                 <div class="status online"></div>
               </figure>
               <div>
-                <h6>Amiah Burton</h6>
-                <p class="text-muted tx-13">Software Developer</p>
+                <h6>{{ $enligne->firstname }} {{ $enligne->lastname }}</h6>
+                <p class="text-muted tx-13">
+                  @foreach($roles as $role)
+                    {{ $role }}@if(!$loop->last), @endif
+                  @endforeach
+                </p>
               </div>
             </div>
             <div class="dropdown">
@@ -114,7 +118,7 @@
             </figure>
             <div>
               <p id="conversationTitle">Conversation Title</p>
-              <p class="text-muted tx-13">Participant Details</p>
+              <p id="participantDetails" class="text-muted tx-13">Participant Details</p>
             </div>
           </div>
         </div>
@@ -149,206 +153,242 @@
     </div>
   </div>
 </div>
+
 @endsection
 
-@section('scripts')
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>$(document).ready(function() {
-  let selectedConversationId = localStorage.getItem('selectedConversationId') || null;
-  let scrollPosition = 0;
 
-  function loadMessages(conversationId) {
-      $('.messages').html('');
-      console.log(`Loading messages for conversation ID: ${conversationId}`);
 
-      $.get(`/conversations/${conversationId}/messages`)
-          .done(function(data) {
-              console.log('Messages data:', data);
-              
-              if (!data || !Array.isArray(data.messages)) {
-                  console.error('Invalid response:', data);
-                  alert('Error: Failed to load messages.');
-                  return;
-              }
+<script>
+$(document).ready(function() {
+    let selectedConversationId = localStorage.getItem('selectedConversationId') || null;
+    let scrollPosition = 0;
 
-              if (data.messages.length === 0) {
-                  $('.messages').append('<p>No messages found.</p>');
-              } else {
-                  data.messages.forEach(function(message) {
-                      let messageClass = message.user_id === data.current_user_id ? 'sender' : 'receiver';
-                      if (message.file_path) {
-                          $('.messages').append(`
-                              <li class="message-item ${messageClass}">
-                                  <div class="message-bubble">
-                                      <a href="${message.file_path}" target="_blank">View File</a>
-                                      <span class="message-time">${message.time || ''}</span>
-                                  </div>
-                              </li>
-                          `);
-                      } else {
-                          $('.messages').append(`
-                              <li class="message-item ${messageClass}">
-                                  <div class="message-bubble">
-                                      <p>${message.message}</p>
-                                      <span class="message-time">${message.time || ''}</span>
-                                  </div>
-                              </li>
-                          `);
-                      }
-                  });
-              }
+    function loadMessages(conversationId) {
+        $('.messages').html('');
+        console.log(`Loading messages for conversation ID: ${conversationId}`);
 
-              $('.messages').scrollTop(scrollPosition);
-          })
-          .fail(function(xhr, status, error) {
-              console.error('Failed to load messages:', {
-                  status: status,
-                  error: error,
-                  responseText: xhr.responseText
-              });
-              alert('Error loading messages.');
-          });
-  }
+        $.get(`/conversations/${conversationId}/messages`)
+            .done(function(data) {
+                console.log('Messages data:', data);
 
-  $(document).on('click', '.conversation', function(e) {
-      e.preventDefault();
-      selectedConversationId = $(this).data('id');
-      localStorage.setItem('selectedConversationId', selectedConversationId);
+                if (!data || !Array.isArray(data.messages)) {
+                    console.error('Invalid response:', data);
+                    alert('Error: Failed to load messages.');
+                    return;
+                }
 
-      scrollPosition = $('.messages').scrollTop();
-      loadMessages(selectedConversationId);
-  });
+                if (data.messages.length === 0) {
+                    $('.messages').append('<p>No messages found.</p>');
+                } else {
+                    data.messages.forEach(function(message) {
+                        let messageClass = message.user_id === data.current_user_id ? 'sender' : 'receiver';
+                        if (message.file_path) {
+                            $('.messages').append(`
+                                <li class="message-item ${messageClass}">
+                                    <div class="message-bubble">
+                                        <a href="${message.file_path}" target="_blank">View File</a>
+                                        <span class="message-time">${message.time || ''}</span>
+                                    </div>
+                                </li>
+                            `);
+                        } else {
+                            $('.messages').append(`
+                                <li class="message-item ${messageClass}">
+                                    <div class="message-bubble">
+                                        <p>${message.message}</p>
+                                        <span class="message-time">${message.time || ''}</span>
+                                    </div>
+                                </li>
+                            `);
+                        }
+                    });
+                }
 
-  $(document).on('click', '.start-chat', function(e) {
-      e.preventDefault();
-      let userId = $(this).data('id');
+                $('.messages').scrollTop(scrollPosition);
+            })
+            .fail(function(xhr, status, error) {
+                console.error('Failed to load messages:', {
+                    status: status,
+                    error: error,
+                    responseText: xhr.responseText
+                });
+                alert('Error loading messages.');
+            });
+    }
 
-      $.post('/conversations', { user_id: userId, _token: '{{ csrf_token() }}' })
-          .done(function(data) {
-              console.log('Start chat response:', data);
-              
-              if (data.error) {
-                  console.error('Error starting conversation:', data.error);
-                  alert('Failed to start conversation.');
-                  return;
-              }
+    function updateConversationDetails(conversationId) {
+        console.log(`Fetching conversation details for ID: ${conversationId}`);
 
-              selectedConversationId = data.conversation.id;
-              localStorage.setItem('selectedConversationId', selectedConversationId);
+        $.get(`/conversations/${conversationId}/details`)
+            .done(function(data) {
+                console.log('Conversation details:', data);
 
-              $('.chat-content').show();
-              $('.aside-body .tab-pane#chats').append(`
-                  <li class="chat-item pe-1">
-                      <a href="#" class="d-flex align-items-center conversation" data-id="${selectedConversationId}">
-                          <div class="d-flex justify-content-between flex-grow-1 border-bottom">
-                              <div>
-                                  <p class="text-body">${data.conversation.title}</p>
-                              </div>
-                          </div>
-                      </a>
-                  </li>
-              `);
+                if (data && data.conversation) {
+                    $('#conversationTitle').text(data.conversation.title);
+                    
+                    // Assuming participants is an array of user objects
+                    let participantsDetails = data.conversation.participants.map(participant => 
+                        `<p class="text-muted tx-13">${participant.name} (${participant.email})</p>`
+                    ).join('');
+                    
+                    $('.text-muted.tx-13').html(participantsDetails);
+                } else {
+                    console.error('Invalid conversation details:', data);
+                }
+            })
+            .fail(function(xhr, status, error) {
+                console.error('Failed to fetch conversation details:', {
+                    status: status,
+                    error: error,
+                    responseText: xhr.responseText
+                });
+                alert('Error fetching conversation details.');
+            });
+    }
 
-              loadMessages(selectedConversationId);
-          })
-          .fail(function(xhr, status, error) {
-              console.error('Failed to start conversation:', {
-                  status: status,
-                  error: error,
-                  responseText: xhr.responseText
-              });
-              alert('Error starting conversation.');
-          });
-  });
+    $(document).on('click', '.conversation', function(e) {
+        e.preventDefault();
+        selectedConversationId = $(this).data('id');
+        localStorage.setItem('selectedConversationId', selectedConversationId);
 
-  $('#chatForm').submit(function(event) {
-      event.preventDefault();
+        scrollPosition = $('.messages').scrollTop();
+        loadMessages(selectedConversationId);
+        updateConversationDetails(selectedConversationId); // Fetch and display conversation details
+    });
 
-      if (selectedConversationId === null) {
-          alert('Please select a conversation first.');
-          return;
-      }
+    $(document).on('click', '.start-chat', function(e) {
+        e.preventDefault();
+        let userId = $(this).data('id');
 
-      let formData = new FormData(this);
+        $.post('/conversations', { user_id: userId, _token: $('meta[name="csrf-token"]').attr('content') })
+            .done(function(data) {
+                console.log('Start chat response:', data);
+                
+                if (data.error) {
+                    console.error('Error starting conversation:', data.error);
+                    alert('Failed to start conversation.');
+                    return;
+                }
 
-      if ($('#file')[0].files.length > 0) {
-          $.ajax({
-              url: `/conversations/${selectedConversationId}/send-file`,
-              type: 'POST',
-              data: formData,
-              processData: false,
-              contentType: false,
-              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-              success: function(res) {
-                  console.log('File upload response:', res);
-                  
-                  if (res.error) {
-                      console.error('File upload error:', res.error);
-                      alert('File upload failed: ' + res.error);
-                      return;
-                  }
+                selectedConversationId = data.conversation.id;
+                localStorage.setItem('selectedConversationId', selectedConversationId);
 
-                  $('.messages').append(`
-                      <li class="message-item sender">
-                          <div class="message-bubble">
-                              <a href="${res.file_path}" target="_blank">View File</a>
-                              <span class="message-time">${res.time || ''}</span>
-                          </div>
-                      </li>
-                  `);
-                  $('#file').val('');
-                  $('.messages').scrollTop($('.messages')[0].scrollHeight);
-              },
-              error: function(xhr, status, error) {
-                  console.error('File upload failed:', {
-                      status: status,
-                      error: error,
-                      responseText: xhr.responseText
-                  });
-                  alert('File upload failed: ' + error);
-              }
-          });
-      } else {
-          $.ajax({
-              url: `/conversations/${selectedConversationId}/send-message`,
-              type: 'POST',
-              data: { _token: '{{ csrf_token() }}', message: $('#message').val() },
-              success: function(res) {
-                  console.log('Message send response:', res);
-                  
-                  if (res.error) {
-                      console.error('Message sending error:', res.error);
-                      alert('Message sending failed: ' + res.error);
-                      return;
-                  }
+                $('.chat-content').show();
+                $('.aside-body .tab-pane#chats').append(`
+                    <li class="chat-item pe-1">
+                        <a href="#" class="d-flex align-items-center conversation" data-id="${selectedConversationId}">
+                            <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                                <div>
+                                    <p class="text-body">${data.conversation.title}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                `);
 
-                  $('.messages').append(`
-                      <li class="message-item sender">
-                          <div class="message-bubble">
-                              <p>${res.message}</p>
-                              <span class="message-time">${res.time || ''}</span>
-                          </div>
-                      </li>
-                  `);
-                  $('#message').val('');
-                  $('.messages').scrollTop($('.messages')[0].scrollHeight);
-              },
-              error: function(xhr, status, error) {
-                  console.error('Message sending failed:', {
-                      status: status,
-                      error: error,
-                      responseText: xhr.responseText
-                  });
-                  alert('Message sending failed: ' + error);
-              }
-          });
-      }
-  });
+                loadMessages(selectedConversationId);
+                updateConversationDetails(selectedConversationId); // Fetch and display conversation details
+            })
+            .fail(function(xhr, status, error) {
+                console.error('Failed to start conversation:', {
+                    status: status,
+                    error: error,
+                    responseText: xhr.responseText
+                });
+                alert('Error starting conversation.');
+            });
+    });
 
-  $('#attachFilesButton').click(function() {
-      $('#file').click();
-  });
+    $('#chatForm').submit(function(event) {
+        event.preventDefault();
+
+        if (selectedConversationId === null) {
+            alert('Please select a conversation first.');
+            return;
+        }
+
+        let formData = new FormData(this);
+
+        if ($('#file')[0].files.length > 0) {
+            $.ajax({
+                url: `/conversations/${selectedConversationId}/send-file`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                success: function(res) {
+                    console.log('File upload response:', res);
+                    
+                    if (res.error) {
+                        console.error('File upload error:', res.error);
+                        alert('File upload failed: ' + res.error);
+                        return;
+                    }
+
+                    $('.messages').append(`
+                        <li class="message-item sender">
+                            <div class="message-bubble">
+                                <a href="${res.file_path}" target="_blank">View File</a>
+                                <span class="message-time">${res.time || ''}</span>
+                            </div>
+                        </li>
+                    `);
+                    $('#file').val('');
+                    $('.messages').scrollTop($('.messages')[0].scrollHeight);
+                },
+                error: function(xhr, status, error) {
+                    console.error('File upload failed:', {
+                        status: status,
+                        error: error,
+                        responseText: xhr.responseText
+                    });
+                    alert('File upload failed: ' + error);
+                }
+            });
+        } else {
+            $.ajax({
+                url: `/conversations/${selectedConversationId}/send-message`,
+                type: 'POST',
+                data: { _token: $('meta[name="csrf-token"]').attr('content'), message: $('#message').val() },
+                success: function(res) {
+                    console.log('Message send response:', res);
+                    
+                    if (res.error) {
+                        console.error('Message sending error:', res.error);
+                        alert('Message sending failed: ' + res.error);
+                        return;
+                    }
+
+                    $('.messages').append(`
+                        <li class="message-item sender">
+                            <div class="message-bubble">
+                                <p>${res.message}</p>
+                                <span class="message-time">${res.time || ''}</span>
+                            </div>
+                        </li>
+                    `);
+                    $('#message').val('');
+                    $('.messages').scrollTop($('.messages')[0].scrollHeight);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Message sending failed:', {
+                        status: status,
+                        error: error,
+                        responseText: xhr.responseText
+                    });
+                    alert('Message sending failed: ' + error);
+                }
+            });
+        }
+    });
+
+    $('#attachFilesButton').click(function() {
+        $('#file').click();
+    });
 });
 
 </script>
-@endsection
+

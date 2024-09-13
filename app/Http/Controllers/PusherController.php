@@ -22,8 +22,18 @@ class PusherController extends Controller
     public function index()
     {
         $conversations = auth()->user()->conversations;
-        $users = User::all(); 
-         return view('admin.webapp.chate.chate',compact('conversations','users'));
+        $enligne = auth()->user();
+
+       
+            $users = User::where('id' ,'!=' ,auth()->id())
+            ->get();;
+
+            $role = auth()->user();
+           $roles = $role->getRoleNames(); // Returns a collection of role names
+
+        
+
+         return view('admin.webapp.chate.chate',compact('conversations','users','enligne','roles'));
     }
 
     public function broadcast(Request $request)

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -8,7 +7,6 @@ use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-
 
 class MessageController extends Controller
 {
@@ -30,11 +28,13 @@ class MessageController extends Controller
     }
     
     // Send a text message
-    public function sendMessage(Request $request, Conversation $conversation)
+    public function sendMessage(Request $request, $conversationId)
     {
         $request->validate([
             'message' => 'required|string',
         ]);
+
+        $conversation = Conversation::findOrFail($conversationId);
 
         $message = Message::create([
             'message' => $request->input('message'),
@@ -49,11 +49,13 @@ class MessageController extends Controller
     }
 
     // Send a file message
-    public function sendFile(Request $request, Conversation $conversation)
+    public function sendFile(Request $request, $conversationId)
     {
         $request->validate([
             'file' => 'required|file|max:10240', // 10MB file size limit
         ]);
+
+        $conversation = Conversation::findOrFail($conversationId);
 
         $filePath = $request->file('file')->store('uploads', 'public');
 

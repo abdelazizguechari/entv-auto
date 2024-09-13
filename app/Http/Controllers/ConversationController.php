@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conversation;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
+
 
 class ConversationController extends Controller
 {
-
-    
     public function createConversation(Request $request)
     {
         $userId = $request->input('user_id');
@@ -28,9 +29,13 @@ class ConversationController extends Controller
             return response()->json(['conversation' => $existingConversation]);
         }
     
+        // Fetch user names for the conversation title
+        $userName = User::find($userId)->name ?? 'Unknown User';
+        $currentUserName = User::find($currentUserId)->name ?? 'You';
+
         // Create a new conversation
         $conversation = Conversation::create([
-            'title' => 'Conversation between ' . User::find($userId)->name . ' and ' . User::find($currentUserId)->name,
+            'title' => 'Conversation between ' . $userName . ' and ' . $currentUserName,
         ]);
     
         // Add participants
@@ -41,8 +46,29 @@ class ConversationController extends Controller
     
         return response()->json(['conversation' => $conversation]);
     }
-    
-        
-    }
-    
 
+    // New method to get conversation details
+    public function getConversationDetails($conversationId)
+    {
+        try {
+            $conversation = Conversation::with('participants.user')->findOrFail($conversationId);
+
+            $participants = $conversation->participants->map(function ($participant) {
+                return [
+                    'name' => $participant->user->name,
+                    'email' => $participant->user->email
+                ];
+            });
+
+            return response()->json([
+                'conversation' => [
+                    'title' => $conversation->title,
+                    'participants' => $participants
+                ]
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching conversation details: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to load conversation details.'], 500);
+        }
+    }
+}

@@ -2648,8 +2648,8 @@ div.tox .input-group-sm > .tox-button,
 }
 
 .profile-img-small {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%; /* rounded-circle equivalent */
 }
 
@@ -19722,11 +19722,103 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
 .chat-wrapper .chat-content .chat-header {
   padding: 0 10px;
 }
-
-
-
-
-
+.chat-wrapper .chat-content .chat-body {
+  position: relative;
+  max-height: calc(100vh - 340px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .chat-wrapper .chat-content .chat-body {
+    max-height: calc(100vh - 315px);
+  }
+}
+@media (max-width: 991px) {
+  .chat-wrapper .chat-content .chat-body {
+    max-height: calc(100vh - 342px);
+  }
+}
+.chat-wrapper .chat-content .chat-body .messages {
+  padding: 0 10px;
+  list-style-type: none;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item {
+  display: flex;
+  max-width: 80%;
+  margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .chat-wrapper .chat-content .chat-body .messages .message-item {
+    max-width: 95%;
+  }
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item .content .bubble {
+  position: relative;
+  padding: 7px 15px;
+  margin-bottom: 4px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item .content span {
+  font-size: 12px;
+  color: #7987a1;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend img {
+  order: 1;
+  margin-right: 15px;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend .content {
+  order: 2;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend .content .bubble {
+  background: rgba(101, 113, 255, 0.1);
+  border-radius: 0 5px 5px;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.friend .content .bubble::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -10px;
+  top: 0;
+  border-top: 5px solid rgba(101, 113, 255, 0.1);
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid rgba(101, 113, 255, 0.1);
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me {
+  margin-left: auto;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me img {
+  order: 2;
+  margin-left: 15px;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content {
+  order: 1;
+  margin-left: auto;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content .bubble {
+  background: rgba(102, 209, 209, 0.1);
+  border-radius: 5px 0 5px 5px;
+  margin-left: auto;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content .bubble::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: -10px;
+  top: 0;
+  border-top: 5px solid rgba(102, 209, 209, 0.1);
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid rgba(102, 209, 209, 0.1);
+  border-right: 5px solid transparent;
+}
+.chat-wrapper .chat-content .chat-body .messages .message-item.me .content span {
+  text-align: right;
+  display: block;
+}
 .chat-wrapper figure {
   position: relative;
 }
@@ -19770,12 +19862,19 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
 
   /* Ensure the chat-content takes full height of its container */
 .chat-content {
-  display: flex;
+  display: flex ;
   flex-direction: column;
   height: 100%;
 }
 
 /* Make sure the chat-body takes up the remaining space */
+.chat-body {
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
 
 /* Keep the chat-footer fixed at the bottom */
 .chat-footer {
@@ -19801,94 +19900,6 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   background: #e9ecef;
 }
 
-/* Ensure the chat-wrapper takes the full height of the viewport */
-.chat-wrapper {
-  height: 100vh !important;
-  display: flex !important;
-}
-
-/* Sidebar adjustments */
-.chat-aside {
-  height: 100% !important;
-  overflow-y: auto !important; /* Allow scrolling if the sidebar content is too long */
-}
-
-/* Ensure the chat-content area takes the remaining space */
-.chat-content {
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 !important; /* Allow the chat content to fill the remaining space */
-}
-
-/* Ensure the chat-body takes up the remaining space and has scrollable messages */
-.chat-body {
-  flex: 1 !important;
-  overflow-y: auto !important;
-  padding: 10px !important;
-  background-color: #000 !important; /* Black background for chat area */
-}
-
-/* Ensure the messages container fits within the chat body */
-.messages {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* Style the individual message items */
-.message-item {
-  margin-bottom: 10px !important;
-}
-
-.message-bubble {
-  max-width: 70% !important;
-  padding: 10px !important;
-  border-radius: 15px !important;
-  background: #000 ; 
-  color: black !important; 
-  position: relative !important;
-  word-break: break-word !important;
-}
-
-.message-item.sender .message-bubble {
-  background: #000 ; /* Blue background for sender messages */
-  color: #fff !important;
-  margin-left: auto !important; /* Align sender messages to the right */
-}
-
-.message-item.receiver .message-bubble {
-  background: red !important; /* Slightly lighter dark grey for receiver messages */
-  margin-right: auto !important; /* Align receiver messages to the left */
-}
-
-.message-time {
-  display: block ;
-  font-size: 0.75em !important;
-  color: #fff !important;
-}
-
-/* Ensure the chat-footer stays at the bottom */
-.chat-footer {
-  border-top: 1px solid #ddd !important;
-  padding: 10px !important;
-  background-color: #000 !important; /* White background for footer */
-  display: flex !important;
-  align-items: center !important;
-  position: relative !important;
-}
-
-/* Input and button styling */
-#chatForm {
-  flex-grow: 1 !important;
-}
-
-#message {
-  border-radius: 20px !important;
-}
-
-.btn-icon {
-  border-radius: 50% !important;
-}
 
 
 }
