@@ -59,7 +59,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary text-uppercase">Mettre à jour</button>
+                        <button type="submit" class="btn btn-inverse-primary text-uppercase">Mettre à jour</button>
                         
                        
                     </form>

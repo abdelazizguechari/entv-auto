@@ -1,440 +1,354 @@
 @extends('admin.dash')
 
 @section('admin')
-
 <div class="page-content">
+  <div class="row d-flex">
+    <!-- Sidebar -->
+    <div class="col-md-4 col-lg-4 chat-aside border-end-lg">
+      <div class="card">
+        <div class="card-body">
+          <!-- Sidebar Header -->
+          <div class="d-flex justify-content-between align-items-center pb-2 mb-2">
+            <div class="d-flex align-items-center">
+              <figure class="me-2 mb-0">
+                <img src="https://via.placeholder.com/43x43" class="img-sm rounded-circle" alt="profile">
+                <div class="status online"></div>
+              </figure>
+              <div>
+                <h6>Amiah Burton</h6>
+                <p class="text-muted tx-13">Software Developer</p>
+              </div>
+            </div>
+            <div class="dropdown">
+              <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="icon-lg text-muted pb-3px" data-feather="settings"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm me-2"></i> View Profile</a>
+                <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="edit-2" class="icon-sm me-2"></i> Edit Profile</a>
+                <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="aperture" class="icon-sm me-2"></i> Add status</a>
+                <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="settings" class="icon-sm me-2"></i> Settings</a>
+              </div>
+            </div>
+          </div>
 
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body d-flex">
+          <!-- Tabs for Chats and Contacts -->
+          <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="chats-tab" data-bs-toggle="tab" data-bs-target="#chats" role="tab" aria-controls="chats" aria-selected="true">
+                <div class="d-flex align-items-center justify-content-center">
+                  <i data-feather="message-square" class="icon-sm me-2"></i>
+                  <p class="d-none d-sm-block">Chats</p>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" role="tab" aria-controls="contacts" aria-selected="false">
+                <div class="d-flex align-items-center justify-content-center">
+                  <i data-feather="users" class="icon-sm me-2"></i>
+                  <p class="d-none d-sm-block">Contacts</p>
+                </div>
+              </a>
+            </li>
+          </ul>
 
-
-
-                    <div class="col-lg-4 chat-content">
-
-                        <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
-                            <li class="nav-item">
-                              <a class="nav-link active" id="chats-tab" data-bs-toggle="tab" data-bs-target="#chats" role="tab" aria-controls="chats" aria-selected="true">
-                                <div class="d-flex flex-row flex-lg-column flex-xl-row align-items-center justify-content-center">
-                                  <i data-feather="message-square" class="icon-sm me-sm-2 me-lg-0 me-xl-2 mb-md-1 mb-xl-0"></i>
-                                  <p class="d-none d-sm-block">Chats</p>
-                                </div>
-                              </a>
-                            </li>
-                        </ul>
-
-                    <div class="tab-content mt-3">
-                        <div class="tab-pane fade show active" id="chats" role="tabpanel" aria-labelledby="chats-tab">
-                          <div>
-                            <p class="text-muted mb-1">Recent chats</p>
-                            <ul class="list-unstyled chat-list px-1">
-                              <li class="chat-item pe-1">
-                                <a href="javascript:;" class="d-flex align-items-center">
-                                  <figure class="mb-0 me-2">
-                                    <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                    <div class="status online"></div>
-                                  </figure>
-                                  <div class="d-flex justify-content-between flex-grow-1 border-bottom">
-                                    <div>
-                                      <p class="text-body fw-bolder">John Doe</p>
-                                      <p class="text-muted tx-13">Hi, How are you?</p>
-                                    </div>
-                                    <div class="d-flex flex-column align-items-end">
-                                      <p class="text-muted tx-13 mb-1">4:32 PM</p>
-                                      <div class="badge rounded-pill bg-primary ms-auto">5</div>
-                                    </div>
-                                  </div>
-                                </a>
-                              </li>
-                           
-
-                             
-                            
-                            
-                          
-                              <li class="chat-item pe-1">
-                                <a href="javascript:;" class="d-flex align-items-center">
-                                  <figure class="mb-0 me-2">
-                                    <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                    <div class="status online"></div>
-                                  </figure>
-                                  <div class="d-flex justify-content-between flex-grow-1 border-bottom">
-                                    <div>
-                                      <p class="text-body">Leonardo Payne</p>
-                                      <div class="d-flex align-items-center">
-                                        <i data-feather="video" class="text-muted icon-md mb-2px"></i>
-                                        <p class="text-muted ms-1">Video</p>
-                                      </div>
-                                    </div>
-                                    <div class="d-flex flex-column align-items-end">
-                                      <p class="text-muted tx-13 mb-1">2 days ago</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </li>
-                              <li class="chat-item pe-1">
-                                <a href="javascript:;" class="d-flex align-items-center">
-                                  <figure class="mb-0 me-2">
-                                    <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                    <div class="status online"></div>
-                                  </figure>
-                                  <div class="d-flex justify-content-between flex-grow-1 border-bottom">
-                                    <div>
-                                      <p class="text-body">John Doe</p>
-                                      <p class="text-muted tx-13">Hi, How are you?</p>
-                                    </div>
-                                    <div class="d-flex flex-column align-items-end">
-                                      <p class="text-muted tx-13 mb-1">4 week ago</p>
-                                    </div>
-                                  </div>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="tab-pane fade" id="calls" role="tabpanel" aria-labelledby="calls-tab">
-                          <p class="text-muted mb-1">Recent calls</p>
-                          <ul class="list-unstyled chat-list px-1">
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status online"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">Jensen Combs</p>
-                                    <div class="d-flex align-items-center">
-                                      <i data-feather="arrow-up-right" class="icon-sm text-success me-1"></i>
-                                      <p class="text-muted tx-13">Today, 03:11 AM</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex flex-column align-items-end">
-                                    <i data-feather="phone-call" class="text-primary icon-md"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status offline"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">Leonardo Payne</p>
-                                    <div class="d-flex align-items-center">
-                                      <i data-feather="arrow-down-left" class="icon-sm text-success me-1"></i>
-                                      <p class="text-muted tx-13">Today, 11:41 AM</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex flex-column align-items-end">
-                                    <i data-feather="video" class="text-primary icon-md"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status offline"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">Carl Henson</p>
-                                    <div class="d-flex align-items-center">
-                                      <i data-feather="arrow-down-left" class="icon-sm text-danger me-1"></i>
-                                      <p class="text-muted tx-13">Today, 04:24 PM</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex flex-column align-items-end">
-                                    <i data-feather="phone-call" class="text-primary icon-md"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status online"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">Jensen Combs</p>
-                                    <div class="d-flex align-items-center">
-                                      <i data-feather="arrow-down-left" class="icon-sm text-danger me-1"></i>
-                                      <p class="text-muted tx-13">Today, 12:53 AM</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex flex-column align-items-end">
-                                    <i data-feather="video" class="text-primary icon-md"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status online"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                      <i data-feather="arrow-down-left" class="icon-sm text-success me-1"></i>
-                                      <p class="text-muted tx-13">Today, 01:42 AM</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex flex-column align-items-end">
-                                    <i data-feather="video" class="text-primary icon-md"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status offline"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                      <i data-feather="arrow-up-right" class="icon-sm text-success me-1"></i>
-                                      <p class="text-muted tx-13">Today, 12:01 AM</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex flex-column align-items-end">
-                                    <i data-feather="phone-call" class="text-primary icon-md"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-                          <p class="text-muted mb-1">Contacts</p>
-                          <ul class="list-unstyled chat-list px-1">
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status offline"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">Amiah Burton</p>
-                                    <div class="d-flex align-items-center">
-                                      <p class="text-muted tx-13">Front-end Developer</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex align-items-end text-body">
-                                    <i data-feather="message-square" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="phone-call" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="video" class="icon-md text-primary"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status online"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                      <p class="text-muted tx-13">Back-end Developer</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex align-items-end text-body">
-                                    <i data-feather="message-square" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="phone-call" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="video" class="icon-md text-primary"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status offline"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">Yaretzi Mayo</p>
-                                    <div class="d-flex align-items-center">
-                                      <p class="text-muted tx-13">Fullstack Developer</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex align-items-end text-body">
-                                    <i data-feather="message-square" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="phone-call" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="video" class="icon-md text-primary"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                            <li class="chat-item pe-1">
-                              <a href="javascript:;" class="d-flex align-items-center">
-                                <figure class="mb-0 me-2">
-                                  <img src="https://via.placeholder.com/37x37" class="img-xs rounded-circle" alt="user">
-                                  <div class="status offline"></div>
-                                </figure>
-                                <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
-                                  <div>
-                                    <p class="text-body">John Doe</p>
-                                    <div class="d-flex align-items-center">
-                                      <p class="text-muted tx-13">Front-end Developer</p>
-                                    </div>
-                                  </div>
-                                  <div class="d-flex align-items-end text-body">
-                                    <i data-feather="message-square" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="phone-call" class="icon-md text-primary me-2"></i>
-                                    <i data-feather="video" class="icon-md text-primary"></i>
-                                  </div>
-                                </div>
-                              </a>
-                            </li>
-                          </ul>
+          <!-- Sidebar Body -->
+          <div class="aside-body">
+            <!-- Recent Chats -->
+            <div class="tab-pane fade show active" id="chats" role="tabpanel" aria-labelledby="chats-tab">
+              <p class="text-muted mb-1">Recent chats</p>
+              <ul class="list-unstyled chat-list px-1">
+                @foreach($conversations as $conversation)
+                  <li class="chat-item pe-1">
+                    <a href="#" class="d-flex align-items-center conversation" data-id="{{ $conversation->id }}">
+                      <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                        <div>
+                          <p class="text-body">{{ $conversation->title ?? 'Conversation ' . $conversation->id }}</p>
                         </div>
                       </div>
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
 
-                    </div>
+            <!-- Contacts List -->
+            <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+              <p class="text-muted mb-1">Contacts</p>
+              <ul class="list-unstyled chat-list px-1">
+                @foreach($users as $user)
+                  <li class="chat-item pe-1">
+                    <a href="#" class="d-flex align-items-center start-chat" data-id="{{ $user->id }}">
+                      <figure class="mb-0 me-2">
+                        <div class="status {{ $user->status }}"></div>
+                      </figure>
+                      <div class="d-flex align-items-center justify-content-between flex-grow-1 border-bottom">
+                        <div>
+                          <p class="text-body">{{ $user->firstname }}</p>
+                          <p class="text-muted tx-13">{{ $user->position }}</p>
+                        </div>
+                        <div class="d-flex align-items-end text-body">
+                          <i data-feather="message-square" class="icon-md text-primary me-2"></i>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="col-lg-8 chat-content">
-    <div class="chat-header border-bottom pb-2">
+    <!-- Chat Content -->
+    <div class="col-md-8 col-lg-8 chat-content">
+      <!-- Chat Header -->
+      <div class="chat-header border-bottom pb-2">
         <div class="d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-                <i data-feather="corner-up-left" id="backToChatList" class="icon-lg me-2 ms-n2 text-muted d-lg-none"></i>
-                <figure class="mb-0 me-2">
-                    <img src="https://via.placeholder.com/43x43" class="img-sm rounded-circle" alt="image">
-                    <div class="status online"></div>
-                    <div class="status online"></div>
-                </figure>
-                <div>
-                    <p>Guechari abdelaziz</p>
-                    <p class="text-muted tx-13">super admin</p>
-                </div>
+          <div class="d-flex align-items-center">
+            <i data-feather="corner-up-left" id="backToChatList" class="icon-lg me-2 ms-n2 text-muted d-lg-none"></i>
+            <figure class="mb-0 me-2">
+              <img src="https://via.placeholder.com/43x43" class="img-sm rounded-circle" alt="image">
+              <div class="status online"></div>
+            </figure>
+            <div>
+              <p id="conversationTitle">Conversation Title</p>
+              <p class="text-muted tx-13">Participant Details</p>
             </div>
-            <div class="d-flex align-items-center me-n1">
-                <a class="me-3" type="button" data-bs-toggle="tooltip" data-bs-title="Start video call">
-                    <i data-feather="video" class="icon-lg text-muted"></i>
-                </a>
-                <a class="me-0 me-sm-3" data-bs-toggle="tooltip" data-bs-title="Start voice call" type="button">
-                    <i data-feather="phone-call" class="icon-lg text-muted"></i>
-                </a>
-                <a type="button" class="d-none d-sm-block" data-bs-toggle="tooltip" data-bs-title="Add to contacts">
-                    <i data-feather="user-plus" class="icon-lg text-muted"></i>
-                </a>
-            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="chat-body">
+      <!-- Chat Body -->
+      <div class="chat-body">
         <ul class="messages">
-            <!-- Messages will be appended here -->
+          <!-- Messages will be dynamically loaded here -->
         </ul>
-    </div>
+      </div>
 
-    <div class="chat-footer d-flex">
-        <div>
-            <button type="button" class="btn border btn-icon rounded-circle me-2" data-bs-toggle="tooltip" data-bs-title="Emoji">
-                <i data-feather="smile" class="text-muted"></i>
-            </button>
-        </div>
+      <!-- Chat Footer -->
+      <div class="chat-footer d-flex">
         <div class="d-none d-md-block">
-            <button type="button" class="btn border btn-icon rounded-circle me-2" data-bs-toggle="tooltip" data-bs-title="Attach files">
-                <i data-feather="paperclip" class="text-muted"></i>
-            </button>
+          <button type="button" class="btn border btn-icon rounded-circle me-2" data-bs-toggle="tooltip" data-bs-title="Attach files" id="attachFilesButton">
+            <i data-feather="paperclip" class="text-muted"></i>
+          </button>
+          <input type="file" id="file" name="file" class="d-none">
         </div>
-        <div class="d-none d-md-block">
-            <button type="button" class="btn border btn-icon rounded-circle me-2" data-bs-toggle="tooltip" data-bs-title="Record your voice">
-                <i data-feather="mic" class="text-muted"></i>
-            </button>
-        </div>
-
-        <form class="search-form flex-grow-1 me-2">
-            <div class="input-group">
-                <input type="text" class="form-control rounded-pill" id="message" placeholder="Type a message">
-            </div>
+        <form id="chatForm" class="search-form flex-grow-1 me-2">
+          <div class="input-group">
+            <input type="text" class="form-control rounded-pill" id="message" name="message" placeholder="Type a message" autocomplete="off">
+          </div>
         </form>
-        <button type="submit" class="btn btn-primary btn-icon rounded-circle">
+        <div>
+          <button type="submit" class="btn btn-primary btn-icon rounded-circle" id="sendMessageButton">
             <i data-feather="send"></i>
-        </button>
-    </div>
-</div>
-
-                    </div>
-            </div>
+          </button>
         </div>
-
+      </div>
+    </div>
+  </div>
 </div>
+@endsection
 
-<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+@section('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>$(document).ready(function() {
+  let selectedConversationId = localStorage.getItem('selectedConversationId') || null;
+  let scrollPosition = 0;
 
-<script>
-    // Initialize Pusher
-    const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
-        cluster: 'eu'
-    });
-    const channel = pusher.subscribe('public');
+  function loadMessages(conversationId) {
+      $('.messages').html('');
+      console.log(`Loading messages for conversation ID: ${conversationId}`);
 
-    // Receive messages from Pusher
-    channel.bind('chat', function (data) {
-        $.post("/receive", {
-            _token: '{{ csrf_token() }}',
-            message: data.message,
-        })
-        .done(function (res) {
-            // Assuming 'res' contains HTML for the received message
-            $(".messages").append(res); // Append the received message
-            $(document).scrollTop($(document).height()); // Scroll to the bottom
-        })
-        .fail(function () {
-            console.error("Failed to receive message");
-        });
-    });
+      $.get(`/conversations/${conversationId}/messages`)
+          .done(function(data) {
+              console.log('Messages data:', data);
+              
+              if (!data || !Array.isArray(data.messages)) {
+                  console.error('Invalid response:', data);
+                  alert('Error: Failed to load messages.');
+                  return;
+              }
 
-    // Broadcast messages
-    $("form").submit(function (event) {
-        event.preventDefault();
+              if (data.messages.length === 0) {
+                  $('.messages').append('<p>No messages found.</p>');
+              } else {
+                  data.messages.forEach(function(message) {
+                      let messageClass = message.user_id === data.current_user_id ? 'sender' : 'receiver';
+                      if (message.file_path) {
+                          $('.messages').append(`
+                              <li class="message-item ${messageClass}">
+                                  <div class="message-bubble">
+                                      <a href="${message.file_path}" target="_blank">View File</a>
+                                      <span class="message-time">${message.time || ''}</span>
+                                  </div>
+                              </li>
+                          `);
+                      } else {
+                          $('.messages').append(`
+                              <li class="message-item ${messageClass}">
+                                  <div class="message-bubble">
+                                      <p>${message.message}</p>
+                                      <span class="message-time">${message.time || ''}</span>
+                                  </div>
+                              </li>
+                          `);
+                      }
+                  });
+              }
 
-        const message = $("#message").val().trim(); // Get message from input field
+              $('.messages').scrollTop(scrollPosition);
+          })
+          .fail(function(xhr, status, error) {
+              console.error('Failed to load messages:', {
+                  status: status,
+                  error: error,
+                  responseText: xhr.responseText
+              });
+              alert('Error loading messages.');
+          });
+  }
 
-        if (message !== "") {
-            $.ajax({
-                url: "/broadcast",
-                method: 'POST',
-                headers: {
-                    'X-Socket-Id': pusher.connection.socket_id
-                },
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    message: message,
-                },
-                dataType: 'json',
-                success: function (res) {
-                    // Assuming 'res.message' is the message content
-                    $(".messages").append(`<div style='' class="right message"><p>${res.message}</p></div>`);
-                    $("#message").val(''); // Clear input field
-                    $(document).scrollTop($(document).height()); // Scroll to the bottom
-                },
-                error: function () {
-                    console.error("Failed to broadcast message");
-                }
-            });
-        }
-    });
+  $(document).on('click', '.conversation', function(e) {
+      e.preventDefault();
+      selectedConversationId = $(this).data('id');
+      localStorage.setItem('selectedConversationId', selectedConversationId);
+
+      scrollPosition = $('.messages').scrollTop();
+      loadMessages(selectedConversationId);
+  });
+
+  $(document).on('click', '.start-chat', function(e) {
+      e.preventDefault();
+      let userId = $(this).data('id');
+
+      $.post('/conversations', { user_id: userId, _token: '{{ csrf_token() }}' })
+          .done(function(data) {
+              console.log('Start chat response:', data);
+              
+              if (data.error) {
+                  console.error('Error starting conversation:', data.error);
+                  alert('Failed to start conversation.');
+                  return;
+              }
+
+              selectedConversationId = data.conversation.id;
+              localStorage.setItem('selectedConversationId', selectedConversationId);
+
+              $('.chat-content').show();
+              $('.aside-body .tab-pane#chats').append(`
+                  <li class="chat-item pe-1">
+                      <a href="#" class="d-flex align-items-center conversation" data-id="${selectedConversationId}">
+                          <div class="d-flex justify-content-between flex-grow-1 border-bottom">
+                              <div>
+                                  <p class="text-body">${data.conversation.title}</p>
+                              </div>
+                          </div>
+                      </a>
+                  </li>
+              `);
+
+              loadMessages(selectedConversationId);
+          })
+          .fail(function(xhr, status, error) {
+              console.error('Failed to start conversation:', {
+                  status: status,
+                  error: error,
+                  responseText: xhr.responseText
+              });
+              alert('Error starting conversation.');
+          });
+  });
+
+  $('#chatForm').submit(function(event) {
+      event.preventDefault();
+
+      if (selectedConversationId === null) {
+          alert('Please select a conversation first.');
+          return;
+      }
+
+      let formData = new FormData(this);
+
+      if ($('#file')[0].files.length > 0) {
+          $.ajax({
+              url: `/conversations/${selectedConversationId}/send-file`,
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+              success: function(res) {
+                  console.log('File upload response:', res);
+                  
+                  if (res.error) {
+                      console.error('File upload error:', res.error);
+                      alert('File upload failed: ' + res.error);
+                      return;
+                  }
+
+                  $('.messages').append(`
+                      <li class="message-item sender">
+                          <div class="message-bubble">
+                              <a href="${res.file_path}" target="_blank">View File</a>
+                              <span class="message-time">${res.time || ''}</span>
+                          </div>
+                      </li>
+                  `);
+                  $('#file').val('');
+                  $('.messages').scrollTop($('.messages')[0].scrollHeight);
+              },
+              error: function(xhr, status, error) {
+                  console.error('File upload failed:', {
+                      status: status,
+                      error: error,
+                      responseText: xhr.responseText
+                  });
+                  alert('File upload failed: ' + error);
+              }
+          });
+      } else {
+          $.ajax({
+              url: `/conversations/${selectedConversationId}/send-message`,
+              type: 'POST',
+              data: { _token: '{{ csrf_token() }}', message: $('#message').val() },
+              success: function(res) {
+                  console.log('Message send response:', res);
+                  
+                  if (res.error) {
+                      console.error('Message sending error:', res.error);
+                      alert('Message sending failed: ' + res.error);
+                      return;
+                  }
+
+                  $('.messages').append(`
+                      <li class="message-item sender">
+                          <div class="message-bubble">
+                              <p>${res.message}</p>
+                              <span class="message-time">${res.time || ''}</span>
+                          </div>
+                      </li>
+                  `);
+                  $('#message').val('');
+                  $('.messages').scrollTop($('.messages')[0].scrollHeight);
+              },
+              error: function(xhr, status, error) {
+                  console.error('Message sending failed:', {
+                      status: status,
+                      error: error,
+                      responseText: xhr.responseText
+                  });
+                  alert('Message sending failed: ' + error);
+              }
+          });
+      }
+  });
+
+  $('#attachFilesButton').click(function() {
+      $('#file').click();
+  });
+});
+
 </script>
-
 @endsection

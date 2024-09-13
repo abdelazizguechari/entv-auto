@@ -20,3 +20,4 @@ class AddEventColumnToActivityLogTable extends Migration
         });
     }
 }
+

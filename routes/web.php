@@ -17,7 +17,8 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\FaQController ;
 use App\Http\Controllers\DashboardController ;
 use App\Http\Controllers\ThemeController;
-
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
 
 
@@ -244,6 +245,20 @@ Route::get('/admin/chate',[PusherController::class,'index'])->name('chate.app');
 Route::post('/broadcast', [PusherController::class, 'broadcast']);
 Route::post('/receive', [PusherController::class, 'receive']);
 
+// routes/web.php
+
+
+Route::post('/send-message', [PusherController::class, 'sendMessage']);
+Route::post('/send-file', [PusherController::class, 'sendFile']);
+
+
+
+Route::post('/conversations', [ConversationController::class, 'createConversation']);
+Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages']);
+
+// Messages
+Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage']);
+Route::post('/conversations/{conversation}/send-file', [MessageController::class, 'sendFile']);
 
 
 });

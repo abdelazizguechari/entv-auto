@@ -59,6 +59,10 @@ class User extends Authenticatable
 
     }
 
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class, 'conversation_participants');
+    }
     // public function getActivitylogOptions(): LogOptions
     // {
     //     return LogOptions::defaults()

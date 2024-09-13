@@ -84,7 +84,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Soumettre le Formulaire</button>
+                    <button type="submit" class="btn btn-inverse-primary">Soumettre le Formulaire</button>
                 </form>
             </div>
         </div>

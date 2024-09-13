@@ -10,19 +10,45 @@ return new class extends Migration
      * Run the migrations.
      */
   public function up()
-   {
+  
+  
+  {
+
+
+   
+
+    Schema::create('conversations', function (Blueprint $table) {
+        $table->id();
+        $table->string('title')->nullable(); 
+        $table->timestamps();
+    });
+    
+
     Schema::create('messages', function (Blueprint $table) {
         $table->id();
-        $table->unsignedBigInteger('sender_id'); // User who sent the message
-        $table->unsignedBigInteger('receiver_id'); // User who received the message
-        $table->text('message');
+        $table->text('message')->nullable();
+        $table->string('file_path')->nullable(); // For file messages
+        $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+        $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Sender
         $table->timestamps();
-    
-        // Add foreign key constraints if you have users table
-        $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
-        $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
     });
 
+
+    Schema::create('conversation_participants', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('conversation_id')->constrained()->onDelete('cascade');
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->timestamps();
+
+
+    });
+
+
+
+
+
+
+    
 
 }
     /**
