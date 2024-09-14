@@ -6,28 +6,14 @@ use App\Models\Driver;
 use App\Models\Carsm;
 use App\Models\ConducteurConger;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 
 class DriverController extends Controller
 {
-    use LogsActivity; 
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['nom', 'prenom', 'permis_conduire', 'voiture_id', 'email', 'status'])
-            ->useLogName('Driver')
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
-    }
-
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'nullable|string|max:255',
@@ -51,10 +37,9 @@ class DriverController extends Controller
 
         $driver = Driver::create($validatedData);
 
-        activity('Driver')
-            ->performedOn($driver)
+        activity()
             ->causedBy(auth()->user())
-            ->withProperties(['attributes' => $validatedData])
+            ->performedOn($driver)
             ->log('Driver created');
 
         $notification = [
@@ -81,9 +66,9 @@ class DriverController extends Controller
         $driver = Driver::findOrFail($id);
         $driver->delete();
 
-        activity('Driver')
-            ->performedOn($driver)
+        activity()
             ->causedBy(auth()->user())
+            ->performedOn($driver)
             ->log('Driver deleted');
 
         $notification = [
@@ -103,7 +88,6 @@ class DriverController extends Controller
 
     public function updatedriver(Request $request, $id)
     {
-
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
@@ -143,10 +127,9 @@ class DriverController extends Controller
 
         $driver->save();
 
-        activity('Driver')
-            ->performedOn($driver)
+        activity()
             ->causedBy(auth()->user())
-            ->withProperties(['attributes' => $validatedData])
+            ->performedOn($driver)
             ->log('Driver updated');
 
         $notification = [
@@ -179,10 +162,10 @@ class DriverController extends Controller
         $addconger->end_date = $request->end_date;
         $addconger->save();
 
-        activity('Driver')
-            ->performedOn($driver)
+        activity()
             ->causedBy(auth()->user())
-            ->log('Driver added to leave');
+            ->performedOn($driver)
+            ->log('Driver put on leave');
 
         $notification = [
             'message' => 'Driver added to leave successfully and car has been freed up.',

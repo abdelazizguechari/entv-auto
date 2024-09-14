@@ -31,6 +31,11 @@ class EventController extends Controller
         $event = Event::findOrFail($id);    
         $event->update($request->all());
 
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($event)
+        ->log('event updated');
+
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
@@ -38,6 +43,10 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $event->delete();
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($event)
+        ->log('event deleted');
         return redirect()->route('events.index')->with('success', 'Event deleted successfully');
     }
 
@@ -53,15 +62,19 @@ class EventController extends Controller
     //     return response()->json($events);
     // }
 
-    public function store(Request $request)
-    {
-        $event = Event::create([
-            'name' => $request->input('title'),
-            'description' => $request->input('description'),
-            'event_start' => $request->input('start'),
-            'event_end' => $request->input('end')
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $event = Event::create([
+    //         'name' => $request->input('title'),
+    //         'description' => $request->input('description'),
+    //         'event_start' => $request->input('start'),
+    //         'event_end' => $request->input('end')
+    //     ]);
+    //     activity()
+    //     ->causedBy(auth()->user())
+    //     ->performedOn($event)
+    //     ->log('event created');
 
-        return response()->json($event);
-    }
+    //     return response()->json($event);
+    // }
 }

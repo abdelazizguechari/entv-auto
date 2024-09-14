@@ -51,6 +51,11 @@ public function store(Request $request)
         $car->save();
     }
 
+    activity()
+        ->causedBy(Auth::user())
+        ->performedOn($maintenance)
+        ->log('car ajouter on maintenance');
+
 
     $notification = [
         'message' => 'car ajouter on maintenance success.',
@@ -79,7 +84,7 @@ public function store(Request $request)
  {
      $maintenance = Maintenance::findOrFail($id);
      $pdf = PDF::loadView('admin.gestion.maintenanceprint', compact('maintenance'));
-     return $pdf->download('maintenance_report.pdf'); // This will download the PDF
+     return $pdf->download('maintenance_report.pdf'); 
  }
 
 
@@ -156,28 +161,22 @@ public function store(Request $request)
  
      $maintenanceId = $request->input('maintenance_id');
      $totalCost = 0;
- 
-     // Loop through selected stocks
+
      foreach ($request->input('stocks') as $stockId => $stockData) {
          $quantity = $stockData['quantity'];
- 
-         // Fetch the stock item from the database
+
          $stockItem = Stock::find($stockId);
- 
-         // Ensure there is enough stock available
+
          if ($stockItem->quantity < $quantity) {
              return back()->withErrors("Insufficient stock for item: " . $stockItem->name);
          }
- 
-         // Calculate total cost for the selected stock
+
          $itemCost = $stockItem->price * $quantity;
          $totalCost += $itemCost;
- 
-         // Decrease the stock quantity in the database
+
          $stockItem->quantity -= $quantity;
          $stockItem->save();
- 
-         // Record the stock usage in the maintenance record (if needed)
+
          MaintenanceStock::create([
              'maintenance_id' => $maintenanceId,
              'stock_id' => $stockId,
@@ -186,8 +185,7 @@ public function store(Request $request)
              'total_cost' => $itemCost,
          ]);
      }
- 
-     // Update the total cost for the maintenance record
+
      $maintenance = Maintenance::find($maintenanceId);
      $maintenance->cost = $totalCost;
      $maintenance->save();

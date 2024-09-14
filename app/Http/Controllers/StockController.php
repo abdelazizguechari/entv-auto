@@ -27,23 +27,26 @@ class StockController extends Controller
             'stocks.*.quantity' => 'required|integer|min:0',
             'stocks.*.price' => 'required|numeric|min:0',
         ]);
-    
+
         // Iterate over the stocks input and create new Stock entries
-        foreach ($request->input('stocks') as $stock) {
-            Stock::create([
-                'category' => $stock['category'],  // Make sure this matches the validation field name
-                'quantity' => $stock['quantity'],
-                'price' => $stock['price'],
+        foreach ($request->input('stocks') as $stockData) {
+            $stock = Stock::create([
+                'category' => $stockData['category'], 
+                'quantity' => $stockData['quantity'],
+                'price' => $stockData['price'],
             ]);
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($stock)
+                ->log('Stock added: ' . $stock->category . ', Quantity: ' . $stock->quantity);
         }
-    
-        // Set notification message
+
         $notification = [
             'message' => 'Stock created successfully.',
             'alert-type' => 'success'
         ];
-    
-        // Redirect back with the notification
+
         return redirect()->route('all.stock')->with($notification);
     }
 
@@ -56,12 +59,20 @@ class StockController extends Controller
 
 
     public function delete($id) {
-        $types = Stock::findOrFail($id)->delete();
+        $stock = Stock::findOrFail($id);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($stock)
+            ->log('Stock deleted: ' . $stock->category);
+
+        $stock->delete();
+
         $notification = [
-            'message' => 'element deleted successfully.',
+            'message' => 'Element deleted successfully.',
             'alert-type' => 'success'
         ];
-        
+
         return redirect()->back()->with($notification);
     }
 
@@ -149,6 +160,4 @@ class StockController extends Controller
         
         return redirect()->route('import.stock')->with('success', 'Données importées avec succès');
     }
-
-    
 }

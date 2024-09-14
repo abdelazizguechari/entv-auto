@@ -178,9 +178,9 @@ Route::controller(EventController::class)->group(function()  {
         Route::get('/all/permission', [roleController::class, 'allPermission'])->name('all.permission');
         Route::get('/add/permission', [roleController::class, 'addpermission'])->name('add.permission');
         Route::post('/permission/store', [roleController::class, 'storepermission'])->name('store.permission');
-        Route::get('ad/change/permission/{id}*/', [roleController::class, 'editpermission'])->name('edit.permission');
+        Route::get('ad/change/permission/{id}/', [roleController::class, 'editpermission'])->name('edit.permission');
         Route::post('/permission/update', [roleController::class, 'updatepermission'])->name('update.permission');
-        Route::get('/permission/delate/{id}*/', [roleController::class, 'delatepermission'])->name('delate.permission');
+        Route::get('/permission/delate/{id}/', [roleController::class, 'delatepermission'])->name('delate.permission');
     
     });
     
