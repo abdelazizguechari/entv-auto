@@ -11,7 +11,6 @@ class MaintenanceStock extends Model
 
     protected $fillable = ['maintenance_id', 'stock_id', 'quantity', 'price', 'total_cost'];
 
-    // Relationships
     public function maintenance()
     {
         return $this->belongsTo(Maintenance::class);

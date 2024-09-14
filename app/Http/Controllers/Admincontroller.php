@@ -101,13 +101,11 @@ public function updateprofil(Request $request) {
 
 public function passwordupdate(Request $request)
 {
-    // Validate the request data
     $request->validate([
         'old_password' => 'required',
         'new_password' => 'required|confirmed|min:6',
     ]);
 
-    // Check if the old password is correct
     if (!Hash::check($request->old_password, auth()->user()->password)) {
         $notification = [
             'message' => 'Old password does not match.',
@@ -178,7 +176,6 @@ public function usersigne(Request $request) {
 
     public function newlogin(Request $request): RedirectResponse
     {
-        // Validate the incoming request data
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -186,22 +183,18 @@ public function usersigne(Request $request) {
     
         $credentials = ['email' => $request->email, 'password' => $request->password];
     
-        // Log the attempted credentials (for debugging purposes)
         Log::info('Attempting login with credentials: ', $credentials);
     
         if (Auth::attempt($credentials)) {
-            // Check if the user is an admin
             $user = Auth::user();
             if ($user->role === 'admin') {
                 return redirect()->intended('/admin/home');
             }
-    
-            // Log out if not an admin
+
             Auth::logout();
             return back()->withErrors(['email' => 'Unauthorized']);
         }
-    
-        // Authentication failed
+
         return back()->withErrors(['email' => 'Invalid login credentials']);
     }
     
@@ -244,124 +237,140 @@ public function Ouradmins() {
 
 
 
-public function Saveadmin(Request $request) {
-   
-   
-   
-    $user = new User();
-    $user->firstname = $request->firstname;
-    $user->lastname = $request->lastname;
-    $user->mat= $request->mat;
-    $user->email = $request->email;
-    $user->phone = $request->phone;
-    $user->birthday = $request->birthday;
-    $user->password = Hash::make( $request->password);
-    $user->role = 'admin';
-    $user->status = 'active';
+public function Saveadmin(Request $request)
+    {
+        $user = new User();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->mat = $request->mat;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->birthday = $request->birthday;
+        $user->password = Hash::make($request->password);
+        $user->role = 'admin';
+        $user->status = 'active';
 
-  
-    if ($request->roles) {
-        $role = Role::find($request->roles);
-        if ($role) {
-            $user->save(); 
-            $user->assignRole($role); 
-            $notification = [
-                'message' => 'Admin created and role assigned successfully.',
-                'alert-type' => 'success'
-            ];
+        if ($request->roles) {
+            $role = Role::find($request->roles);
+            if ($role) {
+                $user->save();
+                $user->assignRole($role);
+
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($user)
+                    ->withProperties(['role' => $role->name])
+                    ->log('User created and role assigned');
+
+                $notification = [
+                    'message' => 'Admin created and role assigned successfully.',
+                    'alert-type' => 'success'
+                ];
+            } else {
+                $notification = [
+                    'message' => 'Role not found.',
+                    'alert-type' => 'error'
+                ];
+            }
         } else {
-            $notification = [
-                'message' => 'Role not found.',
-                'alert-type' => 'error'
-            ];
+            $user->save();
         }
-    } else {
-        $user->save(); 
+
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->performedOn($user)
+        //     ->log('user created');
+
+        $notification = [
+            'message' => 'User Created.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('Our.admins')->with($notification);
     }
 
-    
-    $notification = [
-        'message' => 'User Create .',
-        'alert-type' => 'success'
-    ];
 
 
-    return redirect()->route('Our.admins')->with($notification);
-}
+    public function Delateadmin($id)
+    {
+        $Delateadmin = User::findOrFail($id);
 
+        if (!is_null($Delateadmin)) {
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($Delateadmin)
+                ->log('User deleted');
 
-
-public function Delateadmin($id) {
-
-    $Delateadmin = User::findOrFail($id);
-    
-    if (!is_null($Delateadmin)) {
-        $Delateadmin->delete();
-    }
-    
-    
-
-
-    $notification = [
-        'message' => 'Admin Deleted .',
-        'alert-type' => 'success'
-    ];
-
-
-    return redirect()->back()->with($notification);
-}
-
-
-public function Editadmin($id){
-
-    $user = User::findOrFail($id);
-    $Role = Role::all();
-
-    return view('admin.role.adminsetup.Editadmin',compact('user','Role'));
-
-}
-
-public function Updateadmin(Request $request ,$id){
-
-    $user = User::findOrFail($id);
-    $user->update([
-
-
-        'firstname' => $request->firstname,
-        'lastname' => $request->lastname,
-        'mat'=> $request->mat,
-        'email' => $request->email,
-        'phone' => $request->phone,
-    ]);
-
-    $user->roles()->detach();
-
-    if ($request->roles) {
-        $role = Role::find($request->roles);
-        if ($role) {
-            $user->save(); 
-            $user->assignRole($role); 
-            $notification = [
-                'message' => 'Admin created and role assigned successfully.',
-                'alert-type' => 'success'
-            ];
-        } else {
-            $notification = [
-                'message' => 'Role not found.',
-                'alert-type' => 'error'
-            ];
+            $Delateadmin->delete();
         }
+
+        $notification = [
+            'message' => 'Admin Deleted.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
     }
 
-    $notification = [
-        'message' => 'Admin inforamtion update',
-        'alert-type' => 'success'
-    ];
+    public function Editadmin($id){
 
+        $user = User::findOrFail($id);
+        $Role = Role::all();
 
-    return redirect()->route('Our.admins')->with($notification);
+        return view('admin.role.adminsetup.Editadmin',compact('user','Role'));
 
-}
+    }
+
+    public function Updateadmin(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'mat' => $request->mat,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->log('User updated');
+
+        $user->roles()->detach();
+
+        if ($request->roles) {
+            $role = Role::find($request->roles);
+            if ($role) {
+                $user->save();
+                $user->assignRole($role);
+
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($user)
+                    ->withProperties(['role' => $role->name])
+                    ->log('Role reassigned to User');
+
+                $notification = [
+                    'message' => 'Admin updated and role assigned successfully.',
+                    'alert-type' => 'success'
+                ];
+            } else {
+                $notification = [
+                    'message' => 'Role not found.',
+                    'alert-type' => 'error'
+                ];
+            }
+        }
+
+        $notification = [
+            'message' => 'Admin information updated.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('Our.admins')->with($notification);
+    }
 
 
 };

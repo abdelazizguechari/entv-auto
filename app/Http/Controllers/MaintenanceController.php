@@ -1,22 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Carsm;
 use App\Models\Driver;
 use App\Models\Stock;
 use App\Models\Maintenance;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\MaintenanceArchive;
 use Carbon\Carbon;
 use App\Models\MaintenanceStock;
-
-
-
 
 class MaintenanceController extends Controller
 {
@@ -26,183 +21,224 @@ class MaintenanceController extends Controller
         $mantanance = Maintenance::all(); 
         $chauffeur = Driver::where('voiture_id', $immatriculation)->first();
 
+        // Log activity for viewing maintenance addition page
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->withProperties(['immatriculation' => $immatriculation])
+        //     ->log('Viewed car maintenance addition page');
+
         return view('admin.gestion.addCarmantenance', compact('car', 'mantanance', 'chauffeur'));
     }
 
-public function store(Request $request)
-{
-   
-    $maintenance = Maintenance::create([
-        'immatriculation' => $request->immatriculation,
-        'driver_id' => $request->driver_id, 
-        'categorie_panne' => $request->categorie_panne,
-        'maintenance_type' => $request->maintenance_type,
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date,
-        'description' => $request->description,
-        'cost' => $request->cost,
-       
-    ]);
+    public function store(Request $request)
+    {
+        $maintenance = Maintenance::create([
+            'immatriculation' => $request->immatriculation,
+            'driver_id' => $request->driver_id,
+            'categorie_panne' => $request->categorie_panne,
+            'maintenance_type' => $request->maintenance_type,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'description' => $request->description,
+            'cost' => $request->cost,
+        ]);
 
-   
-    $car = Carsm::where('immatriculation', $request->immatriculation)->first();
-    if ($car) {
-        $car->status='inactive';
-        $car->save();
+        $car = Carsm::where('immatriculation', $request->immatriculation)->first();
+        if ($car) {
+            $car->status = 'inactive';
+            $car->save();
+
+            // Log car status change
+            // activity()
+            //     ->causedBy(Auth::user())
+            //     ->performedOn($car)
+            //     ->withProperties(['status' => 'inactive'])
+            //     ->log('Car status changed to inactive');
+        }
+
+        // Log maintenance creation
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($maintenance)
+            ->log('Maintenance created for car');
+
+        $notification = [
+            'message' => 'car ajouter on maintenance success.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('Datain.maintenance')->with($notification);
     }
 
-    activity()
-        ->causedBy(Auth::user())
-        ->performedOn($maintenance)
-        ->log('car ajouter on maintenance');
+    public function Datainmaintenance()
+    {
+        $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
+            ->select('maintenance.*', 'drivers.nom as driver_name')
+            ->where('maintenance.status', 'inwork')
+            ->get();
 
+        // Log data retrieval
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->log('Fetched data for cars currently in maintenance');
 
-    $notification = [
-        'message' => 'car ajouter on maintenance success.',
-        'alert-type' => 'success'
-    ];
+        return view('admin.gestion.CarInMaintenance', compact('data'));
+    }
 
-    return redirect()->route('Datain.maintenance')->with($notification);
-}
+    public function print($id)
+    {
+        $maintenance = Maintenance::findOrFail($id);
+        $pdf = PDF::loadView('admin.gestion.maintenanceprint', compact('maintenance'));
 
- public function Datainmaintenance () {
- 
-    
-    $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
-    ->select('maintenance.*', 'drivers.nom as driver_name')
-    ->where('maintenance.status', 'inwork') 
-    ->get();
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($maintenance)
+            ->log('Generated PDF for maintenance report');
 
+        return $pdf->download('maintenance_report.pdf');
+    }
 
-    return view('admin.gestion.CarInMaintenance',compact('data'));
- }
+    public function complete($id)
+    {
+        $maintenance = Maintenance::findOrFail($id);
 
+        $maintenance->status = 'completed';
+        $maintenance->end_date = Carbon::now();
+        $maintenance->save();
 
+        MaintenanceArchive::create([
+            'maintenance_id' => $maintenance->id,
+            'maintenance_type' => $maintenance->maintenance_type,
+            'start_date' => $maintenance->start_date,
+            'end_date' => $maintenance->end_date,
+            'description' => $maintenance->description,
+            'categorie_panne' => $maintenance->categorie_panne,
+            'cost' => $maintenance->cost,
+            'created_at' => $maintenance->created_at,
+            'updated_at' => $maintenance->updated_at,
+        ]);
 
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($maintenance)
+            ->log('Maintenance completed and archived');
 
- public function print($id)
- {
-     $maintenance = Maintenance::findOrFail($id);
-     $pdf = PDF::loadView('admin.gestion.maintenanceprint', compact('maintenance'));
-     return $pdf->download('maintenance_report.pdf'); 
- }
+        $notification = [
+            'message' => 'car ajouter on maintenance success.',
+            'alert-type' => 'success'
+        ];
 
+        return redirect()->back()->with($notification);
+    }
 
- public function complete($id)
- {
-     
-     $maintenance = Maintenance::findOrFail($id);
+    public function maintenancearchive()
+    {
+        $Marchive = MaintenanceArchive::all();
 
-    
-     $maintenance->status = 'completed';
-     $maintenance->end_date = Carbon::now();
-     $maintenance->save();
+        // Log archive view access
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->log('Accessed maintenance archive');
 
- 
-     MaintenanceArchive::create([
-         'maintenance_id' => $maintenance->id,
-         'maintenance_type' => $maintenance->maintenance_type,
-         'start_date' => $maintenance->start_date,
-         'end_date' => $maintenance->end_date,
-         'description' => $maintenance->description,
-         'categorie_panne' => $maintenance->categorie_panne,
-         'cost' => $maintenance->cost,
-         'created_at' => $maintenance->created_at,
-         'updated_at' => $maintenance->updated_at,
-     ]);
+        return view('admin.gestion.archive.MaintenanceArchive', compact('Marchive'));
+    }
 
+    public function Manintern()
+    {
+        $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
+            ->select('maintenance.*', 'drivers.nom as driver_name')
+            ->where('maintenance.status', 'inwork')
+            ->where('maintenance_type', 'inside')
+            ->get();
 
-     $notification = [
-        'message' => 'car ajouter on maintenance success.',
-        'alert-type' => 'success'
-    ];
+        // Log retrieval of internal maintenance data
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->log('Fetched data for internal maintenance');
 
-     
-    
-     return redirect()->back()->with($notification);
- }
+        return view('admin.gestion.Manintern', compact('data'));
+    }
 
+    public function maintenacegestion($id)
+    {
+        $data = Maintenance::findOrFail($id);
+        $stock = Stock::all();
 
- public function maintenancearchive() {
-    $Marchive = MaintenanceArchive::all();
-    return view ('admin.gestion.archive.MaintenanceArchive',compact('Marchive'));
- }
+        // Log maintenance management view access
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->withProperties(['maintenance_id' => $id])
+        //     ->log('Accessed maintenance management view');
 
+        return view('admin.gestion.Maintenance', compact('data', 'stock'));
+    }
 
- public function Manintern() {
+    public function addStockToMaintenance(Request $request)
+    {
+        $request->validate([
+            'maintenance_id' => 'required|exists:maintenance,id',
+            'stocks' => 'required|array',
+            'stocks.*.quantity' => 'required|integer|min:1',
+        ]);
 
+        $maintenanceId = $request->input('maintenance_id');
+        $totalCost = 0;
 
- 
-    $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
-    ->select('maintenance.*', 'drivers.nom as driver_name')
-    ->where('maintenance.status', 'inwork') 
-    ->where('maintenance_type', 'inside')
-    ->get();
+        foreach ($request->input('stocks') as $stockId => $stockData) {
+            $quantity = $stockData['quantity'];
+            $stockItem = Stock::find($stockId);
 
+            if ($stockItem->quantity < $quantity) {
+                return back()->withErrors("Insufficient stock for item: " . $stockItem->name);
+            }
 
-    return view ('admin.gestion.Manintern',compact('data'));
- }
+            $itemCost = $stockItem->price * $quantity;
+            $totalCost += $itemCost;
 
+            $stockItem->quantity -= $quantity;
+            $stockItem->save();
 
- public function maintenacegestion($id){
-    $data = Maintenance::findOrFail($id);
-    $stock = Stock::all();
-    return view('admin.gestion.Maintenance',compact('data','stock'));
- }
+            // Log stock item addition to maintenance
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($stockItem)
+                ->withProperties(['maintenance_id' => $maintenanceId, 'quantity' => $quantity])
+                ->log('Stock item added to maintenance');
 
- public function addStockToMaintenance(Request $request)
- {
-   
-     $request->validate([
-         'maintenance_id' => 'required|exists:maintenance,id',
-         'stocks' => 'required|array',
-         'stocks.*.quantity' => 'required|integer|min:1',
-     ]);
- 
-     $maintenanceId = $request->input('maintenance_id');
-     $totalCost = 0;
+            MaintenanceStock::create([
+                'maintenance_id' => $maintenanceId,
+                'stock_id' => $stockId,
+                'quantity' => $quantity,
+                'price' => $stockItem->price,
+                'total_cost' => $itemCost,
+            ]);
+        }
 
-     foreach ($request->input('stocks') as $stockId => $stockData) {
-         $quantity = $stockData['quantity'];
+        $maintenance = Maintenance::find($maintenanceId);
+        $maintenance->cost = $totalCost;
+        $maintenance->save();
 
-         $stockItem = Stock::find($stockId);
+        // Log total maintenance cost update
+        // activity()
+        //     ->causedBy(Auth::user())
+        //     ->performedOn($maintenance)
+        //     ->log('Updated maintenance total cost');
 
-         if ($stockItem->quantity < $quantity) {
-             return back()->withErrors("Insufficient stock for item: " . $stockItem->name);
-         }
+        return redirect()->back()->with('success', 'Stock added to maintenance successfully!');
+    }
 
-         $itemCost = $stockItem->price * $quantity;
-         $totalCost += $itemCost;
+    public function nosintern()
+    {
+        $data = MaintenanceStock::join('maintenance', 'maintenance_stocks.maintenance_id', '=', 'maintenance.id')
+            ->join('stock', 'maintenance_stocks.stock_id', '=', 'stock.id')
+            ->select('maintenance_stocks.*', 'maintenance.immatriculation', 'stock.name as stock_name', 'stock.category', 'stock.price')
+            ->get();
 
-         $stockItem->quantity -= $quantity;
-         $stockItem->save();
+        // Log retrieval of stock in maintenance
+        // activity()
+        //     ->causedBy(Auth::user()) 
+        //     ->log('Fetched stock data for internal maintenance');
 
-         MaintenanceStock::create([
-             'maintenance_id' => $maintenanceId,
-             'stock_id' => $stockId,
-             'quantity' => $quantity,
-             'price' => $stockItem->price,
-             'total_cost' => $itemCost,
-         ]);
-     }
-
-     $maintenance = Maintenance::find($maintenanceId);
-     $maintenance->cost = $totalCost;
-     $maintenance->save();
- 
-     return redirect()->back()->with('success', 'Stock added to maintenance successfully!');
- }
-
- public function nosintern(){
-
-  
-    $data = MaintenanceStock::join('maintenance', 'maintenance_stocks.maintenance_id', '=', 'maintenance.id')
-    ->join('stock', 'maintenance_stocks.stock_id', '=', 'stock.id') // Correct table name here
-    ->select('maintenance_stocks.*', 'maintenance.immatriculation', 'stock.name as stock_name', 'stock.category', 'stock.price')
-    ->get();
-return view('admin.gestion.nosintern', compact('data'));
         return view('admin.gestion.nosintern', compact('data'));
-    
- }
-
+    }
 }
