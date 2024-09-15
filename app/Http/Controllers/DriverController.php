@@ -205,4 +205,12 @@ class DriverController extends Controller
         $data = Driver::findOrFail($id);
         return view('admin.webapp.driver.Qtrdriver', compact('data'));
     }
+
+    public function driverdetailes($id)
+    {
+        $data = Driver::findOrFail($id);
+        return view('admin.webapp.driver.driverdetailes', compact('data'));
+    }
+
+    
 }

@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/operator/addleave/{id}', [DriverController::class, 'addconger'])->name('add.conger'); // Changed /conducteur/addconger/{id} to /operator/addleave/{id}
         Route::get('/operator/driverconger', [DriverController::class, 'driverconger'])->name('driver.conger');
         Route::get('/operator/{id}/Qtr', [DriverController::class, 'Addintoqtr'])->name('driver.qtr');
+        Route::get('/operator/{id}/detailes', [DriverController::class, 'driverdetailes'])->name('driver.detailes');
 
      
     

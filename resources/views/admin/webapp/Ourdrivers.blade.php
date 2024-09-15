@@ -55,7 +55,7 @@
                 <i data-feather="alert-triangle"></i>
             </a>
             
-            <a href="{{ route('driver.qtr', $item->id) }}" type="submit" class="btn btn-inverse-secondary btn-icon" title="Voir les détails">
+            <a href="{{ route('driver.detailes', $item->id) }}" type="submit" class="btn btn-inverse-secondary btn-icon" title="Voir les détails">
                 <i data-feather="eye"></i>
             </a>
             
