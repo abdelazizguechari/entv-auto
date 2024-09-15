@@ -242,7 +242,13 @@ public function Ouradmins() {
     return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
 }
 
-
+public function show($id) {
+    $user = User::find($id);
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
+    return response()->json($user);
+}
 
 public function Saveadmin(Request $request) {
    

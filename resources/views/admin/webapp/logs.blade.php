@@ -1,8 +1,11 @@
 @extends('admin.dash')
 
 @section('admin')
+<div class="page-content">
 <div class="container">
-    <h1 class="my-4">Activity Logs</h1>
+    <h1 class="fs-4">Activity Logs</h1>
+    <hr>
+
     
     <form method="GET" action="{{ route('logs.index') }}" class="mb-4">
         <div class="row">
@@ -23,8 +26,10 @@
                 <input type="date" id="date_to" name="date_to" class="form-control" value="{{ request('date_to') }}">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Filter</button>
+        <button type="submit" class="btn btn-inverse-primary mt-3">Filter</button>
     </form>
+
+    <hr>
 
     <table class="table table-bordered">
         <thead>
@@ -50,5 +55,7 @@
             @endforelse
         </tbody>
     </table>
+</div>
+
 </div>
 @endsection

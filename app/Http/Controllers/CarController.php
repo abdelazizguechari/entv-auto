@@ -57,11 +57,11 @@ class CarController extends Controller
         $car->description = $request->description;
         $car->save();
 
-        // activity()
-        //     ->on($car)
-        //     ->causedBy(Auth::user())
-        //     ->withProperties(['attributes' => $car])
-        //     ->log('Car created');
+        activity()
+            ->on($car)
+            ->causedBy(Auth::user())
+            ->withProperties(['attributes' => $car])
+            ->log('Car created');
 
         $notification = [
             'message' => 'Car created successfully.',
@@ -99,11 +99,11 @@ class CarController extends Controller
 
         $car->delete();
 
-        // activity()
-        //     ->on($car)
-        //     ->causedBy(Auth::user())
-        //     ->withProperties(['attributes' => $car])
-        //     ->log('Car deleted');
+        activity()
+            ->on($car)
+            ->causedBy(Auth::user())
+            ->withProperties(['attributes' => $car])
+            ->log('Car deleted');
 
         $notification = [
             'message' => 'Car deleted successfully.',
@@ -127,11 +127,11 @@ class CarController extends Controller
             'description' => $request->description,
         ]);
 
-        // activity()
-        //     ->on($car)
-        //     ->causedBy(Auth::user())
-        //     ->withProperties(['attributes' => $car])
-        //     ->log('Car updated');
+        activity()
+            ->on($car)
+            ->causedBy(Auth::user())
+            ->withProperties(['attributes' => $car])
+            ->log('Car updated');
 
         $notification = [
             'message' => 'Car updated successfully.',
