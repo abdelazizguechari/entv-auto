@@ -35,13 +35,13 @@ class MissionsController extends Controller
     }
 
    public function createMission(Request $request)
-{
-    $cars = Carsm::all();
-    $events = Event::all();
-    $eventId = $request->input('event_id');
-    $fromEvent = $request->input('from_event', false);
-    return view('admin.webapp.createmission', compact('cars', 'events', 'eventId', 'fromEvent'));
-}
+    {
+        $cars = Carsm::all();
+        $events = Event::all();
+        $eventId = $request->input('event_id');
+        $fromEvent = $request->input('from_event', false);
+        return view('admin.webapp.createmission', compact('cars', 'events', 'eventId', 'fromEvent'));
+    }
 
     public function createEvents()
     {
@@ -66,6 +66,11 @@ class MissionsController extends Controller
         $data['type'] = 'transportation'; 
 
         $mission = Mission::create($data);
+
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($mission)
+        ->log('created transportation mission');
 
         return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission created successfully.');
     }
@@ -97,6 +102,11 @@ class MissionsController extends Controller
             $event->missions()->attach($mission->id);
             return redirect()->back()->with('success', 'Mission added to event successfully. You can add more missions.');
         }
+
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($mission)
+        ->log('created mission.');
 
 
         $notification = [
@@ -139,6 +149,11 @@ class MissionsController extends Controller
             return redirect()->back()->with('success', 'Mission updated and added to event successfully.');
         }
 
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($mission)
+        ->log('mission updated');
+
         return redirect()->route('missions.index')->with('success', 'Mission updated successfully.');
     }
 
@@ -171,6 +186,11 @@ class MissionsController extends Controller
 
         $mission->update($data);
 
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($mission)
+        ->log('transportation mission updated');
+
         return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission updated successfully.');
     } 
     public function editTransportation($id)
@@ -193,6 +213,11 @@ class MissionsController extends Controller
 
         $event = Event::create($request->all());
 
+        activity()
+        ->causedBy(auth()->user())
+        ->performedOn($event)
+        ->log('event created');
+
         if ($request->query('redirect_to_add_mission')) {
             return redirect()->route('missions.create.mission', ['event_id' => $event->id, 'from_event' => true])
                             ->with('success', 'Event created successfully. Now add missions to the event.');
@@ -205,15 +230,30 @@ class MissionsController extends Controller
     public function destroy($id)
     {
         $mission = Mission::findOrFail($id);
-        $missionType = $mission->type; 
+        $missionType = $mission->type;
+        $missionName = $mission->name;
         $mission->delete();
-    
+
+        $logMessage = '';
+
+        if ($missionType == 'transportation') {
+            $logMessage = "Transportation mission '{$missionName}' deleted successfully.";
+        } else if ($missionType == 'mission') {
+            $logMessage = " mission '{$missionName}' deleted successfully.";
+        }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($mission)
+            ->log($logMessage);
+
         if ($missionType == 'transportation') {
             return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission deleted successfully.');
         } else {
             return redirect()->route('missions.index')->with('success', 'Mission deleted successfully.');
         }
     }
+
     
 
     public function getDriversByCars(Request $request)

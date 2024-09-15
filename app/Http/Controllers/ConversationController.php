@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conversation;
+use App\Models\ConversationParticipant;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -13,7 +14,7 @@ class ConversationController extends Controller
     {
         $userId = $request->input('user_id');
         $currentUserId = auth()->id();
-        
+    
         // Ensure that we are not creating a conversation with the same user
         if ($userId === $currentUserId) {
             return response()->json(['error' => 'Cannot start a conversation with yourself.'], 400);
@@ -29,18 +30,15 @@ class ConversationController extends Controller
         }
     
         // Fetch user names for the conversation title
-        $user = User::find($userId);
-        $currentUser = auth()->user();
-    
-        $userName = $user ? ($user->firstname . ' ' . $user->lastname) : 'Unknown User';
-        $currentUserName = ($currentUser ? ($currentUser->firstname . ' ' . $currentUser->lastname) : 'You');
-    
+        $userName = User::find($userId)->name ?? 'Unknown User';
+        $currentUserName = User::find($currentUserId)->name ?? 'You';
+
         // Create a new conversation
         $conversation = Conversation::create([
-            'title' => 'Conversation between ' . $userName . ' and ' . $currentUserName,
+            'title' => 'Conversation with ' . User::find($contactUserId)->firstname,
         ]);
-    
-        // Add participants
+
+        // Add participants to the new conversation
         $conversation->participants()->createMany([
             ['user_id' => $userId],
             ['user_id' => $currentUserId]
@@ -48,8 +46,8 @@ class ConversationController extends Controller
     
         return response()->json(['conversation' => $conversation]);
     }
-    
 
+    // New method to get conversation details
     public function getConversationDetails($conversationId)
     {
         try {

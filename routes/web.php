@@ -178,9 +178,9 @@ Route::controller(EventController::class)->group(function()  {
         Route::get('/all/permission', [roleController::class, 'allPermission'])->name('all.permission');
         Route::get('/add/permission', [roleController::class, 'addpermission'])->name('add.permission');
         Route::post('/permission/store', [roleController::class, 'storepermission'])->name('store.permission');
-        Route::get('ad/change/permission/{id}*/', [roleController::class, 'editpermission'])->name('edit.permission');
+        Route::get('ad/change/permission/{id}/', [roleController::class, 'editpermission'])->name('edit.permission');
         Route::post('/permission/update', [roleController::class, 'updatepermission'])->name('update.permission');
-        Route::get('/permission/delate/{id}*/', [roleController::class, 'delatepermission'])->name('delate.permission');
+        Route::get('/permission/delate/{id}/', [roleController::class, 'delatepermission'])->name('delate.permission');
     
     });
     
@@ -242,7 +242,6 @@ Route::controller(roleController::class)->group(function() {
 
 
 
-Route::get('/admin/chate',[PusherController::class,'index'])->name('chate.app');
 
 // Route::get('/chate', 'App\Http\Controllers\PusherController@index');
 Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
@@ -252,13 +251,21 @@ Route::post('/send-message', [PusherController::class, 'sendMessage']);
 Route::post('/send-file', [PusherController::class, 'sendFile']);
 
 
-Route::get('/conversations/{conversation}/details', [ConversationController::class, 'getConversationDetails']);
-Route::post('/conversations', [ConversationController::class, 'createConversation']);
-Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages']);
 
-// Messages
-Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage']);
-Route::post('/conversations/{conversation}/send-file', [MessageController::class, 'sendFile']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::get('/admin/chat', [ConversationController::class, 'index'])->name('chate.app');
+Route::get('/conversations/{conversation}/details', [ConversationController::class, 'getConversationDetails'])->name('conversations.details');
+Route::post('/conversations', [ConversationController::class, 'createConversation'])->name('conversations.create');
+Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages'])->name('conversations.messages');
+Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage'])->name('messages.send');
+Route::post('/conversations/{conversation}/send-file', [MessageController::class, 'sendFile'])->name('files.send');
+
+
+Route::get('/admin/contacts', [ConversationController::class, 'contacts'])->name('contacts');
+
+
+// Route for conversation page
+Route::get('/conversation/{id}', [ConversationController::class, 'show'])->name('conversation.show');
 
 Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
 

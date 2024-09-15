@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Carsm;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
@@ -56,11 +56,11 @@ class CarController extends Controller
         $car->proprietaire = $request->proprietaire;
         $car->description = $request->description;
         $car->save();
-    
+
         activity()
-            ->performedOn($car)
+            ->on($car)
             ->causedBy(Auth::user())
-            ->withProperties(['attributes' => $car->getAttributes()])
+            ->withProperties(['attributes' => $car])
             ->log('Car created');
 
         $notification = [
@@ -75,6 +75,7 @@ class CarController extends Controller
     {
         return view('admin.adding.car_add');
     }
+
     public function ourcars()
     {
         return view('admin.webapp.cars.Ourcars');
@@ -94,15 +95,15 @@ class CarController extends Controller
 
     public function deleteCar($immatriculation)
     {
-        $car = Carsm::findOrFail($immatriculation);
-
-        activity()
-            ->performedOn($car)
-            ->causedBy(Auth::user())
-            ->withProperties(['attributes' => $car->getAttributes()])
-            ->log('Car deleted');
+        $car = Carsm::where('immatriculation', $immatriculation)->firstOrFail();
 
         $car->delete();
+
+        activity()
+            ->on($car)
+            ->causedBy(Auth::user())
+            ->withProperties(['attributes' => $car])
+            ->log('Car deleted');
 
         $notification = [
             'message' => 'Car deleted successfully.',
@@ -111,11 +112,10 @@ class CarController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
     public function updateCar(Request $request, $immatriculation)
     {
         $car = Carsm::findOrFail($immatriculation);
-
-        $oldData = $car->getAttributes();
 
         $car->update([
             'etat' => $request->etat,
@@ -128,12 +128,9 @@ class CarController extends Controller
         ]);
 
         activity()
-            ->performedOn($car)
+            ->on($car)
             ->causedBy(Auth::user())
-            ->withProperties([
-                'old' => $oldData,
-                'new' => $car->getAttributes()
-            ])
+            ->withProperties(['attributes' => $car])
             ->log('Car updated');
 
         $notification = [
@@ -144,10 +141,9 @@ class CarController extends Controller
         return redirect()->route('admin.ourcars')->with($notification);
     }
 
-    public function carsdetails($immatriculation) 
+    public function carsdetails($immatriculation)
     {
         $car = Carsm::findOrFail($immatriculation);
         return view('admin.webapp.cars.cardetails', compact('car'));
     }
-
 }

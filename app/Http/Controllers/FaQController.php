@@ -26,7 +26,11 @@ class FaQController extends Controller
         $faq->reponse= $request->reponse;
         $faq->save();
 
-
+        activity()
+            ->causedby(auth()->user())
+            ->performedOn($faq)
+            ->log('faq created');
+                        
         $notification = [
             'message' => 'FAQ create successfully.',
             'alert-type' => 'success'

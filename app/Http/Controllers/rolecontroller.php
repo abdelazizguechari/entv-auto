@@ -24,17 +24,23 @@ public function addpermission () {
 
 public function storepermission(Request $request) {
     $permission = Permission::create([
-        'name' => $request->name ,
-        'group_name' => $request ->group_name,
+        'name' => $request->name,
+        'group_name' => $request->group_name,
     ]);
 
+    activity()
+        ->causedBy(auth()->user())
+        ->performedOn($permission)
+        ->log('New permission created: ' . $permission->name);
+
     $notification = [
-        'message' => 'permission created successfully.',
+        'message' => 'Permission created successfully.',
         'alert-type' => 'success'
     ];
 
     return redirect()->route('all.permission')->with($notification);
 }
+
 
 public function editpermission($id) {
 
@@ -43,39 +49,54 @@ public function editpermission($id) {
 }
 
 
-public function updatepermission (Request $request){
-
+public function updatepermission(Request $request) {
     $per_id = $request->id;
+    $permission = Permission::findOrFail($per_id);
 
-    Permission::findOrFail($per_id)->update([
-        'name' => $request->name ,
-        'group_name' => $request ->group_name,
+    $permission->update([
+        'name' => $request->name,
+        'group_name' => $request->group_name,
     ]);
 
+    activity()
+        ->causedBy(auth()->user())
+        ->performedOn($permission)
+        ->log('Permission updated: ' . $permission->name);
+
     $notification = [
-        'message' => 'permission update successfully.',
+        'message' => 'Permission updated successfully.',
         'alert-type' => 'success'
     ];
 
     return redirect()->route('all.permission')->with($notification);
 }
 
-public function delatepermission($id) {
 
-    Permission::findOrFail($id)->delete(); 
-    $notification = [
-        'message' => 'permission update successfully.',
-        'alert-type' => 'success'
-    ];
+public function delatepermission($id) {
+    $permission = Permission::findOrFail($id);
+
+    if ($permission) {
+        $permissionName = $permission->name;
+        $permission->delete();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($permission)
+            ->log('Permission deleted: ' . $permissionName);
+
+        $notification = [
+            'message' => 'Permission deleted successfully.',
+            'alert-type' => 'success'
+        ];
+    } else {
+        $notification = [
+            'message' => 'Permission not found.',
+            'alert-type' => 'error'
+        ];
+    }
 
     return redirect()->back()->with($notification);
-
 }
-
-
-
-// role methouds
-
 
 public function allrole() {
     $role = Role::all();
@@ -89,17 +110,22 @@ public function addrole () {
 
 public function storerole(Request $request) {
     $role = Role::create([
-        'name' => $request->name ,
-        
+        'name' => $request->name,
     ]);
 
+    activity()
+        ->causedBy(auth()->user())
+        ->performedOn($role)
+        ->log('New role created: ' . $role->name);
+
     $notification = [
-        'message' => 'role created successfully.',
+        'message' => 'Role created successfully.',
         'alert-type' => 'success'
     ];
 
     return redirect()->route('all.role')->with($notification);
 }
+
 
 public function editrole($id) {
 
@@ -108,34 +134,48 @@ public function editrole($id) {
 }
 
 
-public function updaterole (Request $request){
-
+public function updaterole(Request $request) {
     $per_id = $request->id;
+    $role = Role::findOrFail($per_id);
 
-    Role::findOrFail($per_id)->update([
-        'name' => $request->name ,
-    
+    $role->update([
+        'name' => $request->name,
     ]);
 
+    activity()
+        ->causedBy(auth()->user())
+        ->performedOn($role)
+        ->log('Role updated: ' . $role->name);
+
     $notification = [
-        'message' => 'Role update successfully.',
+        'message' => 'Role updated successfully.',
         'alert-type' => 'success'
     ];
 
     return redirect()->route('all.role')->with($notification);
 }
 
-public function delaterole($id) {
 
-    Role::findOrFail($id)->delete(); 
+public function delaterole($id) {
+    $role = Role::findOrFail($id);
+    if (!is_null($role)) {
+        $roleName = $role->name;
+        $role->delete();
+        
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($role)
+            ->log('Role deleted: ' . $roleName);
+    }
+
     $notification = [
-        'message' => 'role delete successfully.',
+        'message' => 'Role deleted successfully.',
         'alert-type' => 'success'
     ];
 
     return redirect()->back()->with($notification);
-
 }
+
 
 
     public function addrolespermission() {
@@ -147,34 +187,41 @@ public function delaterole($id) {
     }
 
     public function rolePermissionStore(Request $request) {
-       
         $request->validate([
             'role_id' => 'required|integer',
             'permissions' => 'required|array',
             'permissions.*' => 'integer',
         ]);
 
-        $permissions = $request->permissions ?? []; 
+        $roleId = $request->role_id;
+        $permissions = $request->permissions ?? [];
 
         if (empty($permissions)) {
-            
             $notification = [
                 'message' => 'No permissions selected.',
                 'alert-type' => 'warning'
             ];
-
             return redirect()->back()->with($notification);
         }
 
+        $role = Role::findOrFail($roleId);
+        $roleName = $role->name;
+
+        $permissionNames = Permission::whereIn('id', $permissions)->pluck('name')->toArray();
+    
         $data = [];
         foreach ($permissions as $permissionId) {
             $data[] = [
-                'role_id' => $request->role_id,
+                'role_id' => $roleId,
                 'permission_id' => $permissionId
             ];
         }
 
         DB::table('role_has_permissions')->insert($data);
+
+        activity()
+            ->causedBy(auth()->user())
+            ->log('Assigned permissions to role: ' . $roleName . '. Permissions: ' . implode(', ', $permissionNames));
 
         $notification = [
             'message' => 'Role permissions added successfully.',
@@ -183,7 +230,8 @@ public function delaterole($id) {
 
         return redirect()->route('all.roles.permission')->with($notification);
     }
-
+    
+    
 
 
     public function allrolespermission() {
@@ -207,19 +255,20 @@ public function delaterole($id) {
     }
     
 
-    public function adminroleupdate(Request $request, $id)
-    {
+    public function adminroleupdate(Request $request, $id) {
         $role = Role::findOrFail($id);
         $permissions = $request->permissions;
     
         if (!empty($permissions)) {
-            // Convert permission IDs to names
             $permissionNames = Permission::whereIn('id', $permissions)->pluck('name')->toArray();
             $role->syncPermissions($permissionNames);
         } else {
-            // Optional: Clear all permissions if the permissions array is empty
             $role->syncPermissions([]);
         }
+    
+        activity()
+            ->causedBy(auth()->user())
+            ->log('Updated permissions for role: ' . $role->name . '. Permissions: ' . implode(', ', $permissionNames));
     
         $notification = [
             'message' => 'Role permissions updated successfully.',
@@ -228,26 +277,23 @@ public function delaterole($id) {
     
         return redirect()->route('all.roles.permission')->with($notification);
     }
-
-
+    
 
     public function admindeleterole($id) {
-    $role = Role::findOrFail($id);
-if (!is_null($role)) {
-    $role ->delete();
-}
-
-
-$notification = [
-    'message' => 'Role permissions deleted successfully.',
-    'alert-type' => 'success'
-];
-
-return redirect()->back()->with($notification);
-
-    }
-
+        $role = Role::findOrFail($id);
+        if (!is_null($role)) {
+            $role->delete();
+            
+            activity()
+                ->causedBy(auth()->user())
+                ->log('Deleted role: ' . $role->name);
+        }
     
+        $notification = [
+            'message' => 'Role deleted successfully.',
+            'alert-type' => 'success'
+        ];
     
-
+        return redirect()->back()->with($notification);
+    }    
 }

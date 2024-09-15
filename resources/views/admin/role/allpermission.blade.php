@@ -1,17 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
-
 <div class="page-content">
 
     <nav class="page-breadcrumb">
@@ -65,9 +54,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection
