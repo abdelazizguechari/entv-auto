@@ -11,7 +11,7 @@
 <div class="page-content">
         <div class="col-md-12 stretch-card">
             <div class="card bg-transparent">
-                <div class="card-body bg-dark">
+                <div class="card-body ">
                     <h4 class="card-title fs-4">Formulaire de Maintenance</h4>
                     <hr>
                     <form method="POST" action="{{ route('maintenance.store') }}">

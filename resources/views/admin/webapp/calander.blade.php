@@ -45,6 +45,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                     <a id="eventUrl" class="btn btn-primary" href="#" target="_blank">Page de l'Événement</a>
+                    <button id="deleteEventButton" class="btn btn-danger">Supprimer</button>
                 </div>
             </div>
         </div>
@@ -81,7 +82,6 @@
     </div>
 </div>
 
-
 <!-- FullCalendar JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.2/main.min.js"></script>
 <!-- Bootstrap JS -->
@@ -90,72 +90,122 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-    $(function() {
-        var calendarEl = document.getElementById('fullcalendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: "prev,today,next",
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-            },
-            editable: true,
-            droppable: true,
-            initialView: 'dayGridMonth',
-            timeZone: 'UTC',
-            events: function(fetchInfo, successCallback, failureCallback) {
-                $.ajax({
-                    url: '{{ route('events.index') }}', // Your Laravel route for fetching events
-                    method: 'GET',
-                    success: function(data) {
-                        successCallback(data);
-                    },
-                    error: function() {
-                        failureCallback();
-                    }
-                });
-            },
-            dateClick: function(info) {
-                $('#eventStart').val(info.dateStr);
-                $('#eventEnd').val(info.dateStr);
-                $('#createEventModal').modal('show');
-            },
-            eventClick: function(info) {
-                var eventObj = info.event;
-                $('#modalTitle1').text(eventObj.title);
-                $('#modalBody1').text(eventObj.extendedProps.description || 'No description');
-                $('#eventUrl').attr('href', eventObj.url || '#');
-                $('#fullCalModal').modal('show');
-            },
-        });
-
-        calendar.render();
-
-        $('#saveEventButton').on('click', function() {
-            var title = $('#eventTitle').val();
-            var description = $('#eventDescription').val();
-            var start = $('#eventStart').val();
-            var end = $('#eventEnd').val();
-
+  $(function() {
+    var calendarEl = document.getElementById('fullcalendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+            left: "prev,today,next",
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+        },
+        editable: true,
+        droppable: true,
+        initialView: 'dayGridMonth',
+        timeZone: 'UTC',
+        events: function(fetchInfo, successCallback, failureCallback) {
             $.ajax({
-                url: '{{ route('events.store') }}', // Your Laravel route for saving events
-                method: 'POST',
+                url: '{{ route('calendar-events.index') }}', // Laravel route for fetching events
+                method: 'GET',
+                success: function(data) {
+                    successCallback(data);
+                },
+                error: function() {
+                    failureCallback();
+                }
+            });
+        },
+        dateClick: function(info) {
+            $('#eventStart').val(info.dateStr);
+            $('#eventEnd').val(info.dateStr);
+            $('#createEventModal').modal('show');
+        },
+        eventClick: function(info) {
+            var eventObj = info.event;
+            $('#modalTitle1').text(eventObj.title);
+            $('#modalBody1').text(eventObj.extendedProps.description || 'No description');
+            $('#eventUrl').attr('href', eventObj.url || '#');
+            $('#deleteEventButton').data('event-id', eventObj.id); // Store the event ID
+            $('#fullCalModal').modal('show');
+        },
+        eventDrop: function(info) {
+            updateEvent(info.event);
+        },
+        eventResize: function(info) {
+            updateEvent(info.event);
+        }
+    });
+
+    calendar.render();
+
+    // Save event
+    $('#saveEventButton').on('click', function() {
+        var title = $('#eventTitle').val();
+        var description = $('#eventDescription').val();
+        var start = $('#eventStart').val();
+        var end = $('#eventEnd').val();
+
+        $.ajax({
+            url: '{{ route('calendar-events.store') }}', // Laravel route for saving events
+            method: 'POST',
+            data: {
+                title: title,
+                description: description,
+                start: start,
+                end: end,
+                _token: '{{ csrf_token() }}' // CSRF token for Laravel
+            },
+            success: function(response) {
+                calendar.refetchEvents(); // Refresh events in the calendar
+                $('#createEventModal').modal('hide');
+            },
+            error: function() {
+                alert('Failed to save event');
+            }
+        });
+    });
+
+    // Delete event
+    $('#deleteEventButton').on('click', function() {
+        var eventId = $(this).data('event-id');
+        if (confirm('Are you sure you want to delete this event?')) {
+            $.ajax({
+                url: '{{ url('calendar-events') }}/' + eventId, // Adjust route for deletion
+                method: 'DELETE',
                 data: {
-                    title: title,
-                    description: description,
-                    start: start,
-                    end: end,
                     _token: '{{ csrf_token() }}' // CSRF token for Laravel
                 },
                 success: function(response) {
-                    calendar.refetchEvents();
-                    $('#createEventModal').modal('hide');
+                    calendar.refetchEvents(); // Refresh events in the calendar
+                    $('#fullCalModal').modal('hide');
                 },
                 error: function() {
-                    alert('Failed to save event');
+                    alert('Failed to delete event');
                 }
             });
-        });
+        }
     });
+
+    // Update event
+    function updateEvent(event) {
+        $.ajax({
+            url: '{{ url('calendar-events') }}/' + event.id, // Adjust route for updating
+            method: 'PUT',
+            data: {
+                title: event.title,
+                start: event.start.toISOString(),
+                end: event.end ? event.end.toISOString() : null,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                calendar.refetchEvents(); // Refresh events in the calendar
+            },
+            error: function() {
+                alert('Failed to update event');
+            }
+        });
+    }
+});
+
 </script>
 
 @endsection

@@ -22,7 +22,12 @@ class Admincontroller extends Controller
     
     }
 
-
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+    
 
     
 public function AdminDashboard() {
@@ -116,9 +121,7 @@ public function passwordupdate(Request $request)
         return back()->with($notification);
     }
 
-    User::whereId(auth()->user()->id)->update([
-        'password' => Hash::make($request->new_password)
-    ]);
+
 
 
     $notification = [
@@ -242,13 +245,6 @@ public function Ouradmins() {
     return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
 }
 
-public function show($id) {
-    $user = User::find($id);
-    if (!$user) {
-        return response()->json(['error' => 'User not found'], 404);
-    }
-    return response()->json($user);
-}
 
 public function Saveadmin(Request $request) {
    

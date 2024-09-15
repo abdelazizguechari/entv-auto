@@ -226,6 +226,18 @@ use Illuminate\Support\Facades\Auth;
               <li class="nav-item">
                 <a href="{{route('maintenance.archive')}}" class="nav-link">maintenance archive</a>
               </li>
+
+              <li class="nav-item">
+                <a href="pages/advanced-ui/cropper.html" class="nav-link">conger conducteur archive</a>
+              </li>
+              
+
+              <li class="nav-item">
+                <a href="pages/advanced-ui/cropper.html" class="nav-link"> conducteur signler archive</a>
+              </li>
+              
+
+
             </ul>
           </div>
         </li>

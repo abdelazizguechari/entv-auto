@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
-<div class="card bg-transparent ">
+<div class="card ">
   <div class="card-body ">
     <h6 class="card-title  fs-4">TABLEAU DES maintenance</h6>
     <hr>

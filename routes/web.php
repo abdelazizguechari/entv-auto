@@ -21,6 +21,7 @@ use App\Http\Controllers\LogsController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
+use App\Http\Controllers\CalendarEventController;
 
 
 
@@ -56,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('admin/vehicle/createw', [CarController::class, 'create'])->name('car.create'); // Changed /admin/car/create to /admin/vehicle/create
         Route::post('admin/vehicle/reez', [CarController::class, 'store'])->name('car.store'); // Changed /admin/car/store to /admin/vehicle/store
-        Route::get('/admin/vehicles/flizst', [CarController::class, 'ourcars'])->name('admin.ourcars'); // Changed /admin/ourcars to /admin/vehicles/list
+        Route::get('/admin/vehicles', [CarController::class, 'ourcars'])->name('admin.ourcars'); // Changed /admin/ourcars to /admin/vehicles/list
         Route::get('/admin/vehicles/qedit/{immatriculation}', [CarController::class, 'edit'])->name('edit.car'); // Changed /admin/ourcars/edit/{immatriculation} to /admin/vehicles/edit/{immatriculation}
         Route::get('/admin/vehicles/dfselete/{immatriculation}', [CarController::class, 'deleteCar'])->name('delete.car'); // Changed /admin/ourcars/delete/{immatriculation} to /admin/vehicles/delete/{immatriculation}
         Route::put('/admin/vehicles/updqsate/{immatriculation}', [CarController::class, 'updateCar'])->name('update.car'); // Changed /admin/ourcars/update/{immatriculation} to /admin/vehicles/update/{immatriculation}
@@ -68,6 +69,15 @@ Route::middleware(['auth'])->group(function () {
     
     });
   
+
+
+    Route::get('/calendar', function () {
+        return view('admin.webapp.calender'); // Adjust the view path as needed
+    })->name('calendar');
+    
+    // Resource routes for managing calendar events
+    Route::resource('calendar-events', CalendarEventController::class);
+
 
     
     Route::controller(DriverController::class)->group(function(){
@@ -100,7 +110,7 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
         Route::get('/admin/remove/{id}', [AdminController::class, 'Delateadmin'])->name('delate.admin'); // Changed /admin/Delateadmin/{id} to /admin/remove/{id}
         Route::get('/admin/edit/{id}', [AdminController::class, 'Editadmin'])->name('edit.admin'); // Changed /admin/Editadmin/{id} to /admin/edit/{id}
         Route::post('/admin/modify/{id}', [AdminController::class, 'Updateadmin'])->name('Update.admin'); // Changed /admin/Updateadmin/{id} to /admin/modify/{id}
-        Route::get('/admin/vehicle', [AdminController::class, 'Addcar'])->name('add.car'); // Changed /admin/addcar to /admin/add-vehicle
+        Route::get('/admin/z', [AdminController::class, 'Addcar'])->name('add.car'); // Changed /admin/addcar to /admin/add-vehicle
         Route::get('/admin/calendar', [AdminController::class, 'caladner'])->name('caladner.add'); // Changed /admin/calander to /admin/calendar
         Route::get('/driver/try', [AdminController::class, 'draiveradd'])->name('add'); // Changed /driver to /driver/add
         Route::get('/admin/task', [AdminController::class, 'Addmission'])->name('add.mission'); // Changed /admin/missi/ to /admin/task
@@ -252,20 +262,16 @@ Route::post('/send-file', [PusherController::class, 'sendFile']);
 
 
 
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::get('/admin/chat', [ConversationController::class, 'index'])->name('chate.app');
-Route::get('/conversations/{conversation}/details', [ConversationController::class, 'getConversationDetails'])->name('conversations.details');
-Route::post('/conversations', [ConversationController::class, 'createConversation'])->name('conversations.create');
-Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages'])->name('conversations.messages');
-Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage'])->name('messages.send');
-Route::post('/conversations/{conversation}/send-file', [MessageController::class, 'sendFile'])->name('files.send');
 
 
-Route::get('/admin/contacts', [ConversationController::class, 'contacts'])->name('contacts');
+Route::get('/users/{id}', [Admincontroller::class, 'show']);
+Route::get('/conversations/{conversationId}/messages', [MessageController::class, 'getMessages']);
+Route::get('/{id}/conversation', [ConversationController::class, 'showOrCreateConversation'])->name('conversation.show');
 
+Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage']);
 
-// Route for conversation page
-Route::get('/conversation/{id}', [ConversationController::class, 'show'])->name('conversation.show');
+Route::post('/files/{conversationId}', [MessageController::class, 'sendFile']);
+Route::get('/admin/conve', [ConversationController::class, 'index'])->name('chatee.app');
 
 Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
 

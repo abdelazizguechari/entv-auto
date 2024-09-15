@@ -55,26 +55,26 @@
 
    <!-- Layout styles -->
    <link id="theme-style" rel="stylesheet" href="{{ $theme === 'light' ? asset('backend/assets/css/demo1/style.css') : asset('backend/assets/css/demo2/style.css') }}">
-   <!-- End layout styles --
+   <!-- End layout styles -->
 
 
   <link rel="shortcut icon" href="{{asset('backend/assets/images/entvlogo.png')}}" sizes="48x48" type="image/png"/>
 
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
-
+{{-- 
   <style>
 	/* Inline styles to handle initial theme */
 	:root {
 		--default-theme: url("{{ asset('backend/assets/css/demo2/style.css') }}"); /* Dark mode */
 	}
-</style>
+</style> --}}
 
 </head>
 <body>
 	
 
-		<-- partial:partials/_sidebar.html -->
+	
    @include('admin.body.sidebar')
 		<!-- partial -->
 	

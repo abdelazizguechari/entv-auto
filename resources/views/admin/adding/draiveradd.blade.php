@@ -10,11 +10,6 @@ $cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('
 
 @section('admin')
 
-<style>
-    .form-control {
-        background-color: transparent !important;
-    }
-</style>
 
 <div class="page-content">
     <div class="row">
@@ -100,9 +95,9 @@ $cars = App\Models\Carsm::whereNotIn('immatriculation', $activeDrivers)->pluck('
                                     <div class="mb-3">
                                         <label class="form-label">Sélectionnez une voiture</label>
                                         <select class="form-control" name="voiture_id">
-                                            <option style="background-color: black;padding:3px;" value="" disabled selected>Sélectionnez une voiture</option>
+                                            <option  value="" disabled selected>Sélectionnez une voiture</option>
                                             @foreach($cars as $immatriculation)
-                                                <option style="background-color: rgb(7, 8, 18)" value="{{ $immatriculation }}">{{ $immatriculation }}</option>
+                                                <option value="{{ $immatriculation }}">{{ $immatriculation }}</option>
                                             @endforeach
                                         </select>  
                                     </div>
