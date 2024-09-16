@@ -93,6 +93,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/operator/driverconger', [DriverController::class, 'driverconger'])->name('driver.conger');
         Route::get('/operator/{id}/Qtr', [DriverController::class, 'Addintoqtr'])->name('driver.qtr');
         Route::get('/operator/{id}/detailes', [DriverController::class, 'driverdetailes'])->name('driver.detailes');
+        Route::post('/report-driver', [DriverController::class, 'reportDriver'])->name('report.driver');
+        Route::get('/admin/allqtr', [DriverController::class, 'Condqtr'])->name('Cond.qtr');
+
+        Route::delete('/admin/{id}/signalements', [DriverController::class, 'deleteRecord'])->name('signalements.delete');
+
+
+
+
 
      
     
@@ -119,7 +127,7 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
         Route::post('/admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update'); // Kept /admin/profile/update as is
         Route::post('/admin/password/update', [AdminController::class, 'passwordupdate'])->name('password.change'); // Changed /admin/update/password to /admin/password/update
         Route::get('/admin/profile', [AdminController::class, 'Adminprofile'])->name('admin.profile'); // Kept /admin/profile as is
-        Route::get('/admin/home', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard'); // Changed /admin/dashboard to  
+ // Changed /admin/dashboard to  
         Route::get('/agent/home', [Agentcontroller::class, 'AgentDashboard'])->name('agent.dashboard'); // Changed /agent/dashboard to /agent/home
         Route::get('/admin/sign-up', [AdminController::class, 'adminsigne'])->name('signe.admin'); // Changed /admin/signe to /admin/sign-up
         Route::post('/admin/sign-up/create', [AdminController::class, 'usersigne'])->name('user.admin'); 
@@ -127,6 +135,10 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
     
     });
     
+
+    Route::get('/admin/home', [DashboardController::class, 'AdminDashboard'])->name('admin.dashboard');
+
+
 
 Route::get('/auth/redirect', function () {  return Socialite::driver('google')->redirect();});
 // Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');

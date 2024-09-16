@@ -17,6 +17,7 @@ class Driver extends Model
         'assurance_num',
         'permis_conduire',
         'telephone',
+        'matricule',
         'num_cas_urgance',
         'nom_cas_urgance',
         'email',
@@ -32,4 +33,7 @@ class Driver extends Model
     {
         return $this->belongsTo(Carsm::class, 'voiture_id', 'immatriculation');
     }
+
+
+    
 }

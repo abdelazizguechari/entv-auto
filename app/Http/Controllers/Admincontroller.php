@@ -30,11 +30,6 @@ class Admincontroller extends Controller
     
 
     
-public function AdminDashboard() {
-    $data = Department::where('id', 2)->first();
-    return view ('admin.index',compact('data'));
-
-}
 
 public function caladner() {
     return view ('admin.webapp.calander');

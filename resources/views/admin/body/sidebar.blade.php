@@ -182,7 +182,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('driver.conger')}}" class="nav-link">Conducteurs en congé</a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">Conducteurs questionnaires</a>
+                <a href="{{route('Cond.qtr')}}" class="nav-link">Conducteurs questionnaires</a>
               </li>
 
             
