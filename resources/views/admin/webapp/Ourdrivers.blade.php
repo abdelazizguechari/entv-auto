@@ -2,10 +2,6 @@
 
 @section('admin') 
 
-
-
-
-
 <div class="page-content">
 
 
@@ -43,26 +39,9 @@
             <td>{{$item ->voiture_id}}</td>
             <td>
                
-              <a class="btn btn-inverse-info btn-icon" href="{{ route('edit.driver', $item->id) }}" title="Éditer le conducteur">
-                <i data-feather="edit"></i>
-            </a>
-            
-            <a class="btn btn-inverse-success btn-icon" href="{{ route('conducteur.conge', $item->id) }}" title="Conducteur en congé">
-                <i data-feather="battery-charging"></i>
-            </a>
-            
-            <a href="{{ route('driver.qtr', $item->id) }}" type="submit" class="btn btn-inverse-warning btn-icon" title="Signaler le conducteur">
-                <i data-feather="alert-triangle"></i>
-            </a>
-            
-            <a href="{{ route('driver.detailes', $item->id) }}" type="submit" class="btn btn-inverse-secondary btn-icon" title="Voir les détails">
-                <i data-feather="eye"></i>
-            </a>
-            
-            <a class="btn btn-inverse-danger btn-icon" href="{{ route('delete.driver', $item->id) }}" id="delete" title="Supprimer le conducteur">
-                <i data-feather="trash"></i>
-            </a>
-            
+            <a class="btn btn-inverse-info btn-icon" href="{{ route('edit.driver', $item->id)}}"><i data-feather="edit"> </i></a>
+
+            <a class="btn btn-inverse-danger btn-icon" href="{{ route('delete.driver', $item->id) }}" id="delete"><i data-feather="trash"> </i></a>
 </td>
           </tr>
 
@@ -77,9 +56,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection
