@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Driver;
 use App\Models\Carsm;
+use App\Models\Event;
+use App\Models\Mission;
+use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Department;
 use App\Models\ConducteurConger;
 use Illuminate\Http\RedirectResponse;
@@ -48,14 +53,17 @@ class DashboardController extends Controller
     return redirect()->route('admin.dashboard')->with($notification);
 }
 
+public function AdminDashboard() {
 
-public function index() {
+    $data = Department::where('id', 2)->first();
+    $carnumber = Carsm::where('status' , 'active')->count();
+    $driverumber = Driver::where('status' , 'active')->count();
+   
+    $users = User::all(); $currentUserId = auth()->user();
 
-    
-$carnumber = Carsm::count();
+    $missions = Mission::whereDate('mission_start', Carbon::today())->get();
 
-
-return view ('admin.index' ,compact('carnumber'));
+    return view ('admin.index',compact('data','carnumber','driverumber','missions','currentUserId','users'));
 
 }
 

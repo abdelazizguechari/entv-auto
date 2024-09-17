@@ -19,3 +19,5 @@ class Conversation extends Model
         return $this->hasMany(ConversationParticipant::class);
     }
 }
+
+

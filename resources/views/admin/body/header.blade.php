@@ -9,15 +9,16 @@
 
 
 <nav class="navbar">
+
 				<a href="#" class="sidebar-toggler">
 					<i data-feather="menu"></i>
 				</a>
 
-        <div style="display: flex; align-items: center;margin-left: 3px;">
+        {{-- <div style="display: flex; align-items: center;margin-left: 3px;">
           
           <div id="currentDate" style="width: 210px; margin-left: 3px;" class="text-light fs-6"></div>
       </div>
-      
+       --}}
 
 				<div class="navbar-content">
          
@@ -29,7 +30,6 @@
 								<i class=" mt-1" title="us"></i> <span class="ms-1 me-1 d-none d-md-inline-block">Fr</span>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="languageDropdown">
-                {{-- <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ms-1"> French </span></a> --}}
                 <a href="javascript:;" class="dropdown-item py-2"><i class="" title="us" id="us"></i> <span class="ms-1"> En </span></a>
                 <a href="javascript:;" class="dropdown-item py-2"><i class="" title="de" id="de"></i> <span class="ms-1"> Ar </span></a>
 
@@ -54,7 +54,7 @@
 								</div>
                 <div class="row g-0 p-1">
                   <div class="col-3 text-center">
-                    <a href="{{route('chate.app')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="message-square" class="icon-lg mb-1"></i><p class="tx-12">Chat</p></a>
+                    <a href="{{route('chatee.app')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="message-square" class="icon-lg mb-1"></i><p class="tx-12">Chat</p></a>
                   </div>
                   <div class="col-3 text-center">
                     <a href="{{route('caladner.add')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="calendar" class="icon-lg mb-1"></i><p class="tx-12">Calendar</p></a>

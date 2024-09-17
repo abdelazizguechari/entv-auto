@@ -4,71 +4,66 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conversation;
+use App\Models\ConversationParticipant;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
-
 class ConversationController extends Controller
 {
-    public function createConversation(Request $request)
-    {
-        $userId = $request->input('user_id');
-        $currentUserId = auth()->id();
-    
-        // Ensure that we are not creating a conversation with the same user
-        if ($userId === $currentUserId) {
-            return response()->json(['error' => 'Cannot start a conversation with yourself.'], 400);
-        }
-    
-        // Check if a conversation already exists between these two users
-        $existingConversation = Conversation::whereHas('participants', function($query) use ($userId, $currentUserId) {
-            $query->whereIn('user_id', [$userId, $currentUserId]);
-        })->withCount('participants')->having('participants_count', 2)->first();
-    
-        if ($existingConversation) {
-            return response()->json(['conversation' => $existingConversation]);
-        }
-    
-        // Fetch user names for the conversation title
-        $userName = User::find($userId)->name ?? 'Unknown User';
-        $currentUserName = User::find($currentUserId)->name ?? 'You';
 
+
+        public function index()
+    {
+
+        $users = User::where('id', '!=', auth()->id())->get();
+        $currentUserId = auth()->user();
+
+         return view('admin.webapp.chate.chate',compact('users','currentUserId'));
+    }
+
+    
+    public function showOrCreateConversation(Request $request, $id)
+{
+    $userId = $id;
+    $currentUserId = auth()->id();
+
+    // Check if a conversation already exists between the two users
+    $existingConversation = ConversationParticipant::select('conversation_id')
+        ->whereIn('user_id', [$userId, $currentUserId])
+        ->groupBy('conversation_id')
+        ->havingRaw('COUNT(user_id) = 2')
+        ->first();
+
+    if ($existingConversation) {
+        $conversationId = $existingConversation->conversation_id;
+    } else {
         // Create a new conversation
         $conversation = Conversation::create([
-            'title' => 'Conversation between ' . $userName . ' and ' . $currentUserName,
+            'title' => User::find($userId)->firstname . ' ' . User::find($userId)->lastname,
         ]);
-    
-        // Add participants
-        $conversation->participants()->createMany([
-            ['user_id' => $userId],
-            ['user_id' => $currentUserId]
-        ]);
-    
-        return response()->json(['conversation' => $conversation]);
+
+        $conversationId = $conversation->id;
+
+        // Add participants to the new conversation
+        ConversationParticipant::create(['conversation_id' => $conversationId, 'user_id' => $currentUserId]);
+        ConversationParticipant::create(['conversation_id' => $conversationId, 'user_id' => $userId]);
     }
 
-    // New method to get conversation details
-    public function getConversationDetails($conversationId)
-    {
-        try {
-            $conversation = Conversation::with('participants.user')->findOrFail($conversationId);
+    // Fetch the conversation with participants and messages
+    $conversation = Conversation::with(['participants', 'messages'])->findOrFail($conversationId);
 
-            $participants = $conversation->participants->map(function ($participant) {
-                return [
-                    'name' => $participant->user->name,
-                    'email' => $participant->user->email
-                ];
-            });
+    // Fetch the user who is not the currently authenticated user
+    $user = User::findOrFail($id);
 
-            return response()->json([
-                'conversation' => [
-                    'title' => $conversation->title,
-                    'participants' => $participants
-                ]
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Error fetching conversation details: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to load conversation details.'], 500);
-        }
-    }
+    // Pass the conversation and user data to the view
+    return view('admin.webapp.chate.conversation', [
+        'conversation' => $conversation,
+        'user' => $user,
+        'conversationId' => $conversationId
+    ]);
+}
+
+    
+
+  
 }

@@ -21,6 +21,7 @@ use App\Http\Controllers\LogsController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
+use App\Http\Controllers\CalendarEventController;
 
 
 
@@ -56,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('admin/vehicle/createw', [CarController::class, 'create'])->name('car.create'); // Changed /admin/car/create to /admin/vehicle/create
         Route::post('admin/vehicle/reez', [CarController::class, 'store'])->name('car.store'); // Changed /admin/car/store to /admin/vehicle/store
-        Route::get('/admin/vehicles/flizst', [CarController::class, 'ourcars'])->name('admin.ourcars'); // Changed /admin/ourcars to /admin/vehicles/list
+        Route::get('/admin/vehicles', [CarController::class, 'ourcars'])->name('admin.ourcars'); // Changed /admin/ourcars to /admin/vehicles/list
         Route::get('/admin/vehicles/qedit/{immatriculation}', [CarController::class, 'edit'])->name('edit.car'); // Changed /admin/ourcars/edit/{immatriculation} to /admin/vehicles/edit/{immatriculation}
         Route::get('/admin/vehicles/dfselete/{immatriculation}', [CarController::class, 'deleteCar'])->name('delete.car'); // Changed /admin/ourcars/delete/{immatriculation} to /admin/vehicles/delete/{immatriculation}
         Route::put('/admin/vehicles/updqsate/{immatriculation}', [CarController::class, 'updateCar'])->name('update.car'); // Changed /admin/ourcars/update/{immatriculation} to /admin/vehicles/update/{immatriculation}
@@ -68,6 +69,15 @@ Route::middleware(['auth'])->group(function () {
     
     });
   
+
+
+    Route::get('/calendar', function () {
+        return view('admin.webapp.calender'); // Adjust the view path as needed
+    })->name('calendar');
+    
+    // Resource routes for managing calendar events
+    Route::resource('calendar-events', CalendarEventController::class);
+
 
     
     Route::controller(DriverController::class)->group(function(){
@@ -82,6 +92,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/operator/addleave/{id}', [DriverController::class, 'addconger'])->name('add.conger'); // Changed /conducteur/addconger/{id} to /operator/addleave/{id}
         Route::get('/operator/driverconger', [DriverController::class, 'driverconger'])->name('driver.conger');
         Route::get('/operator/{id}/Qtr', [DriverController::class, 'Addintoqtr'])->name('driver.qtr');
+        Route::get('/operator/{id}/detailes', [DriverController::class, 'driverdetailes'])->name('driver.detailes');
+        Route::post('/report-driver', [DriverController::class, 'reportDriver'])->name('report.driver');
+        Route::get('/admin/allqtr', [DriverController::class, 'Condqtr'])->name('Cond.qtr');
+
+        Route::delete('/admin/{id}/signalements', [DriverController::class, 'deleteRecord'])->name('signalements.delete');
+
+
+
+
 
      
     
@@ -100,7 +119,7 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
         Route::get('/admin/remove/{id}', [AdminController::class, 'Delateadmin'])->name('delate.admin'); // Changed /admin/Delateadmin/{id} to /admin/remove/{id}
         Route::get('/admin/edit/{id}', [AdminController::class, 'Editadmin'])->name('edit.admin'); // Changed /admin/Editadmin/{id} to /admin/edit/{id}
         Route::post('/admin/modify/{id}', [AdminController::class, 'Updateadmin'])->name('Update.admin'); // Changed /admin/Updateadmin/{id} to /admin/modify/{id}
-        Route::get('/admin/vehicle', [AdminController::class, 'Addcar'])->name('add.car'); // Changed /admin/addcar to /admin/add-vehicle
+        Route::get('/admin/z', [AdminController::class, 'Addcar'])->name('add.car'); // Changed /admin/addcar to /admin/add-vehicle
         Route::get('/admin/calendar', [AdminController::class, 'caladner'])->name('caladner.add'); // Changed /admin/calander to /admin/calendar
         Route::get('/driver/try', [AdminController::class, 'draiveradd'])->name('add'); // Changed /driver to /driver/add
         Route::get('/admin/task', [AdminController::class, 'Addmission'])->name('add.mission'); // Changed /admin/missi/ to /admin/task
@@ -108,7 +127,7 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
         Route::post('/admin/profile/update', [AdminController::class, 'updateprofil'])->name('profile.update'); // Kept /admin/profile/update as is
         Route::post('/admin/password/update', [AdminController::class, 'passwordupdate'])->name('password.change'); // Changed /admin/update/password to /admin/password/update
         Route::get('/admin/profile', [AdminController::class, 'Adminprofile'])->name('admin.profile'); // Kept /admin/profile as is
-        Route::get('/admin/home', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard'); // Changed /admin/dashboard to  
+ // Changed /admin/dashboard to  
         Route::get('/agent/home', [Agentcontroller::class, 'AgentDashboard'])->name('agent.dashboard'); // Changed /agent/dashboard to /agent/home
         Route::get('/admin/sign-up', [AdminController::class, 'adminsigne'])->name('signe.admin'); // Changed /admin/signe to /admin/sign-up
         Route::post('/admin/sign-up/create', [AdminController::class, 'usersigne'])->name('user.admin'); 
@@ -116,6 +135,10 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
     
     });
     
+
+    Route::get('/admin/home', [DashboardController::class, 'AdminDashboard'])->name('admin.dashboard');
+
+
 
 Route::get('/auth/redirect', function () {  return Socialite::driver('google')->redirect();});
 // Route::get('/auth/google' , [googleauth::class,'redirect' ])->name('google_auth');
@@ -242,7 +265,6 @@ Route::controller(roleController::class)->group(function() {
 
 
 
-Route::get('/admin/chate',[PusherController::class,'index'])->name('chate.app');
 
 // Route::get('/chate', 'App\Http\Controllers\PusherController@index');
 Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast');
@@ -252,13 +274,17 @@ Route::post('/send-message', [PusherController::class, 'sendMessage']);
 Route::post('/send-file', [PusherController::class, 'sendFile']);
 
 
-Route::get('/conversations/{conversation}/details', [ConversationController::class, 'getConversationDetails']);
-Route::post('/conversations', [ConversationController::class, 'createConversation']);
-Route::get('/conversations/{conversation}/messages', [MessageController::class, 'getMessages']);
 
-// Messages
+
+
+Route::get('/users/{id}', [Admincontroller::class, 'show']);
+Route::get('/conversations/{conversationId}/messages', [MessageController::class, 'getMessages']);
+Route::get('/{id}/conversation', [ConversationController::class, 'showOrCreateConversation'])->name('conversation.show');
+
 Route::post('/conversations/{conversation}/send-message', [MessageController::class, 'sendMessage']);
-Route::post('/conversations/{conversation}/send-file', [MessageController::class, 'sendFile']);
+
+Route::post('/files/{conversationId}', [MessageController::class, 'sendFile']);
+Route::get('/admin/conve', [ConversationController::class, 'index'])->name('chatee.app');
 
 Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
 

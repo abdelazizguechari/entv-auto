@@ -7,67 +7,60 @@ use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use App\Events\MessageSent;
 
 class MessageController extends Controller
 {
-    // Get all messages for a specific conversation
+
+
     public function getMessages($conversationId)
     {
-        try {
-            $conversation = Conversation::findOrFail($conversationId);
-            $messages = $conversation->messages()->get();
-    
-            return response()->json([
-                'messages' => $messages,
-                'current_user_id' => auth()->id()
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Error fetching messages: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to load messages.'], 500);
-        }
+        $messages = Message::where('conversation_id', $conversationId)->get();
+        return response()->json(['messages' => $messages]);
     }
     
-    // Send a text message
-    public function sendMessage(Request $request, $conversationId)
+
+    public function sendMessage(Request $request, Conversation $conversation)
     {
         $request->validate([
             'message' => 'required|string',
         ]);
-
-        $conversation = Conversation::findOrFail($conversationId);
-
-        $message = Message::create([
-            'message' => $request->input('message'),
-            'conversation_id' => $conversation->id,
+    
+        $message = $conversation->messages()->create([
             'user_id' => auth()->id(),
+            'message' => $request->message,
         ]);
-
-        // Optionally, broadcast the message (if using Pusher)
-        // broadcast(new \App\Events\ChatMessage($message))->toOthers();
-
-        return response()->json($message);
+    
+        broadcast(new MessageSent($message))->toOthers();
+    
+        return response()->json(['message' => $message]);
     }
+    
 
-    // Send a file message
     public function sendFile(Request $request, $conversationId)
     {
         $request->validate([
             'file' => 'required|file|max:10240', // 10MB file size limit
         ]);
 
-        $conversation = Conversation::findOrFail($conversationId);
+        try {
+            $conversation = Conversation::findOrFail($conversationId);
 
-        $filePath = $request->file('file')->store('uploads', 'public');
+            $filePath = $request->file('file')->store('uploads', 'public');
 
-        $message = Message::create([
-            'file_path' => Storage::url($filePath),
-            'conversation_id' => $conversation->id,
-            'user_id' => auth()->id(),
-        ]);
+            $message = Message::create([
+                'file_path' => Storage::url($filePath),
+                'conversation_id' => $conversation->id,
+                'user_id' => auth()->id(),
+            ]);
 
-        // Optionally, broadcast the file message (if using Pusher)
-        broadcast(new \App\Events\FileMessage($message))->toOthers();
-
-        return response()->json($message);
+      
+            return response()->json($message);
+        } catch (\Exception $e) {
+            // Log the exception message
+            Log::error('Failed to send file for conversation ID ' . $conversationId . ': ' . $e->getMessage());
+            
+            return response()->json(['error' => 'Failed to send file.'], 500);
+        }
     }
 }

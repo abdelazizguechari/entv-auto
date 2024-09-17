@@ -22,14 +22,14 @@ class Admincontroller extends Controller
     
     }
 
-
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+    
 
     
-public function AdminDashboard() {
-    $data = Department::where('id', 2)->first();
-    return view ('admin.index',compact('data'));
-
-}
 
 public function caladner() {
     return view ('admin.webapp.calander');
@@ -114,9 +114,7 @@ public function passwordupdate(Request $request)
         return back()->with($notification);
     }
 
-    User::whereId(auth()->user()->id)->update([
-        'password' => Hash::make($request->new_password)
-    ]);
+
 
 
     $notification = [
@@ -234,7 +232,6 @@ public function Ouradmins() {
     
     return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
 }
-
 
 
 public function Saveadmin(Request $request)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use App\Models\Carsm;
+use App\Models\Driverspam;
 use App\Models\ConducteurConger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,12 +15,13 @@ class DriverController extends Controller
 {
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        // Define validation rules and custom messages
+        $rules = [
             'nom' => 'required|string|max:255',
             'prenom' => 'nullable|string|max:255',
-            'assurance_num' => 'nullable|string|max:255',
-            'permis_conduire' => 'required|string|unique:drivers',
-            'telephone' => 'nullable|string|max:255',
+            'assurance_num' => 'nullable|string|max:15', // Maximum length of 15 for assurance number
+            'permis_conduire' => 'required|string|unique:drivers|max:15', // Maximum length of 15 for permis number
+            'telephone' => 'nullable|string|max:13', // Maximum length of 13 for telephone number
             'num_cas_urgance' => 'nullable|string|max:255',
             'nom_cas_urgance' => 'nullable|string|max:255',
             'email' => 'required|email|unique:drivers',
@@ -28,28 +30,59 @@ class DriverController extends Controller
             'date_naissance' => 'nullable|date',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'voiture_id' => 'required|string|exists:cars,immatriculation',
-        ]);
-
+            'matricule' => 'required|string|max:4', // Required and at most 4 characters
+        ];
+    
+        $messages = [
+            'permis_conduire.unique' => 'Le numéro de permis est déjà utilisé.',
+            'permis_conduire.max' => 'Le numéro de permis ne doit pas dépasser 15 caractères.',
+            'matricule.max' => 'Le matricule ne doit pas dépasser 4 caractères.',
+            'assurance_num.max' => 'Le numéro d\'assurance ne doit pas dépasser 15 caractères.',
+            'telephone.max' => 'Le numéro de téléphone ne doit pas dépasser 13 caractères.',
+            'date_naissance.after' => 'Vous devez avoir au moins 18 ans.',
+        ];
+    
+        // Validate the request
+        $validatedData = $request->validate($rules, $messages);
+    
+        // Check if the driver is at least 18 years old
+        if ($request->has('date_naissance')) {
+            $birthDate = new \DateTime($request->input('date_naissance'));
+            $currentDate = new \DateTime();
+            $age = $currentDate->diff($birthDate)->y;
+    
+            if ($age < 18) {
+                return redirect()->back()->withErrors([
+                    'date_naissance' => 'Vous devez avoir au moins 18 ans.',
+                ])->withInput();
+            }
+        }
+    
+        // Handle photo upload
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');
             $validatedData['photo'] = $photoPath;
         }
-
+    
+        // Create the driver record
         $driver = Driver::create($validatedData);
-
+    
+        // Log activity
         activity()
             ->causedBy(auth()->user())
             ->performedOn($driver)
-            ->log('Driver created');
-
+            ->log('Conducteur créé');
+    
+        // Set notification message
         $notification = [
-            'message' => 'Driver created successfully.',
+            'message' => 'Conducteur créé avec succès.',
             'alert-type' => 'success'
         ];
-
+    
+        // Redirect with success notification
         return redirect()->route('our.drivers')->with($notification);
     }
-
+    
     public function create()
     {
         return view('admin.draiveradd');
@@ -202,7 +235,106 @@ class DriverController extends Controller
 
     public function Addintoqtr($id)
     {
+
         $data = Driver::findOrFail($id);
-        return view('admin.webapp.driver.Qtrdriver', compact('data'));
+    
+ 
+        $voitureImmatriculation = $data->voiture->immatriculation ?? 'N/A';
+ 
+        $user = auth()->user();
+  
+        return view('admin.webapp.driver.Qtrdriver', compact('data', 'voitureImmatriculation', 'user'));
     }
+    
+    public function driverdetailes($id)
+    {
+        $data = Driver::findOrFail($id);
+        return view('admin.webapp.driver.driverdetailes', compact('data'));
+    }
+
+
+
+    // Add this method to your ReportController
+public function reportDriver(Request $request)
+{
+    // Validate the request
+    $validatedData = $request->validate([
+        'driver_id' => 'required|exists:drivers,id',
+        'raison' => 'required|string',
+        'date_singler' => 'required|date',
+        'justification' => 'nullable|string',
+        'singler_par' => 'required|exists:users,id',
+    ]);
+
+    // Create the report record
+    $report = new Driverspam();
+    $report->driver_id = $validatedData['driver_id'];
+    $report->raison = $validatedData['raison'];
+    $report->date_singler = $validatedData['date_singler'];
+    $report->justification = $validatedData['justification'];
+    $report->singler_par = $validatedData['singler_par'];
+    $report->save();
+
+    // Log activity
+    activity()
+        ->causedBy(auth()->user())
+        ->performedOn($report)
+        ->log('Driver reported');
+
+    // Set notification message
+    $notification = [
+        'message' => 'Conducteur signalé avec succès.',
+        'alert-type' => 'success'
+    ];
+
+    // Redirect with success notification
+    return redirect()->back()->with($notification);
+}
+
+public function Condqtr(){
+
+    $data = Driverspam::with('driver')->get();
+    return view('admin.gestion.driver.driverspam', compact('data'));
+
+}
+
+
+
+public function deleteRecord($id)
+{
+    try {
+        $record = Driverspam::findOrFail($id);
+        
+   
+        $record->delete();
+
+        activity()
+            ->causedBy(auth()->user())
+            ->performedOn($record)
+            ->log('Driverspam record deleted');
+
+     
+        $notification = [
+            'message' => 'Signalement supprimé avec succès.',
+            'alert-type' => 'success'
+        ];
+        
+        return redirect()->back()->with($notification);
+    } catch (\Exception $e) {
+ 
+        Log::error('Error deleting Driverspam record', ['id' => $id, 'error' => $e->getMessage()]);
+
+        
+        $notification = [
+            'message' => 'Une erreur s\'est produite lors de la suppression du signalement.',
+            'alert-type' => 'error'
+        ];
+        
+        return redirect()->back()->with($notification);
+    }
+}
+
+
+
+    
 }

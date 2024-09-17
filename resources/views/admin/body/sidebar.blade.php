@@ -182,7 +182,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('driver.conger')}}" class="nav-link">Conducteurs en congé</a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">Conducteurs questionnaires</a>
+                <a href="{{route('Cond.qtr')}}" class="nav-link">Conducteurs questionnaires</a>
               </li>
 
             
@@ -226,6 +226,18 @@ use Illuminate\Support\Facades\Auth;
               <li class="nav-item">
                 <a href="{{route('maintenance.archive')}}" class="nav-link">maintenance archive</a>
               </li>
+
+              <li class="nav-item">
+                <a href="pages/advanced-ui/cropper.html" class="nav-link">conger conducteur archive</a>
+              </li>
+              
+
+              <li class="nav-item">
+                <a href="pages/advanced-ui/cropper.html" class="nav-link"> conducteur signler archive</a>
+              </li>
+              
+
+
             </ul>
           </div>
         </li>
