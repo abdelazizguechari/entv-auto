@@ -19,6 +19,11 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
     ];
 
+    protected $routeMiddleware = [
+        // Other middleware
+        'locale' => \App\Http\Middleware\LocaleMiddleware::class, // Adjust this path if needed
+    ];
+
     /**
      * The application's route middleware groups.
      *
@@ -34,6 +39,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ThemeMiddleware::class,
+            \App\Http\Middleware\LocaleMiddleware::class,
         ],
 
         'api' => [

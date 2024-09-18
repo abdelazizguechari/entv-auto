@@ -8,6 +8,8 @@ use App\Models\Carsm;
 use App\Models\Driver;
 use App\Models\Event;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 
 class MissionsController extends Controller
@@ -48,42 +50,57 @@ class MissionsController extends Controller
         $missions = Mission::all();
         return view('admin.webapp.createevents', compact('missions'));
     }
-
     public function storeTransportation(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'mission_start' => 'nullable|date',
-            'mission_end' => 'nullable|date',
-            'status' => 'required|in:ongoing,scheduled,completed',
-            'fuel_tokens' => 'required|integer|min:0',
-            'distance' => 'required|integer|min:0',
-            'car_id' => 'required|string|exists:cars,immatriculation',
-        ]);
-
-        $data = $request->all();
-        $data['type'] = 'transportation'; 
-
-        $mission = Mission::create($data);
-
-        activity()
-        ->causedBy(auth()->user())
-        ->performedOn($mission)
-        ->log('created transportation mission');
-
-        return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission created successfully.');
+        // Use try-catch to handle exceptions
+        try {
+            // Validate the request data
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'mission_start' => 'required|date',
+                'mission_end' => 'required|date|after_or_equal:mission_start',
+                'status' => 'required|in:ongoing,scheduled,completed',
+                'fuel_tokens' => 'required|integer|min:0',
+                'distance' => 'required|integer|min:0',
+                'car_id' => 'required|string|exists:cars,immatriculation',
+            ]);
+    
+            // Return validation errors if any
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+    
+            // Create the mission
+            $data = $request->all();
+            $data['type'] = 'transportation';
+            $mission = Mission::create($data);
+    
+            // Log the activity
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($mission)
+                ->log('created transportation mission');
+    
+            // Return success response
+            return response()->json(['success' => true, 'message' => 'Transportation mission created successfully.']);
+    
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
     }
-
+    
+    
     public function storeMission(Request $request)
-    {   
-        $request->validate([
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'mission_type' => 'nullable|string',
             'lieu_mission' => 'nullable|string',
             'mission_start' => 'nullable|date',
-            'mission_end' => 'nullable|date',
+            'mission_end' => 'nullable|date|after_or_equal:mission_start',
             'crew_leader' => 'nullable|string|max:255',
             'crew_name' => 'nullable|string|max:255',
             'status' => 'required|in:ongoing,scheduled,completed',
@@ -92,32 +109,29 @@ class MissionsController extends Controller
             'car_id' => 'required|string|exists:cars,immatriculation',
             'event_id' => 'nullable|exists:events,id',
         ]);
-
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+    
         $data = $request->all();
-        $data['type'] = 'mission'; 
+        $data['type'] = 'mission';
         $mission = Mission::create($data);
-
+    
         if ($request->input('action') == 'add_to_event' && $request->has('event_id') && $request->input('event_id')) {
             $event = Event::find($request->input('event_id'));
             $event->missions()->attach($mission->id);
-            return redirect()->back()->with('success', 'Mission added to event successfully. You can add more missions.');
+            return response()->json(['success' => true, 'message' => 'Mission ajoutée à l\'événement avec succès.']);
         }
-
+    
         activity()
-        ->causedBy(auth()->user())
-        ->performedOn($mission)
-        ->log('created mission.');
-
-
-        $notification = [
-            'message' => 'mission create successfully.',
-            'alert-type' => 'success'
-        ];
-
-
-
-        return redirect()->route('missions.index')->with($notification);
+            ->causedBy(auth()->user())
+            ->performedOn($mission)
+            ->log('création de mission.');
+    
+        return response()->json(['success' => true, 'message' => 'Mission créée avec succès.']);
     }
+    
     public function updateMission(Request $request, $id)
     {
         $mission = Mission::findOrFail($id);
@@ -268,4 +282,46 @@ class MissionsController extends Controller
         $events = Event::with('missions')->get();
         return view('admin.webapp.events', compact('events'));
     }
+
+
+    public function fetchByDate(Request $request)
+    {
+        $date = $request->input('date'); // Ensure the correct parameter name
+    
+        // Log the date being fetched
+        Log::info('Fetching missions for date: ' . $date);
+    
+        try {
+            // Validate the date format (optional)
+            $this->validate($request, [
+                'date' => 'required|date_format:Y-m-d',
+            ]);
+    
+            // Fetch missions by date
+            $missions = Mission::whereDate('mission_start', $date)
+                ->orWhereDate('mission_end', $date)
+                ->get();
+    
+            // Check if missions were found
+            if ($missions->isEmpty()) {
+                Log::info('No missions found for date: ' . $date);
+            }
+    
+            return response()->json(['missions' => $missions]);
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Log validation errors
+            Log::error('Validation error: ' . $e->getMessage());
+            return response()->json(['error' => 'Invalid date format'], 422);
+    
+        } catch (\Exception $e) {
+            // Log the error and return a response
+            Log::error('Error fetching missions by date: ' . $e->getMessage());
+            return response()->json(['error' => 'Unable to fetch missions'], 500);
+        }
+    }
+    
+    
+   
+    
 }

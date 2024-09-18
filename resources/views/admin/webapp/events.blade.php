@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h6 class="card-title fs-4">Events</h6>
                     <hr>
-                    <table class="table">
+                    <table class="table missionsTable"   id="dataTableExample">
                         <thead>
                             <tr>
         

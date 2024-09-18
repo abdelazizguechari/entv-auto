@@ -324,13 +324,7 @@ $(function() {
   
 
   // Date Picker
-  if($('#dashboardDate').length) {
-    flatpickr("#dashboardDate", {
-      wrap: true,
-      dateFormat: "d-M-Y",
-      defaultDate: "today",
-    });
-  }
+
   // Date Picker - END
 
 

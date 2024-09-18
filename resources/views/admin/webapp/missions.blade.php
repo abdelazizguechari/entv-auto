@@ -26,6 +26,7 @@
                             @foreach($missions as $mission)
                                 @if($mission->type != 'transportation')
                                     <tr>
+                                        
                                         <td>{{ $mission->name }}</td>
                                         <td>{{ $mission->mission_start }}</td>
                                         <td>{{ $mission->mission_end }}</td>
@@ -34,11 +35,11 @@
                                         <td>{{ $mission->car->immatriculation ?? 'N/A' }}</td>  
                                         <td>{{ $mission->driver->nom ?? 'N/A' }}</td> 
                                         <td>
-                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-warning">Edit</a>
-                                            <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">
+                                            <a href="{{ route('missions.edit', ['id' => $mission->id]) }}" class="btn btn-inverse-info btn-icon"><i data-feather="edit"> </i></a>
+                                            <form action="{{ route('missions.destroy', ['id' => $mission->id]) }}" method="POST" style="display:inline-block;">  
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this mission?')">Delete</button>
+                                                <button type="submit" class="btn btn-inverse-danger btn-icon" id="delete"><i data-feather="trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
