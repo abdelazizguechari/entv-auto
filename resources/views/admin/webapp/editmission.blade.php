@@ -2,16 +2,7 @@
 
 @section('admin')
 
-<style>
-    .form-control {
-        background-color: transparent !important;
-    }
-    
-    select.form-control option {
-        background-color: #060C17;
-        color: #fff; /* Ensure text readability */
-    }
-</style>
+
 
 <div class="page-content">
     <div class="row">

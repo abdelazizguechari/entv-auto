@@ -317,3 +317,17 @@ Route::middleware(['locale'])->group(function () {
 
 Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
 });
+
+
+
+
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    Mail::raw('This is a test email from Laravel using Gmail SMTP.', function ($message) {
+        $message->to('bvbaziznono@gmail.com') // Replace with your email address
+                ->subject('Test Email from Laravel');
+    });
+
+    return 'Test email sent!';
+});

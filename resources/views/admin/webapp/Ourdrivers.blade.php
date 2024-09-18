@@ -39,7 +39,7 @@
                 <i data-feather="edit"></i>
             </a>
             
-            <a class="btn btn-inverse-success btn-icon" href="{{ route('conducteur.conge', $item->id) }}" title="Conducteur en congé">
+            <a   href="{{ route('conducteur.conge', $item->id) }}" title="Conducteur en congé">
                 <i data-feather="battery-charging"></i>
             </a>
             

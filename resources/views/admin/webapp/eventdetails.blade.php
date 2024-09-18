@@ -10,14 +10,28 @@
                     <h6 class="card-title fs-4">Détails de l'Événement</h6>
                     <hr>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <p><strong>Nom:</strong> {{ $event->name }}</p>
-                            <p><strong>Début de l'Événement:</strong> {{ $event->event_start }}</p>
-                            <p><strong>Fin de l'Événement:</strong> {{ $event->event_end }}</p>
-                            <p><strong>Description:</strong> {{ $event->description }}</p>
+                           
                         </div>
+                        <div class="col-md-4">
+                        <p><strong>Début de l'Événement:</strong> {{ $event->event_start }}</p>
                     </div>
+
+                    <div class="col-md-4">
+                        <p><strong>Fin de l'Événement:</strong> {{ $event->event_end }}</p></div>
+              
+                    </div>
+
+                    <hr>
+
+                    <p><strong>Description:</strong> {{ $event->description }}</p>
+
+                    <hr>
+
                     <h6 class="card-title fs-4">Missions associées</h6>
+                    <hr>
+
                     @if($event->missions->count() > 0)
                         <ul>
                             @foreach($event->missions as $mission)
@@ -31,7 +45,8 @@
                     @else
                         <p>Aucune mission associée à cet événement.</p>
                     @endif
-                    <a href="{{ route('events.index') }}" class="btn btn-primary">Retour aux Événements</a>
+                    <hr>
+                    <a class="btn btn-inverse-success btn-icon" href="{{ route('events.index') }}" > <i data-feather="corner-down-left"></i> </a>
                 </div>
             </div>
         </div>

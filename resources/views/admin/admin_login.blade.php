@@ -52,7 +52,15 @@
                                     <div class="auth-form-wrapper   px-4 py-5">
                                         <a href="#" class="noble-ui-logo logo-light d-block mb-2">DMT<span style="color: green">ENTV</span></a>
                                         <h5 class="text-muted fw-normal mb-4">Bienvenue ! Connectez-vous à votre compte.</h5>
-                                        
+                                        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                                         <form class="forms-sample" method="POST" action="{{ route('admin.login.post') }}">
                                             @csrf
                                             <div class="mb-3">
@@ -68,9 +76,12 @@
                                             <div>
                                                 <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Connexion</button>
                                             </div>
-                                        </form>
-
-                                     
+                                        </form> 
+                                        <a href="{{ route('password.request') }}" class="text-decoration-none">
+                                            <div>
+                                                <p>Mot de passe oublié ?</p>
+                                            </div>
+                                        </a>
                                             <div class="d-flex justify-content-center pt-7">
                                                 <button type="submit" class="btn btn-outline-primary btn-icon-text">
                                                     Continuer avec Google <img src="{{ asset('backend/assets/images/google.svg') }}" alt="Google" style="width: 20px; height: 20px; margin-left: 8px;">
