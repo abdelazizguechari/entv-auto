@@ -110,7 +110,7 @@ class MissionsController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($mission)
-                ->log('created transportation mission');
+                ->log('mission transportation crée');
     
             // Return success response
             return response()->json(['success' => true, 'message' => 'Transportation mission created successfully.']);
@@ -210,7 +210,7 @@ class MissionsController extends Controller
         activity()
             ->causedBy(auth()->user())
             ->performedOn($mission)
-            ->log('Création de mission.');
+            ->log('création de mission.');
     
         // Send notification and redirect
         $notification = [
@@ -313,7 +313,7 @@ class MissionsController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($mission)
-        ->log('transportation mission updated');
+        ->log('mission mis à jour');
 
         return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission updated successfully.');
     } 
@@ -352,7 +352,7 @@ class MissionsController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($event)
-        ->log('event created');
+        ->log('eventement crée');
 
         if ($request->query('redirect_to_add_mission')) {
             return redirect()->route('missions.create.mission', ['event_id' => $event->id, 'from_event' => true])
@@ -373,9 +373,9 @@ class MissionsController extends Controller
         $logMessage = '';
 
         if ($missionType == 'transportation') {
-            $logMessage = "Transportation mission '{$missionName}' deleted successfully.";
+            $logMessage = "Mission transportation '{$missionName}' supprimé.";
         } else if ($missionType == 'mission') {
-            $logMessage = " mission '{$missionName}' deleted successfully.";
+            $logMessage = " mission '{$missionName}' supprimé.";
         }
 
         activity()
@@ -384,9 +384,9 @@ class MissionsController extends Controller
             ->log($logMessage);
 
         if ($missionType == 'transportation') {
-            return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission deleted successfully.');
+            return redirect()->route('missions.index.transportation')->with('success', 'mission transportation supprimé avec succes.');
         } else {
-            return redirect()->route('missions.index')->with('success', 'Mission deleted successfully.');
+            return redirect()->route('missions.index')->with('success', 'Mission supprimé avec succes.');
         }
     }
 

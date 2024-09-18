@@ -14,7 +14,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title fs-4">Update inforamtion administrateur</h6>
+                <h6 class="card-title fs-4">modifier inforamtion utilisateur</h6>
                 <hr>
                 <form action="{{route('Update.admin',$user->id)}}" method="post" class="forms-sample">
                     @csrf

@@ -27,13 +27,8 @@
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">Chauffeur</label>
-                                    @if(!$chauffeur)
-    <p>Voiture sans chauffeur</p>
-@else
-    <input type="text" class="form-control" name="chauffeur" value="{{ $chauffeur->nom }}" readonly>
-@endif
-
-                                    <input type="hidden" name="driver_id" value="{{$chauffeur ? $chauffeur->id : '0'}}" >
+                                    <input type="text" class="form-control" name="chauffeur" value="{{  $chauffeur->nom }}" readonly>
+                                    <input type="hidden" name="driver_id" value="{{$chauffeur->id}}" >
                                 </div>
                             </div>
                         </div>

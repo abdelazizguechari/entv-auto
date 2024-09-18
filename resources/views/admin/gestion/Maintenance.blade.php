@@ -8,7 +8,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card bg-transparent">
                 <div class="card-body bg-dark">
-                    <h6 class="card-title fs-4">Add Stock to Maintenance</h6>
+                    <h6 class="card-title fs-4">Article necessaire au Maintenance</h6>
                     <hr class="mb-4">
 
                     <!-- Form Start -->
@@ -20,7 +20,7 @@
                         <div class="form-group mb-3">
                  <div class="col-md-4 ">      
 <div class="form-group mb-3">
-    <label for="immatriculation">Car Immatriculation:</label>
+    <label for="immatriculation">Matricule</label>
     <input style="background-color: transparent" type="text" id="immatriculation" class="form-control" value="{{ $data->immatriculation }}" readonly>
 </div>
 </div>
@@ -29,7 +29,7 @@
                         </div>
 
                         <!-- Stock Items -->
-                        <h6>Stock Items</h6>
+                        <h6>Article</h6>
                         <hr>
                         @foreach ($stock as $produit)
                         <div style="display: flex" class="row mb-3">
@@ -55,7 +55,7 @@
                         @endforeach
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary">Add Stock to Maintenance</button>
+                        <button type="submit" class="btn btn-primary">Ajouter article au Maintenance</button>
                     </form>
                     <!-- Form End -->
 

@@ -8,15 +8,12 @@
 </style>
 
 <div class="page-content">
-        
-
-
     <div class="row">
         <div class="col-md-12 ">
 <div class="card">
   <div class="card-body bg-dark">
 
-                    <h6 class="card-title fs-4">Add FAQ</h6>
+                    <h6 class="card-title fs-4">Ajouter FAQ</h6>
                     <hr>
 
                     <form action="{{route('save.faq')}}" method="post" class="forms-sample">
@@ -31,8 +28,8 @@
                             <textarea class="form-control" name="reponse" rows="3" placeholder="Entrez la description"></textarea>
                         </div>
                       
-                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                        <button class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary me-2">Soumettre</button>
+                        <button class="btn btn-secondary">Annuler</button>
                     </form>
 
   </div>
@@ -40,9 +37,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 @endsection

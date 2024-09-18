@@ -1,17 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
-
 <div class="page-content">
 
 
@@ -19,7 +8,7 @@
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card bg-transparent ">
   <div class="card-body ">
-    <h6 class="card-title  fs-4">TABLEAU DES maintenance</h6>
+    <h6 class="card-title  fs-4">Couts des maintenances</h6>
     <hr>
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -36,10 +25,6 @@
           </tr>
         </thead>
         <tbody>
-
-          
-
-
 
         @foreach($data as $key => $item )
           <tr>
@@ -69,9 +54,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection

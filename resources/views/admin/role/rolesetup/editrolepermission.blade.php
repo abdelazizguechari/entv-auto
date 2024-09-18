@@ -2,8 +2,6 @@
     use Illuminate\Support\Str;
 @endphp
 
-
-
 @extends('admin.dash')
 
 @section('admin')
@@ -16,7 +14,7 @@
         <div class="col-md-12 col-xl-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">edit rôles aux permissions</h6>
+                    <h6 class="card-title">Designations de permissions</h6>
 
                     <form action="{{ route('admin.role.update',$role->id) }}" method="post" class="forms-sample">
                         @csrf

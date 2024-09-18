@@ -2,7 +2,7 @@
 	
 			<p class="text-muted mb-1 mb-md-0">Copyright © 2024 <a href="https://www.entv.dz/accueil/" target="_blank">ENTV</a>. Tous droits réservés.</p>
 			
-			<p class="text-muted mb-0">Développé par Guechari & Bourghda</p>
+			<p class="text-muted mb-0">Développé par Guechari & Boureghda</p>
 	
 
 			</footer>

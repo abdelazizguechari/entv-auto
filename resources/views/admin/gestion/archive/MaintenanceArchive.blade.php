@@ -1,16 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
 
 <div class="page-content">
 
@@ -19,7 +9,7 @@
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card bg-transparent ">
   <div class="card-body ">
-    <h6 class="card-title  fs-4">tableau des Archive maintenance</h6>
+    <h6 class="card-title  fs-4">Archive des maintenances</h6>
     <hr>
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -29,16 +19,12 @@
            
             <th>Début maintenance</th>
             <th>fin de maintenance</th>
-            <th>categorie panne</th>
+            <th>categorie de panne</th>
             <th>action</th>
           
           </tr>
         </thead>
         <tbody>
-
-          
-
-
 
         @foreach($Marchive as $key => $item )
           <tr>
@@ -49,7 +35,7 @@
             <td>{{$item ->categorie_panne}}</td>
             <td>
                 <a class="btn btn-secondary" href="{{ route('maintenance.print', $item->id) }}"><i data-feather="eye"> </i></a>
-                {{-- <a class="btn btn-success" href="{{ route('complete.maintenance', $item->id) }}">Finish Maintenance</a> --}}
+                {{-- <a class="btn btn-success" href="{{ route('complete.maintenance', $item->id) }}">Completer Maintenance</a> --}}
 
 </td>
           </tr>

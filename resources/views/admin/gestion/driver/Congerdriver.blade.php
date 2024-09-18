@@ -1,17 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
-
 <div class="page-content">
 
 
@@ -19,7 +8,7 @@
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card bg-transparent ">
   <div class="card-body ">
-    <h6 class="card-title  fs-4">TABLEAU DES chauffeur</h6>
+    <h6 class="card-title  fs-4">conducteurs en congé</h6>
     <hr>
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -45,7 +34,7 @@
                     <td>{{ $item->telephone }}</td>
                     <td>
                         <a class="btn btn-danger" href="{{ route('delete.driver', $item->driver_id) }}" id="delete">Supprimer</a>
-                        <a class="btn btn-success" href="{{ route('edit.driver', $item->driver_id) }}">Edit</a>
+                        <a class="btn btn-success" href="{{ route('edit.driver', $item->driver_id) }}">Editer</a>
                     </td>
                 </tr>
             @endforeach
@@ -58,9 +47,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection
