@@ -167,11 +167,22 @@ Route::controller(MissionsController::class)->group(function() {
 
     Route::get('/edit/transportation/{id}', [MissionsController::class, 'editTransportation'])->name('transportation.edit');
     Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
+    Route::get('/delete/{id}/mission', [MissionsController::class, 'deleted'])->name('missions.deleted');
 
     Route::get('/missions/byDate', [MissionController::class, 'fetchByDate'])->name('missions.byDate');
 
+
+    // routes/web.php
+
+
+
+    
+
 });
 
+Route::get('/mission-archives', [DashboardController::class, 'mindex'])->name('mission.archives');
+Route::get('/mission/{id}/archives/', [DashboardController::class, 'show'])->name('missionachiv.detailes');
+Route::get('/missions/archive/{id}', [DashboardController::class, 'archive'])->name('missions.archive');
 
 // In routes/web.php
 Route::get('/test-date', [TestController::class, 'test'])->name('test.date');

@@ -179,9 +179,11 @@ use Illuminate\Support\Facades\Auth;
           </a>
           <div class="collapse" id="archives">
             <ul class="nav sub-menu">
+              
               <li class="nav-item">
-                <a href="" class="nav-link">{{ __('navbar.mission_archives') }}</a>
-              </li>
+                <a href="{{ route('mission.archives') }}" class="nav-link">{{ __('navbar.mission_archives') }}</a>
+            </li>
+            
               <li class="nav-item">
                 <a href="{{ route('maintenance.archive') }}" class="nav-link">{{ __('navbar.maintenance_archive') }}</a>
               </li>

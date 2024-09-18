@@ -11,6 +11,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-4">
+                            
                             <p><strong>Nom:</strong> {{ $event->name }}</p>
                            
                         </div>

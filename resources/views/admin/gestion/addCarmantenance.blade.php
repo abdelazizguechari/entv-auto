@@ -27,8 +27,13 @@
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">Chauffeur</label>
-                                    <input type="text" class="form-control" name="chauffeur" value="{{  $chauffeur->nom }}" readonly>
-                                    <input type="hidden" name="driver_id" value="{{$chauffeur->id}}" >
+                                    @if(!$chauffeur)
+    <p>Voiture sans chauffeur</p>
+@else
+    <input type="text" class="form-control" name="chauffeur" value="{{ $chauffeur->nom }}" readonly>
+@endif
+
+                                    <input type="hidden" name="driver_id" value="{{$chauffeur ? $chauffeur->id : '0'}}" >
                                 </div>
                             </div>
                         </div>
@@ -84,7 +89,7 @@
                                 </div><!-- Col -->
                             </div><!-- Row -->
 
-                        <button type="submit" class="btn btn-primary col-sm-3">Soumettre le Formulaire</button>
+                        <button type="submit" class="btn btn-inverse-primary col-sm-3">Soumettre le Formulaire</button>
                     </form>
                 </div>
             </div>

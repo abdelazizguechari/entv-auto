@@ -11,6 +11,13 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+
+     protected function schedule(Schedule $schedule)
+{
+    // Schedule the archive command to run daily
+    $schedule->command('missions:archive-expired')->daily();
+}
+
     protected $middleware = [
         \App\Http\Middleware\AddNotificationsToView::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,

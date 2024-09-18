@@ -53,6 +53,12 @@ class Carsm extends Model
         });
     }
 
+    
+    public function missions()
+{
+    return $this->hasMany(Mission::class, 'car_id', 'immatriculation');
+}
+
 
     public function checkForExpiry()
     {

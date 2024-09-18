@@ -2,24 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Mission;
 use App\Models\Carsm;
 use App\Models\Driver;
 use App\Models\Event;
+use Carbon\Carbon;
+use App\Models\MissionArchive;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 
 class MissionsController extends Controller
-{   
+{  
+
     public function index()
     {
-        $missions = Mission::whereDoesntHave('events')->get();
+        $today = \Carbon\Carbon::today();
+        
+        // Retrieve missions where the start date is today and group by date
+        $missions = Mission::whereDoesntHave('events')
+            ->whereDate('mission_start', $today)
+            ->get()
+            ->groupBy(function($mission) {
+                return \Carbon\Carbon::parse($mission->mission_start)->format('Y-m-d'); // Group by date
+            });
+        
+        // Translation array
+        $statusTranslations = [
+            'ongoing' => 'En cours',
+            'scheduled' => 'Planifié',
+            'completed' => 'Terminé',
+        ];
+        
+        // Translate statuses
+        foreach ($missions as $date => $missionsByDate) {
+            foreach ($missionsByDate as $mission) {
+                $mission->status = $statusTranslations[$mission->status] ?? $mission->status;
+            }
+        }
+    
+        // Return the view with the grouped missions
         return view('admin.webapp.missions', compact('missions'));
     }
-
 
     public function indexTransportation()
     {
@@ -38,7 +65,9 @@ class MissionsController extends Controller
 
    public function createMission(Request $request)
     {
-        $cars = Carsm::all();
+        $cars = Carsm::whereDoesntHave('missions')
+        ->where('status', 'active')
+        ->get();
         $events = Event::all();
         $eventId = $request->input('event_id');
         $fromEvent = $request->input('from_event', false);
@@ -93,79 +122,125 @@ class MissionsController extends Controller
     }
     
     public function storeMission(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:255',
-        'description' => 'required|string', // Made description required
-        'mission_type' => 'required|string', // Made mission_type required
-        'lieu_mission' => 'required|string', // Made lieu_mission required
-        'mission_start' => 'required|date', // Made mission_start required
-        'mission_end' => 'nullable|date|after_or_equal:mission_start',
-        'crew_leader' => 'required|string|max:255', // Made crew_leader required
-        'crew_name' => 'required|string|max:255', // Made crew_name required
-        'status' => 'required|in:ongoing,scheduled,completed',
-        'fuel_tokens' => 'required|integer|min:0',
-        'distance' => 'required|integer|min:0',
-        'car_id' => 'required|string|exists:cars,immatriculation',
-        'event_id' => 'nullable|exists:events,id',
-    ], [
-        // Custom error messages in French
-        'name.required' => 'Le nom est obligatoire.',
-        'description.required' => 'La description est obligatoire.',
-        'mission_type.required' => 'Le type de mission est obligatoire.',
-        'lieu_mission.required' => 'Le lieu de la mission est obligatoire.',
-        'mission_start.required' => 'La date de début de la mission est obligatoire.',
-        'mission_start.date' => 'La date de début de la mission doit être une date valide.',
-        'mission_end.date' => 'La date de fin de la mission doit être une date valide.',
-        'mission_end.after_or_equal' => 'La date de fin de la mission doit être après ou égale à la date de début.',
-        'crew_leader.required' => 'Le chef d\'équipe est obligatoire.',
-        'crew_name.required' => 'Le nom de l\'équipe est obligatoire.',
-        'status.required' => 'Le statut est obligatoire.',
-        'status.in' => 'Le statut doit être l\'un des suivants: ongoing, scheduled, completed.',
-        'fuel_tokens.required' => 'Le nombre de jetons de carburant est obligatoire.',
-        'fuel_tokens.integer' => 'Le nombre de jetons de carburant doit être un nombre entier.',
-        'fuel_tokens.min' => 'Le nombre de jetons de carburant doit être supérieur ou égal à 0.',
-        'distance.required' => 'La distance est obligatoire.',
-        'distance.integer' => 'La distance doit être un nombre entier.',
-        'distance.min' => 'La distance doit être supérieure ou égale à 0.',
-        'car_id.required' => 'Le numéro d\'immatriculation de la voiture est obligatoire.',
-        'car_id.exists' => 'Le numéro d\'immatriculation de la voiture doit exister dans la base de données.',
-        'event_id.exists' => 'L\'événement sélectionné doit exister dans la base de données.',
-    ]);
+    {
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'mission_type' => 'required|string',
+            'lieu_mission' => 'required|string',
+            'mission_start' => 'required|date',
+            'mission_end' => 'nullable|date|after_or_equal:mission_start',
+            'crew_leader' => 'required|string|max:255',
+            'crew_name' => 'required|string|max:255',
+            'status' => 'required|in:ongoing,scheduled,completed',
+            'fuel_tokens' => 'required|integer|min:0',
+            'distance' => 'required|integer|min:0',
+            'car_id' => 'required|string|exists:cars,immatriculation',
+            'event_id' => 'nullable|exists:events,id',
+        ], [
+            // Custom error messages in French
+            'name.required' => 'Le nom est obligatoire.',
+            'description.required' => 'La description est obligatoire.',
+            'mission_type.required' => 'Le type de mission est obligatoire.',
+            'lieu_mission.required' => 'Le lieu de la mission est obligatoire.',
+            'mission_start.required' => 'La date de début de la mission est obligatoire.',
+            'mission_start.date' => 'La date de début de la mission doit être une date valide.',
+            'mission_end.date' => 'La date de fin de la mission doit être une date valide.',
+            'mission_end.after_or_equal' => 'La date de fin de la mission doit être après ou égale à la date de début.',
+            'crew_leader.required' => 'Le chef d\'équipe est obligatoire.',
+            'crew_name.required' => 'Le nom de l\'équipe est obligatoire.',
+            'status.required' => 'Le statut est obligatoire.',
+            'status.in' => 'Le statut doit être l\'un des suivants: ongoing, scheduled, completed.',
+            'fuel_tokens.required' => 'Le nombre de jetons de carburant est obligatoire.',
+            'fuel_tokens.integer' => 'Le nombre de jetons de carburant doit être un nombre entier.',
+            'fuel_tokens.min' => 'Le nombre de jetons de carburant doit être supérieur ou égal à 0.',
+            'distance.required' => 'La distance est obligatoire.',
+            'distance.integer' => 'La distance doit être un nombre entier.',
+            'distance.min' => 'La distance doit être supérieure ou égale à 0.',
+            'car_id.required' => 'Le numéro d\'immatriculation de la voiture est obligatoire.',
+            'car_id.exists' => 'Le numéro d\'immatriculation de la voiture doit exister dans la base de données.',
+            'event_id.exists' => 'L\'événement sélectionné doit exister dans la base de données.',
+        ]);
 
-    if ($validator->fails()) {
-        return redirect()->back()
-                         ->withErrors($validator)
-                         ->withInput();
-    }
 
     
+        // Handle validation failure
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
     
+        // Retrieve validated data
         $data = $request->all();
         $data['type'] = 'mission';
+    
+        // Create the mission record
         $mission = Mission::create($data);
     
-        if ($request->input('action') == 'add_to_event' && $request->has('event_id') && $request->input('event_id')) {
-            $event = Event::find($request->input('event_id'));
-            $event->missions()->attach($mission->id);
-            return response()->json(['success' => true, 'message' => 'Mission ajoutée à l\'événement avec succès.']);
+        // Handle archiving if status is 'completed'
+        if ($data['status'] === 'completed') {
+            MissionArchive::create([
+                'mission_id' => $mission->id,
+                'type' => 'mission',
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'mission_start' => $data['mission_start'],
+                'mission_end' => $data['mission_end'],
+                'crew_leader' => $data['crew_leader'],
+                'crew_name' => $data['crew_name'],
+                'status' => $data['status'],
+                'fuel_tokens' => $data['fuel_tokens'],
+                'fuel_tokens_used' => 0, // Adjust if needed
+                'distance' => $data['distance'],
+                'car_id' => $data['car_id'],
+                'driver_id' => $request->driver_id ?? null,
+            ]);
         }
     
+        // Handle adding to event if requested
+        if ($request->input('action') == 'add_to_event' && $request->has('event_id') && $request->input('event_id')) {
+            $event = Event::find($request->input('event_id'));
+            if ($event) {
+                $event->missions()->attach($mission->id);
+                return response()->json(['success' => true, 'message' => 'Mission ajoutée à l\'événement avec succès.']);
+            }
+        }
+    
+        // Log activity
         activity()
             ->causedBy(auth()->user())
             ->performedOn($mission)
-            ->log('création de mission.');
+            ->log('Création de mission.');
     
-            $notification = [
-                'message' => 'mission created successfully.',
-                'alert-type' => 'success'
-            ];
+        // Send notification and redirect
+        $notification = [
+            'message' => 'Mission créée avec succès.',
+            'alert-type' => 'success'
+        ];
     
-            return redirect()->route('missions.index')->with($notification);
+        return redirect()->back()->with($notification);
     }
+    
+
+    
+    public function deleted($id) {
+        $Mission= Mission::findOrFail($id);
+        $Mission->delete();
+
+        activity()
+        ->on($Mission)
+        ->causedBy(Auth::user())
+        ->withProperties(['attributes' => $Mission])
+        ->log('mission supprimé');
+
+    $notification = [
+        'message' => 'mission supremier successfully.',
+        'alert-type' => 'success'
+    ];
+    return redirect()->back()->with($notification);
+
+    }
+    
     
     public function updateMission(Request $request, $id)
     {
@@ -201,7 +276,7 @@ class MissionsController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($mission)
-        ->log('mission mis à jour');
+        ->log('mission updated');
 
         return redirect()->route('missions.index')->with('success', 'Mission updated successfully.');
     }
@@ -238,7 +313,7 @@ class MissionsController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($mission)
-        ->log('mission mis à jour');
+        ->log('transportation mission updated');
 
         return redirect()->route('missions.index.transportation')->with('success', 'Transportation mission updated successfully.');
     } 
@@ -277,7 +352,7 @@ class MissionsController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($event)
-        ->log('eventement crée');
+        ->log('event created');
 
         if ($request->query('redirect_to_add_mission')) {
             return redirect()->route('missions.create.mission', ['event_id' => $event->id, 'from_event' => true])
@@ -298,9 +373,9 @@ class MissionsController extends Controller
         $logMessage = '';
 
         if ($missionType == 'transportation') {
-            $logMessage = "Mission transportation '{$missionName}' supprimé.";
+            $logMessage = "Transportation mission '{$missionName}' deleted successfully.";
         } else if ($missionType == 'mission') {
-            $logMessage = " mission '{$missionName}' supprimé.";
+            $logMessage = " mission '{$missionName}' deleted successfully.";
         }
 
         activity()
@@ -368,7 +443,8 @@ class MissionsController extends Controller
         }
     }
     
-    
-   
+
+
+ 
     
 }
