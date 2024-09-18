@@ -34,7 +34,7 @@ class EventController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($event)
-        ->log('event updated');
+        ->log('evenenement mis à jour');
 
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
@@ -46,7 +46,7 @@ class EventController extends Controller
         activity()
         ->causedBy(auth()->user())
         ->performedOn($event)
-        ->log('event deleted');
+        ->log('evenenement supprimé');
         return redirect()->route('events.index')->with('success', 'Event deleted successfully');
     }
 

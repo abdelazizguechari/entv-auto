@@ -257,7 +257,7 @@ public function Saveadmin(Request $request)
                     ->causedBy(Auth::user())
                     ->performedOn($user)
                     ->withProperties(['role' => $role->name])
-                    ->log('User created and role assigned');
+                    ->log('utilisateur creé avec le role ' . $role->name);
 
                 $notification = [
                     'message' => 'Admin created and role assigned successfully.',
@@ -276,7 +276,7 @@ public function Saveadmin(Request $request)
         activity()
             ->causedBy(Auth::user())
             ->performedOn($user)
-            ->log('user created');
+            ->log('utilisateur creé');
 
         $notification = [
             'message' => 'User Created.',
@@ -296,7 +296,7 @@ public function Saveadmin(Request $request)
             activity()
                 ->causedBy(Auth::user())
                 ->performedOn($Delateadmin)
-                ->log('User deleted');
+                ->log('Utilisateur supprimé');
 
             $Delateadmin->delete();
         }
@@ -333,7 +333,7 @@ public function Saveadmin(Request $request)
         activity()
             ->causedBy(Auth::user())
             ->performedOn($user)
-            ->log('User updated');
+            ->log('Utilisateur mis à jour');
 
         $user->roles()->detach();
 
@@ -347,7 +347,7 @@ public function Saveadmin(Request $request)
                     ->causedBy(Auth::user())
                     ->performedOn($user)
                     ->withProperties(['role' => $role->name])
-                    ->log('Role reassigned to User');
+                    ->log('utilisateur mis à jour avec le role ' . $role->name);
 
                 $notification = [
                     'message' => 'Admin updated and role assigned successfully.',

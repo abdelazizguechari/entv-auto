@@ -31,7 +31,7 @@ public function storepermission(Request $request) {
     activity()
         ->causedBy(auth()->user())
         ->performedOn($permission)
-        ->log('New permission created: ' . $permission->name);
+        ->log('Nouvelle permission ajouté: ' . $permission->name);
 
     $notification = [
         'message' => 'Permission created successfully.',
@@ -61,7 +61,7 @@ public function updatepermission(Request $request) {
     activity()
         ->causedBy(auth()->user())
         ->performedOn($permission)
-        ->log('Permission updated: ' . $permission->name);
+        ->log('Permission mis à jour: ' . $permission->name);
 
     $notification = [
         'message' => 'Permission updated successfully.',
@@ -82,15 +82,15 @@ public function delatepermission($id) {
         activity()
             ->causedBy(auth()->user())
             ->performedOn($permission)
-            ->log('Permission deleted: ' . $permissionName);
+            ->log('Permission supprimé: ' . $permissionName);
 
         $notification = [
-            'message' => 'Permission deleted successfully.',
+            'message' => 'Permission supprimé avec succes.',
             'alert-type' => 'success'
         ];
     } else {
         $notification = [
-            'message' => 'Permission not found.',
+            'message' => 'Permission non trouvé.',
             'alert-type' => 'error'
         ];
     }
@@ -116,10 +116,10 @@ public function storerole(Request $request) {
     activity()
         ->causedBy(auth()->user())
         ->performedOn($role)
-        ->log('New role created: ' . $role->name);
+        ->log('Nouveau role ajouté: ' . $role->name);
 
     $notification = [
-        'message' => 'Role created successfully.',
+        'message' => 'Role crée avec succes.',
         'alert-type' => 'success'
     ];
 
@@ -145,10 +145,10 @@ public function updaterole(Request $request) {
     activity()
         ->causedBy(auth()->user())
         ->performedOn($role)
-        ->log('Role updated: ' . $role->name);
+        ->log('Role mis à jour: ' . $role->name);
 
     $notification = [
-        'message' => 'Role updated successfully.',
+        'message' => 'Role mis à jour avec succes.',
         'alert-type' => 'success'
     ];
 
@@ -165,11 +165,11 @@ public function delaterole($id) {
         activity()
             ->causedBy(auth()->user())
             ->performedOn($role)
-            ->log('Role deleted: ' . $roleName);
+            ->log('Role supprimé: ' . $roleName);
     }
 
     $notification = [
-        'message' => 'Role deleted successfully.',
+        'message' => 'Role supprimé avec succes.',
         'alert-type' => 'success'
     ];
 
@@ -221,10 +221,10 @@ public function delaterole($id) {
 
         activity()
             ->causedBy(auth()->user())
-            ->log('Assigned permissions to role: ' . $roleName . '. Permissions: ' . implode(', ', $permissionNames));
+            ->log('Permissions attribuées au rôle : ' . $roleName . '. Permissions : ' . implode(', ', $permissionNames));
 
         $notification = [
-            'message' => 'Role permissions added successfully.',
+            'message' => 'permissions attribuées au role avec succes.',
             'alert-type' => 'success'
         ];
 
@@ -268,10 +268,10 @@ public function delaterole($id) {
     
         activity()
             ->causedBy(auth()->user())
-            ->log('Updated permissions for role: ' . $role->name . '. Permissions: ' . implode(', ', $permissionNames));
+            ->log('Permissions mises à jour pour le rôle : ' . $role->name . '. Permissions : ' . implode(', ', $permissionNames));
     
         $notification = [
-            'message' => 'Role permissions updated successfully.',
+            'message' => 'permissions mis à jour pour role avec succes.',
             'alert-type' => 'success'
         ];
     
@@ -286,11 +286,11 @@ public function delaterole($id) {
             
             activity()
                 ->causedBy(auth()->user())
-                ->log('Deleted role: ' . $role->name);
+                ->log('role supprimé: ' . $role->name);
         }
     
         $notification = [
-            'message' => 'Role deleted successfully.',
+            'message' => 'Role supprimé avec succes.',
             'alert-type' => 'success'
         ];
     
