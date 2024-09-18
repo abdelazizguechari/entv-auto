@@ -11067,11 +11067,7 @@ div.tox .btn-group-vertical > .btn-group:not(:first-child) > .tox-button,
   border-radius: 50%;
   position: absolute;
 }
-@media (max-width: 767px) {
-  .navbar .navbar-content .navbar-nav .nav-item.dropdown {
-    position: static;
-  }
-}
+
 .navbar .navbar-content .navbar-nav .nav-item.dropdown .dropdown-menu, .navbar .navbar-content .navbar-nav .nav-item.dropdown .tt-menu {
   width: max-content;
   position: absolute;

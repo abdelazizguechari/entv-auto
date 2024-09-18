@@ -60,7 +60,7 @@ public function AdminDashboard() {
     $driverumber = Driver::where('status' , 'active')->count();
    
     $users = User::all(); $currentUserId = auth()->user();
-
+    
     $missions = Mission::whereDate('mission_start', Carbon::today())->get();
 
     return view ('admin.index',compact('data','carnumber','driverumber','missions','currentUserId','users'));

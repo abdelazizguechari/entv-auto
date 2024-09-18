@@ -23,24 +23,38 @@
          
         
 					<ul class="navbar-nav">
-						<li class="nav-item dropdown">
-         
-							<a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class=" mt-1" title="us"></i> <span class="ms-1 me-1 d-none d-md-inline-block">Fr</span>
-							</a>
-							<div class="dropdown-menu" aria-labelledby="languageDropdown">
-                <a href="javascript:;" class="dropdown-item py-2"><i class="" title="us" id="us"></i> <span class="ms-1"> En </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="" title="de" id="de"></i> <span class="ms-1"> Ar </span></a>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mt-1" title="{{ session('locale') === 'ar' ? 'ar' : 'fr' }}"></i>
+                <span class="ms-1 me-1 d-none d-md-inline-block">{{ session('locale') === 'ar' ? 'Ar' : 'Fr' }}</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                <!-- French Option -->
+                <form action="{{ route('locale.switch') }}" method="POST" class="dropdown-item py-2">
+                    @csrf
+                    <input type="hidden" name="locale" value="fr">
+                    <button type="submit" class="btn btn-link p-0">
+                        <i class="mt-1" title="fr"></i>
+                        <span class="ms-1">Fr</span>
+                    </button>
+                </form>
+                
+                <!-- Arabic Option -->
+                <form action="{{ route('locale.switch') }}" method="POST" class="dropdown-item py-2">
+                    @csrf
+                    <input type="hidden" name="locale" value="ar">
+                    <button type="submit" class="btn btn-link p-0">
+                        <i class="mt-1" title="ar"></i>
+                        <span class="ms-1">Ar</span>
+                    </button>
+                </form>
+            </div>
+        </li>
+          
 
-							</div>
-
-                  
-                <button style="border: none" id="theme-switcher" class="btn btn-outline-secondary">
-                  <i id="theme-icon" data-feather="moon"></i>
-              </button>
-              
-            </li>
-
+          <button style="border: none" id="theme-switcher" class="btn btn-outline-secondary">
+            <i id="theme-icon" data-feather="moon"></i>
+        </button>
 
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="appsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

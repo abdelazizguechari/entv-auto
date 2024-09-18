@@ -22,6 +22,8 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
 use App\Http\Controllers\CalendarEventController;
+
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\NotificationController;
 
 
@@ -135,7 +137,8 @@ Route::post('/theme/switch', [ThemeController::class, 'switch'])->name('theme.sw
        
     
     });
-    
+
+ 
 
     Route::get('/admin/home', [DashboardController::class, 'AdminDashboard'])->name('admin.dashboard');
 
@@ -159,13 +162,20 @@ Route::controller(MissionsController::class)->group(function() {
 
     Route::put('/update/mission/{id}', [MissionsController::class, 'updateMission'])->name('missions.update');
     Route::get('/edit/mission/{id}', [MissionsController::class, 'editMission'])->name('missions.edit');
+
     Route::put('/update/transportation/{id}', [MissionsController::class, 'updateTransportation'])->name('transportation.update');
+
     Route::get('/edit/transportation/{id}', [MissionsController::class, 'editTransportation'])->name('transportation.edit');
-
-
-
     Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
+
+    Route::get('/missions/byDate', [MissionController::class, 'fetchByDate'])->name('missions.byDate');
+
 });
+
+
+// In routes/web.php
+Route::get('/test-date', [TestController::class, 'test'])->name('test.date');
+
 
 
 Route::controller(DashboardController::class)->group(function(){
@@ -288,6 +298,22 @@ Route::post('/files/{conversationId}', [MessageController::class, 'sendFile']);
 Route::get('/admin/conve', [ConversationController::class, 'index'])->name('chatee.app');
 
 Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
+
+
+
+Route::middleware(['locale'])->group(function () {
+    
+    Route::post('/locale/switch', function () {
+        $locale = request('locale');
+        session(['locale' => $locale]);
+        return redirect()->back();
+    })->name('locale.switch');
+    
+    
+});
+
+
+
 
 Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
 });

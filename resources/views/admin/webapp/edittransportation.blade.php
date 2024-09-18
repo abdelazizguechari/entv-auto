@@ -7,7 +7,9 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Edit Transportation Mission</h6>
+                    <h6 class="card-title fs-4">Edit Transportation Mission</h6>
+
+                    <hr>
                     <form action="{{ route('transportation.update', ['id' => $mission->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -15,10 +17,7 @@
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $mission->name }}" required>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description">{{ $mission->description }}</textarea>
-                        </div>
+                       
                         <div class="form-group">
                             <label for="mission_start">Mission Start</label>
                             <input type="datetime-local" class="form-control" id="mission_start" name="mission_start" value="{{ $mission->mission_start }}">
@@ -52,7 +51,14 @@
                                         {{ $car->immatriculation }}
                                     </option>
                                 @endforeach
+                                
                             </select>
+<hr>
+                            <div class="form-group">
+                                <label class="mb-1" for="description">Description</label>
+                                <textarea class="form-control" id="description" name="description">{{ $mission->description }}</textarea>
+                            </div>
+                            <hr>
                         </div>
                         <button type="submit" class="btn btn-primary">Update transportation</button>
                     </form>
