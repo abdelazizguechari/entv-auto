@@ -113,6 +113,12 @@
                                     <input type="date" class="form-control" name="next_assurance_date">
                                 </div>
                             </div><!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Prochaine Date Control technique</label>
+                                    <input type="date" class="form-control" name="next_control_date">
+                                </div>
+                            </div><!-- Col -->
                         </div><!-- Row -->
 
                         <div class="row">

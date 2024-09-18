@@ -20,6 +20,7 @@ class CreateCarsTable extends Migration
             $table->string('datem')->nullable();
             $table->string('assurance_type')->nullable();
             $table->date('next_assurance_date')->nullable();
+            $table->date('next_control_date')->nullable();
             $table->string('couleur')->nullable(); 
             $table->string('type_carburant')->nullable(); 
             $table->string('transmission')->nullable(); 

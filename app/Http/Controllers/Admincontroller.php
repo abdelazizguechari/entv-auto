@@ -273,10 +273,10 @@ public function Saveadmin(Request $request)
             $user->save();
         }
 
-        // activity()
-        //     ->causedBy(Auth::user())
-        //     ->performedOn($user)
-        //     ->log('user created');
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->log('user created');
 
         $notification = [
             'message' => 'User Created.',

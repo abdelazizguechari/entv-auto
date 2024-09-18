@@ -37,6 +37,10 @@
                                 <label class="form-label">Date de l'assurance suivante</label>
                                 <input type="date" class="form-control" name="next_assurance_date" value="{{ $types->next_assurance_date }}" />
                             </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Date du prochain control technique</label>
+                                <input type="date" class="form-control" name="next_control_date" value="{{ $types->next_control_date }}" />
+                            </div>
                         </div>
 
                         <div class="row mb-3">

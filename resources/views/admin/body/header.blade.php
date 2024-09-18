@@ -3,10 +3,9 @@
 
   $id = Auth::user()->id;
   $profiledata = App\Models\User::find($id);
+  $notifications = Auth::user()->notifications()->latest()->take(5)->get(); // Fetch notifications
+  $notificationCount = $notifications->count();
 @endphp
-
-
-
 
 <nav class="navbar">
 
@@ -70,20 +69,35 @@
 						</li>
             
 
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i data-feather="bell"></i>
-								<div class="indicator">
-									{{-- <div class="circle"></div> --}}
-								</div>
-							</a>
-							<div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
-								<div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
-									<p>0 Notifications</p>
-								</div>
-                <div class="p-1">
-							</div>
-						</li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i data-feather="bell"></i>
+                    @if (Auth::user()->unreadNotifications->count())
+                        <div class="indicator">
+                            <div class="circle"></div>
+                        </div>
+                    @endif
+                </a>
+                <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
+                    <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
+                        <p>{{ Auth::user()->unreadNotifications->count() }} Notifications</p>
+                    </div>
+                    <div class="p-1">
+                        @forelse (Auth::user()->unreadNotifications as $notification)
+                            <a href="{{ route('notifications.show', $notification->id) }}" class="dropdown-item py-2 {{ !$notification->read_at ? 'bg-light' : '' }}">
+                                <i class="me-2 icon-md" data-feather="info"></i> 
+                                <span class="{{ !$notification->read_at ? 'font-weight-bold' : 'text-muted' }}">
+                                    {{ $notification->data['message'] }}
+                                </span>
+                            </a>
+                        @empty
+                            <p class="dropdown-item">No notifications</p>
+                        @endforelse
+                    </div>
+                </div>
+            </li>
+
+
 						<li class="nav-item dropdown">
               
 							<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

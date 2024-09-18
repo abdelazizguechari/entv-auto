@@ -22,6 +22,7 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
 use App\Http\Controllers\CalendarEventController;
+use App\Http\Controllers\NotificationController;
 
 
 
@@ -288,4 +289,5 @@ Route::get('/admin/conve', [ConversationController::class, 'index'])->name('chat
 
 Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
 
+Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
 });

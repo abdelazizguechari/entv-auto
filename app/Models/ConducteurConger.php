@@ -36,7 +36,6 @@ class ConducteurConger extends Model
         return null;
     }
 
-    // Example of a method to determine if the leave is maladie
     public function isCongerMaladie()
     {
         return $this->type_conger === 'conger_maladie';

@@ -107,6 +107,10 @@
                         <label class="form-label">Prochaine Date d'Assurance</label>
                         <input type="date" class="form-control" value="{{ $car->next_assurance_date }}" readonly>
                     </div>
+                    <div class="col-sm-3 mb-3">
+                        <label class="form-label">Prochaine Date control technique</label>
+                        <input type="date" class="form-control" value="{{ $car->next_control_date }}" readonly>
+                    </div>
            
 
              

@@ -12,6 +12,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \App\Http\Middleware\AddNotificationsToView::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
@@ -42,11 +43,7 @@ class Kernel extends HttpKernel
         ],
     ];
 
-    /**
-     * The application's route middleware aliases.
-     *
-     * @var array
-     */
+
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'role' => \App\Http\Middleware\Role::class,

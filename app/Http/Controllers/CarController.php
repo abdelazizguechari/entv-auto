@@ -19,6 +19,7 @@ class CarController extends Controller
             'kilometrage' => 'nullable|numeric|min:0',
             'assurance_type' => 'nullable|string|max:255',
             'next_assurance_date' => 'nullable|date',
+            'next_control_date' => 'nullable|date',
             'datem' => 'nullable|date',
             'couleur' => 'nullable|string|max:7',
             'type_carburant' => 'nullable|string|in:essence,diesel,électrique,hybride,gaz',
@@ -44,6 +45,7 @@ class CarController extends Controller
         $car->kilometrage = $request->kilometrage;
         $car->assurance_type = $request->assurance_type;
         $car->next_assurance_date = $request->next_assurance_date;
+        $car->next_control_date = $request->next_control_date;
         $car->datem = $request->datem;
         $car->couleur = $request->couleur;
         $car->type_carburant = $request->type_carburant;
@@ -122,6 +124,7 @@ class CarController extends Controller
             'kilometrage' => $request->kilometrage,
             'assurance_type' => $request->assurance_type,
             'next_assurance_date' => $request->next_assurance_date,
+            'next_control_date' => $request->next_control_date,
             'type_carburant' => $request->type_carburant,
             'couleur' => $request->couleur,
             'description' => $request->description,
