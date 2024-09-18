@@ -77,7 +77,7 @@ class Maintenance extends Model
 
     public function stocks()
     {
-        return $this->belongsToMany(Stock::class, 'maintenance_stock')
+        return $this->belongsToMany(Stock::class, 'maintenance_stocks')
                     ->withPivot('quantity')
                     ->withTimestamps();
     }

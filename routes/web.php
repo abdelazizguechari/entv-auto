@@ -24,6 +24,7 @@ use App\Http\Controllers\PusherController;
 use App\Http\Controllers\CalendarEventController;
 
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\NotificationController;
 
 
 
@@ -314,4 +315,5 @@ Route::middleware(['locale'])->group(function () {
 
 
 
+Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
 });

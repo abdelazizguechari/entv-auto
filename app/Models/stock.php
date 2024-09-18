@@ -9,7 +9,6 @@ class Stock extends Model
 {
     use HasFactory;
 
-    // Correct table name
     protected $table = 'stock'; 
 
     protected $fillable = [
@@ -33,7 +32,7 @@ class Stock extends Model
 
     public function maintenances()
     {
-        return $this->belongsToMany(Maintenance::class, 'maintenance_stock')
+        return $this->belongsToMany(Maintenance::class, 'maintenance_stocks')
                     ->withPivot('quantity')
                     ->withTimestamps();
     }

@@ -14,6 +14,8 @@ return new class extends Migration
                 $table->unsignedBigInteger('maintenance_id');
                 $table->unsignedBigInteger('stock_id') ;
                 $table->integer('quantity'); 
+                $table->decimal('price', 10, 2);
+                $table->decimal('total_cost', 10, 2);
                 $table->foreign('maintenance_id')->references('id')->on('maintenance')->onDelete('cascade');
                 $table->foreign('stock_id')->references('id')->on('stock')->onDelete('cascade');
                 $table->timestamps();

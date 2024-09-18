@@ -59,7 +59,7 @@
 <div class="page-content">
     <div class="card">
         <div class="card-body ">
-            <h4 class="card-title fs-4 text-center">information sur voiteur </h4>
+            <h4 class="card-title fs-4 text-center">information sur voiture</h4>
             <hr>
 
             <form method="POST">
@@ -106,6 +106,10 @@
                     <div class="col-sm-3 mb-3">
                         <label class="form-label">Prochaine Date d'Assurance</label>
                         <input type="date" class="form-control" value="{{ $car->next_assurance_date }}" readonly>
+                    </div>
+                    <div class="col-sm-3 mb-3">
+                        <label class="form-label">Prochaine Date control technique</label>
+                        <input type="date" class="form-control" value="{{ $car->next_control_date }}" readonly>
                     </div>
            
 

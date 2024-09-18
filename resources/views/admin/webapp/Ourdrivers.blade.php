@@ -2,10 +2,6 @@
 
 @section('admin') 
 
-
-
-
-
 <div class="page-content">
 
 
@@ -29,10 +25,6 @@
           </tr>
         </thead>
         <tbody>
-
-          
-
-
 
         @foreach($drivers as $key => $item )
           <tr>
@@ -77,9 +69,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection
