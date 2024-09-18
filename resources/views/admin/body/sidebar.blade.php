@@ -124,7 +124,7 @@ use Illuminate\Support\Facades\Auth;
         <a href="{{ route('man.intern') }}" class="nav-link">Gérer la maintenance interne</a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('nos.intern') }}" class="nav-link">nos Mantenance intern</a>
+        <a href="{{ route('nos.intern') }}" class="nav-link">Les maintenance intern</a>
       </li>
     </ul>
   </div>
@@ -142,7 +142,7 @@ use Illuminate\Support\Facades\Auth;
         <a href="{{ route('driver.conger') }}" class="nav-link">Conducteurs en congé</a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('Cond.qtr') }}" class="nav-link">Conducteurs questionnaires</a>
+        <a href="{{ route('Cond.qtr') }}" class="nav-link">Conducteurs suspendue</a>
       </li>
     </ul>
   </div>
@@ -157,10 +157,10 @@ use Illuminate\Support\Facades\Auth;
   <div class="collapse" id="stock-pages">
     <ul class="nav sub-menu">
       <li class="nav-item">
-        <a href="{{ route('add.stock') }}" class="nav-link">Ajouter un élément au stock</a>
+        <a href="{{ route('add.stock') }}" class="nav-link">Ajouter un article au stock</a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('all.stock') }}" class="nav-link">Voir les stocks actuels</a>
+        <a href="{{ route('all.stock') }}" class="nav-link">Consulter les stocks actuels</a>
       </li>
     </ul>
   </div>

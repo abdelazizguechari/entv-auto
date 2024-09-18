@@ -1,11 +1,6 @@
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
-
 <div class="page-content">
 
     
@@ -19,18 +14,13 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>role name</th>
-            <th>permission name</th>
+            <th>nom de role</th>
+            <th>Nom de permission</th>
             <th>action</th>
           
           </tr>
         </thead>
         <tbody>
-
-          
-
-
-
         @foreach($roles as $key => $item )
           <tr>
             <td>{{$key+1}}</td>
@@ -51,7 +41,7 @@
 
 
             <td> <a class="btn btn-danger"  href="{{route('admin.delete.role',$item->id)}}" id="delete">supprimer</a>
-      <a class="btn btn-success" href="{{route('admin.edit.role',$item->id)}}">Edit</a></td>
+      <a class="btn btn-success" href="{{route('admin.edit.role',$item->id)}}">Editer</a></td>
             
              
 

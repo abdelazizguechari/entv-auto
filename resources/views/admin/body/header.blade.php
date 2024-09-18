@@ -62,7 +62,7 @@
 							</a>
 							<div class="dropdown-menu p-0" aria-labelledby="appsDropdown">
                 <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
-									<p class="mb-0 fw-bold">Web Apps</p>
+									<p class="mb-0 fw-bold">Application Web</p>
 									<a href="javascript:;" class="text-muted">Edit</a>
 								</div>
                 <div class="row g-0 p-1">
@@ -70,7 +70,7 @@
                     <a href="{{route('chatee.app')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="message-square" class="icon-lg mb-1"></i><p class="tx-12">Chat</p></a>
                   </div>
                   <div class="col-3 text-center">
-                    <a href="{{route('caladner.add')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="calendar" class="icon-lg mb-1"></i><p class="tx-12">Calendar</p></a>
+                    <a href="{{route('caladner.add')}}" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="calendar" class="icon-lg mb-1"></i><p class="tx-12">Calendrier</p></a>
                   </div>
                   <div class="col-3 text-center">
                     <a href="pages/email/inbox.html" class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i data-feather="mail" class="icon-lg mb-1"></i><p class="tx-12">Email</p></a>
@@ -105,7 +105,7 @@
                                 </span>
                             </a>
                         @empty
-                            <p class="dropdown-item">No notifications</p>
+                            <p class="dropdown-item"></p>
                         @endforelse
                     </div>
                 </div>
@@ -145,13 +145,13 @@
                   <li class="dropdown-item py-2">
                     <a href="{{route('change.password')}}" class="text-body ms-0">
                       <i class="me-2 icon-md" data-feather="edit"></i>
-                      <span>Change password</span>
+                      <span>Changer le mot de passe</span>
                     </a>
                   </li>
                   <li class="dropdown-item py-2">
                     <a href="javascript:;" class="text-body ms-0">
                       <i class="me-2 icon-md" data-feather="repeat"></i>
-                      <span>Switch User</span>
+                      <span>Changer Utilisateur</span>
                     </a>
                   </li>
                   <li class="dropdown-item py-2">

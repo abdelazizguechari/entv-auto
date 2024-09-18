@@ -1,24 +1,13 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
-
 <div class="page-content">
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card">
   <div class="card-body ">
-    <h6 class="card-title fs-4">TABLEAU DES ADMIN</h6>
+    <h6 class="card-title fs-4">liste des utilisateur</h6>
     <hr>
     <div class="table-responsive">
       <table  class="table">
@@ -36,10 +25,6 @@
         </thead>
         <tbody>
 
-          
-
-
-
         @foreach( $alladmin as $key => $item )
           <tr>
             <td>{{$key+1}}</td>
@@ -55,7 +40,7 @@
             </td>
 
             <td> <a class="btn btn-danger"  href="{{route('delate.admin',$item->id)}}" id="delete">supprimer</a>
-                <a class="btn btn-success" href="{{route('edit.admin',$item->id)}}">Edit</a></td>
+                <a class="btn btn-success" href="{{route('edit.admin',$item->id)}}">Editer</a></td>
             
              
 
@@ -72,9 +57,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection

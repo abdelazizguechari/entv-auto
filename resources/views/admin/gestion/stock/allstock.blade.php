@@ -1,16 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
 
 <div class="page-content">
 
@@ -25,15 +15,11 @@
       </ol>
     </nav>
 
-  
-  
-
-
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
 <div class="card bg-transparent ">
   <div class="card-body">
-    <h6 class="card-title  fs-4">TABLEAU DES element stock</h6>
+    <h6 class="card-title  fs-4">Articles stock</h6>
     <hr>
     <div class="table-responsive">
       <table id="dataTableExample" class="table">
@@ -41,19 +27,14 @@
           <tr>
             <th>#</th>
             <th>element</th>
-            <th>quantity</th>
-            <th>prix uniter</th>
+            <th>quantité</th>
+            <th>prix unitaire</th>
             <th>prix total</th>
             <th>action</th>
           
           </tr>
         </thead>
         <tbody>
-
-          
-
-
-
         @foreach($stock as $key => $item )
           <tr>
             <td>{{$key+1}}</td>
@@ -63,7 +44,7 @@
             <td>{{$item ->prix_total}}</td>
             <td>
                 <a class="btn btn-danger" href="{{ route('delete.stock', $item->id) }}" id="delete">Supprimer</a>
-            <a class="btn btn-success" href="{{ route('edit.driver', $item->id)}}">Edit</a>
+            <a class="btn btn-success" href="{{ route('edit.driver', $item->id)}}">Editer</a>
 </td>
           </tr>
 
@@ -78,9 +59,4 @@
     </div>
 
 </div>
-
-
-
-
-
 @endsection
