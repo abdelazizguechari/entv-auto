@@ -60,7 +60,7 @@ class MaintenanceController extends Controller
         activity()
             ->causedBy(Auth::user())
             ->performedOn($maintenance)
-            ->log('Maintenance created for car');
+            ->log('Maintenance crée pour la voiture : ' . $request->immatriculation);
 
         $notification = [
             'message' => 'car ajouter on maintenance success.',
@@ -93,7 +93,7 @@ class MaintenanceController extends Controller
         activity()
             ->causedBy(Auth::user())
             ->performedOn($maintenance)
-            ->log('Generated PDF for maintenance report');
+            ->log('PDF generé pour la maintenance : ' . $id);
 
         return $pdf->download('maintenance_report.pdf');
     }
@@ -121,7 +121,7 @@ class MaintenanceController extends Controller
         activity()
             ->causedBy(Auth::user())
             ->performedOn($maintenance)
-            ->log('Maintenance completed and archived');
+            ->log('Maintenance completé et archive crée : ' . $id);
 
         $notification = [
             'message' => 'car ajouter on maintenance success.',
@@ -203,7 +203,7 @@ class MaintenanceController extends Controller
                 ->causedBy(Auth::user())
                 ->performedOn($stockItem)
                 ->withProperties(['maintenance_id' => $maintenanceId, 'quantity' => $quantity])
-                ->log('Stock item added to maintenance');
+                ->log('Article stock ajouté à la maintenance : ' . $stockItem->name);
 
             MaintenanceStock::create([
                 'maintenance_id' => $maintenanceId,

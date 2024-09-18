@@ -29,7 +29,7 @@ class FaQController extends Controller
         activity()
             ->causedby(auth()->user())
             ->performedOn($faq)
-            ->log('faq created');
+            ->log('faq crée');
                         
         $notification = [
             'message' => 'FAQ create successfully.',

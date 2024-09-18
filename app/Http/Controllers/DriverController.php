@@ -102,7 +102,7 @@ class DriverController extends Controller
         activity()
             ->causedBy(auth()->user())
             ->performedOn($driver)
-            ->log('Driver deleted');
+            ->log('Conducteur supprimé');
 
         $notification = [
             'message' => 'Driver deleted successfully.',
@@ -163,7 +163,7 @@ class DriverController extends Controller
         activity()
             ->causedBy(auth()->user())
             ->performedOn($driver)
-            ->log('Driver updated');
+            ->log('Conducteur mis à jour');
 
         $notification = [
             'message' => 'Driver updated successfully.',
@@ -198,7 +198,7 @@ class DriverController extends Controller
         activity()
             ->causedBy(auth()->user())
             ->performedOn($driver)
-            ->log('Driver put on leave');
+            ->log('Conducteur entrant en conge');
 
         $notification = [
             'message' => 'Driver added to leave successfully and car has been freed up.',
@@ -279,7 +279,7 @@ public function reportDriver(Request $request)
     activity()
         ->causedBy(auth()->user())
         ->performedOn($report)
-        ->log('Driver reported');
+        ->log('Conducteur signalé');
 
     // Set notification message
     $notification = [
@@ -311,7 +311,7 @@ public function deleteRecord($id)
         activity()
             ->causedBy(auth()->user())
             ->performedOn($record)
-            ->log('Driverspam record deleted');
+            ->log(' Driverspam supprimé');
 
      
         $notification = [

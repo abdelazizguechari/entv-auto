@@ -39,11 +39,11 @@ class StockController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($stock)
-                ->log('Stock added: ' . $stock->category . ', Quantity: ' . $stock->quantity);
+                ->log('Stock ajouté: ' . $stock->category . ', Quantity: ' . $stock->quantity);
         }
 
         $notification = [
-            'message' => 'Stock created successfully.',
+            'message' => 'Stock crée avec succes.',
             'alert-type' => 'success'
         ];
 
@@ -64,12 +64,12 @@ class StockController extends Controller
         activity()
             ->causedBy(auth()->user())
             ->performedOn($stock)
-            ->log('Stock deleted: ' . $stock->category);
+            ->log('Stock supprimé: ' . $stock->category);
 
         $stock->delete();
 
         $notification = [
-            'message' => 'Element deleted successfully.',
+            'message' => 'Element supprimé avec succes.',
             'alert-type' => 'success'
         ];
 

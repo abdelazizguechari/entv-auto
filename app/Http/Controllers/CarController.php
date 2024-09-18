@@ -63,7 +63,7 @@ class CarController extends Controller
             ->on($car)
             ->causedBy(Auth::user())
             ->withProperties(['attributes' => $car])
-            ->log('Car created');
+            ->log('vehicule crée');
 
         $notification = [
             'message' => 'Car created successfully.',
@@ -105,7 +105,7 @@ class CarController extends Controller
             ->on($car)
             ->causedBy(Auth::user())
             ->withProperties(['attributes' => $car])
-            ->log('Car deleted');
+            ->log('vehicule supprimé');
 
         $notification = [
             'message' => 'Car deleted successfully.',
@@ -134,7 +134,7 @@ class CarController extends Controller
             ->on($car)
             ->causedBy(Auth::user())
             ->withProperties(['attributes' => $car])
-            ->log('Car updated');
+            ->log('vehicule mis à jour');
 
         $notification = [
             'message' => 'Car updated successfully.',
