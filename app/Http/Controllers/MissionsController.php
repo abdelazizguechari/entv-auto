@@ -50,6 +50,7 @@ class MissionsController extends Controller
         $missions = Mission::all();
         return view('admin.webapp.createevents', compact('missions'));
     }
+
     public function storeTransportation(Request $request)
     {
         // Use try-catch to handle exceptions
@@ -91,24 +92,53 @@ class MissionsController extends Controller
         }
     }
     
-    
     public function storeMission(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'mission_type' => 'nullable|string',
-            'lieu_mission' => 'nullable|string',
-            'mission_start' => 'nullable|date',
-            'mission_end' => 'nullable|date|after_or_equal:mission_start',
-            'crew_leader' => 'nullable|string|max:255',
-            'crew_name' => 'nullable|string|max:255',
-            'status' => 'required|in:ongoing,scheduled,completed',
-            'fuel_tokens' => 'required|integer|min:0',
-            'distance' => 'required|integer|min:0',
-            'car_id' => 'required|string|exists:cars,immatriculation',
-            'event_id' => 'nullable|exists:events,id',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'description' => 'required|string', // Made description required
+        'mission_type' => 'required|string', // Made mission_type required
+        'lieu_mission' => 'required|string', // Made lieu_mission required
+        'mission_start' => 'required|date', // Made mission_start required
+        'mission_end' => 'nullable|date|after_or_equal:mission_start',
+        'crew_leader' => 'required|string|max:255', // Made crew_leader required
+        'crew_name' => 'required|string|max:255', // Made crew_name required
+        'status' => 'required|in:ongoing,scheduled,completed',
+        'fuel_tokens' => 'required|integer|min:0',
+        'distance' => 'required|integer|min:0',
+        'car_id' => 'required|string|exists:cars,immatriculation',
+        'event_id' => 'nullable|exists:events,id',
+    ], [
+        // Custom error messages in French
+        'name.required' => 'Le nom est obligatoire.',
+        'description.required' => 'La description est obligatoire.',
+        'mission_type.required' => 'Le type de mission est obligatoire.',
+        'lieu_mission.required' => 'Le lieu de la mission est obligatoire.',
+        'mission_start.required' => 'La date de début de la mission est obligatoire.',
+        'mission_start.date' => 'La date de début de la mission doit être une date valide.',
+        'mission_end.date' => 'La date de fin de la mission doit être une date valide.',
+        'mission_end.after_or_equal' => 'La date de fin de la mission doit être après ou égale à la date de début.',
+        'crew_leader.required' => 'Le chef d\'équipe est obligatoire.',
+        'crew_name.required' => 'Le nom de l\'équipe est obligatoire.',
+        'status.required' => 'Le statut est obligatoire.',
+        'status.in' => 'Le statut doit être l\'un des suivants: ongoing, scheduled, completed.',
+        'fuel_tokens.required' => 'Le nombre de jetons de carburant est obligatoire.',
+        'fuel_tokens.integer' => 'Le nombre de jetons de carburant doit être un nombre entier.',
+        'fuel_tokens.min' => 'Le nombre de jetons de carburant doit être supérieur ou égal à 0.',
+        'distance.required' => 'La distance est obligatoire.',
+        'distance.integer' => 'La distance doit être un nombre entier.',
+        'distance.min' => 'La distance doit être supérieure ou égale à 0.',
+        'car_id.required' => 'Le numéro d\'immatriculation de la voiture est obligatoire.',
+        'car_id.exists' => 'Le numéro d\'immatriculation de la voiture doit exister dans la base de données.',
+        'event_id.exists' => 'L\'événement sélectionné doit exister dans la base de données.',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+                         ->withErrors($validator)
+                         ->withInput();
+    }
+
     
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -129,7 +159,12 @@ class MissionsController extends Controller
             ->performedOn($mission)
             ->log('mission crée');
     
-        return response()->json(['success' => true, 'message' => 'Mission créée avec succès.']);
+            $notification = [
+                'message' => 'mission created successfully.',
+                'alert-type' => 'success'
+            ];
+    
+            return redirect()->route('missions.index')->with($notification);
     }
     
     public function updateMission(Request $request, $id)
@@ -220,9 +255,21 @@ class MissionsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string', // Made description required
             'event_start' => 'nullable|date',
             'event_end' => 'nullable|date',
+            // Custom validation to ensure event_start is not after event_end
+            'event_start' => ['nullable', 'date', function ($attribute, $value, $fail) use ($request) {
+                if ($request->event_end && $value > $request->event_end) {
+                    $fail('La date de début de l\'événement ne peut pas être après la date de fin.');
+                }
+            }],
+        ], [
+            // Custom error messages in French
+            'name.required' => 'Le nom est obligatoire.',
+            'description.required' => 'La description est obligatoire.',
+            'event_start.date' => 'La date de début de l\'événement doit être une date valide.',
+            'event_end.date' => 'La date de fin de l\'événement doit être une date valide.',
         ]);
 
         $event = Event::create($request->all());

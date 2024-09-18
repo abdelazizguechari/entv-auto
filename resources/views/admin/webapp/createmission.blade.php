@@ -1,13 +1,3 @@
-<style>
-    .form-control {
-        background-color: transparent !important;
-    }
-    
-    select.form-control option {
-        background-color: #060C17;
-        color: #fff; 
-    }
-</style>
 
 @extends('admin.dash')
 
@@ -22,6 +12,17 @@
 
                     <h6 class="card-title fs-4">Créer une Mission</h6>
                     <hr>
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                
                     <form id="missionForm" action="{{ route('missions.store.mission') }}" method="POST">
                         @csrf
 
