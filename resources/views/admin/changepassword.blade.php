@@ -19,12 +19,12 @@
       <div class="row">
         <div class="card bg-transparent">
           <div class="card-body bg-dark ">
-            <h6 class="card-title fs-4">Change Password</h6>
+            <h6 class="card-title fs-4">Changer mot de passe</h6>
             <hr>
             <form action="{{ route('password.change') }}" method="POST" class="forms-sample">
               @csrf
               <div class="mb-3">
-                <label for="oldpassword" class="form-label">Old Password</label>
+                <label for="oldpassword" class="form-label">Ancien mot de passe</label>
                 <input type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" id="oldpassword">
                 @error('old_password')
                 <span class="text-danger">{{ $message }}</span>
@@ -32,7 +32,7 @@
               </div>
             
               <div class="mb-3">
-                <label for="newpassword" class="form-label">New Password</label>
+                <label for="newpassword" class="form-label">Nouveau mot de passe</label>
                 <input type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" id="newpassword">
                 @error('new_password')
                 <span class="text-danger">{{ $message }}</span>
@@ -40,15 +40,15 @@
               </div>
             
               <div class="mb-3">
-                <label for="newpassword_confirmation" class="form-label">Confirm New Password</label>
+                <label for="newpassword_confirmation" class="form-label">Confirmer nouveau mot de passe</label>
                 <input type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror" name="new_password_confirmation" id="newpassword_confirmation">
                 @error('new_password_confirmation')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
               </div>
             
-              <button type="submit" class="btn btn-primary me-2">Change</button>
-              <button type="reset" class="btn btn-secondary">Cancel</button>
+              <button type="submit" class="btn btn-primary me-2">Changer</button>
+              <button type="reset" class="btn btn-secondary">Annuler</button>
             </form>
           </div>
         </div>

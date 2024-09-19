@@ -98,15 +98,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/operator/{id}/detailes', [DriverController::class, 'driverdetailes'])->name('driver.detailes');
         Route::post('/report-driver', [DriverController::class, 'reportDriver'])->name('report.driver');
         Route::get('/admin/allqtr', [DriverController::class, 'Condqtr'])->name('Cond.qtr');
-
-        Route::delete('/admin/{id}/signalements', [DriverController::class, 'deleteRecord'])->name('signalements.delete');
-
-
-
-
-
-     
-    
+        Route::get('/driver/{id}/activate', [DriverController::class, 'activateDriver'])->name('activate.driver');
+        Route::delete('/admin/{id}/signalements', [DriverController::class, 'deleteRecord'])->name('signalements.delete');   
     });
 
 
@@ -172,7 +165,9 @@ Route::controller(MissionsController::class)->group(function() {
 
 });
 
-
+Route::get('/mission-archives', [DashboardController::class, 'mindex'])->name('mission.archives');
+Route::get('/mission/{id}/archives/', [DashboardController::class, 'show'])->name('missionachiv.detailes');
+Route::get('/missions/archive/{id}', [DashboardController::class, 'archive'])->name('missions.archive');
 // In routes/web.php
 Route::get('/test-date', [TestController::class, 'test'])->name('test.date');
 
@@ -181,8 +176,6 @@ Route::get('/test-date', [TestController::class, 'test'])->name('test.date');
 Route::controller(DashboardController::class)->group(function(){
     Route::get('/update/section',[DashboardController::class,'updatesection'])->name('update.section');
     Route::put('/departments/section/{id}', [DashboardController::class, 'update'])->name('departments.update');
-
-
 });
 
 

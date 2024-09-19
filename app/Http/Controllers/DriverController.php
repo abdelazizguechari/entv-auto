@@ -255,86 +255,99 @@ class DriverController extends Controller
 
 
     // Add this method to your ReportController
-public function reportDriver(Request $request)
-{
-    // Validate the request
-    $validatedData = $request->validate([
-        'driver_id' => 'required|exists:drivers,id',
-        'raison' => 'required|string',
-        'date_singler' => 'required|date',
-        'justification' => 'nullable|string',
-        'singler_par' => 'required|exists:users,id',
-    ]);
+    public function reportDriver(Request $request)
+    {
+        // Validate the request
+        $validatedData = $request->validate([
+            'driver_id' => 'required|exists:drivers,id',
+            'raison' => 'required|string',
+            'date_singler' => 'required|date',
+            'justification' => 'nullable|string',
+            'singler_par' => 'required|exists:users,id',
+        ]);
 
-    // Create the report record
-    $report = new Driverspam();
-    $report->driver_id = $validatedData['driver_id'];
-    $report->raison = $validatedData['raison'];
-    $report->date_singler = $validatedData['date_singler'];
-    $report->justification = $validatedData['justification'];
-    $report->singler_par = $validatedData['singler_par'];
-    $report->save();
+        // Create the report record
+        $report = new Driverspam();
+        $report->driver_id = $validatedData['driver_id'];
+        $report->raison = $validatedData['raison'];
+        $report->date_singler = $validatedData['date_singler'];
+        $report->justification = $validatedData['justification'];
+        $report->singler_par = $validatedData['singler_par'];
+        $report->save();
 
-    // Log activity
-    activity()
-        ->causedBy(auth()->user())
-        ->performedOn($report)
-        ->log('Conducteur signalé');
-
-    // Set notification message
-    $notification = [
-        'message' => 'Conducteur signalé avec succès.',
-        'alert-type' => 'success'
-    ];
-
-    // Redirect with success notification
-    return redirect()->back()->with($notification);
-}
-
-public function Condqtr(){
-
-    $data = Driverspam::with('driver')->get();
-    return view('admin.gestion.driver.driverspam', compact('data'));
-
-}
-
-
-
-public function deleteRecord($id)
-{
-    try {
-        $record = Driverspam::findOrFail($id);
-        
-   
-        $record->delete();
-
+        // Log activity
         activity()
             ->causedBy(auth()->user())
-            ->performedOn($record)
-            ->log(' Driverspam supprimé');
+            ->performedOn($report)
+            ->log('Conducteur signalé');
 
-     
+        // Set notification message
         $notification = [
-            'message' => 'Signalement supprimé avec succès.',
+            'message' => 'Conducteur signalé avec succès.',
             'alert-type' => 'success'
         ];
-        
-        return redirect()->back()->with($notification);
-    } catch (\Exception $e) {
- 
-        Log::error('Error deleting Driverspam record', ['id' => $id, 'error' => $e->getMessage()]);
 
-        
-        $notification = [
-            'message' => 'Une erreur s\'est produite lors de la suppression du signalement.',
-            'alert-type' => 'error'
-        ];
-        
+        // Redirect with success notification
         return redirect()->back()->with($notification);
     }
-}
+
+    public function Condqtr(){
+
+        $data = Driverspam::with('driver')->get();
+        return view('admin.gestion.driver.driverspam', compact('data'));
+
+    }
+
+    public function activateDriver($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = 'active';
+        $driver->save();
+    
+        ConducteurConger::where('driver_id', $id)->delete();
+    
+        $notification = [
+            'message' => 'conducteur réactiver et congé terminer',
+            'alert-type' => 'success'
+        ];
+    
+        return redirect()->back()->with($notification);
+    }
+    
 
 
+    public function deleteRecord($id)
+    {
+        try {
+            $record = Driverspam::findOrFail($id);
+            
+    
+            $record->delete();
 
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($record)
+                ->log(' Driverspam supprimé');
+
+        
+            $notification = [
+                'message' => 'Signalement supprimé avec succès.',
+                'alert-type' => 'success'
+            ];
+            
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+    
+            Log::error('Error deleting Driverspam record', ['id' => $id, 'error' => $e->getMessage()]);
+
+            
+            $notification = [
+                'message' => 'Une erreur s\'est produite lors de la suppression du signalement.',
+                'alert-type' => 'error'
+            ];
+            
+            return redirect()->back()->with($notification);
+        }
+    }
     
 }

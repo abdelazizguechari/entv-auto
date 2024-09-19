@@ -21,7 +21,7 @@
 
                         <div class="form-group">
                             <label for="category">Categorie</label>
-                            <input type="text" name="category" id="category" class="form-control" value="{{ old('category', $stock->category) }}" required>
+                            <input type="text" name="category" id="category" class="form-control" value="{{ old('category', $stock->category) }}" required readonly>
                         </div>
 
                         <div class="form-group">
@@ -32,13 +32,7 @@
                         <div class="form-group">
                             <label for="price">Prix unitaire</label>
                             <input type="number" name="price" id="price" class="form-control" value="{{ old('price', $stock->price) }}" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea name="description" id="description" class="form-control">{{ old('description', $stock->description) }}</textarea>
-                        </div>
-
+                        </div>                   
                         <button type="submit" class="btn btn-primary">mis à jour</button>
                     </form>
                 </div>
