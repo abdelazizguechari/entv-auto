@@ -167,22 +167,11 @@ Route::controller(MissionsController::class)->group(function() {
 
     Route::get('/edit/transportation/{id}', [MissionsController::class, 'editTransportation'])->name('transportation.edit');
     Route::delete('/delete/{id}', [MissionsController::class, 'destroy'])->name('missions.destroy');
-    Route::get('/delete/{id}/mission', [MissionsController::class, 'deleted'])->name('missions.deleted');
 
     Route::get('/missions/byDate', [MissionController::class, 'fetchByDate'])->name('missions.byDate');
 
-
-    // routes/web.php
-
-
-
-    
-
 });
 
-Route::get('/mission-archives', [DashboardController::class, 'mindex'])->name('mission.archives');
-Route::get('/mission/{id}/archives/', [DashboardController::class, 'show'])->name('missionachiv.detailes');
-Route::get('/missions/archive/{id}', [DashboardController::class, 'archive'])->name('missions.archive');
 
 // In routes/web.php
 Route::get('/test-date', [TestController::class, 'test'])->name('test.date');
@@ -258,13 +247,14 @@ Route::controller(StockController::class)->group(function() {
     Route::get('/inventorya/add/stoers', [StockController::class, 'addstock'])->name('add.stock'); // Changed /addCar/add/stock to /inventory/add/stock
     Route::post('/inventoryza/save', [StockController::class, 'store'])->name('stocks.store'); // Changed /store/store to /inventory/save
     Route::get('/inventoryr/list', [StockController::class, 'allstock'])->name('all.stock'); // Changed /all/stock to /inventory/list
+    Route::get('stock/edit/{id}', [StockController::class, 'edit'])->name('edit.stock');
+    Route::put('stock/update/{id}', [StockController::class, 'update'])->name('update.stock');
     Route::get('/inventorys/remove/{id}', [StockController::class, 'delete'])->name('delete.stock'); // Changed /stock/delete/{id} to /inventory/remove/{id}
     Route::get('/inventorye/new', [StockController::class, 'impoststock'])->name('impost.stock'); // Changed /impost/stock to /inventory/initialize
     Route::get('/inventoryr/down', [StockController::class, 'export'])->name('export'); // Changed /stock/export to /inventory/download
-    // web.php
-Route::get('/export-stock', [StockController::class, 'exportExcel'])->name('export.stock');
-Route::get('/import-stock', [StockController::class, 'showImportForm'])->name('import.stock');
-Route::post('/import-stock', [StockController::class, 'importExcel']);
+    Route::get('/export-stock', [StockController::class, 'exportExcel'])->name('export.stock');
+    Route::get('/import-stock', [StockController::class, 'showImportForm'])->name('import.stock');
+    Route::post('/import-stock', [StockController::class, 'importExcel']);
 
 
 });
@@ -319,7 +309,6 @@ Route::middleware(['locale'])->group(function () {
         session(['locale' => $locale]);
         return redirect()->back();
     })->name('locale.switch');
-    
     
 });
 

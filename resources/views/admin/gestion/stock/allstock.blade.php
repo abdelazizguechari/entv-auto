@@ -7,10 +7,8 @@
  
     <nav class="page-breadcrumb">
       <ol class="breadcrumb">
-        <!-- Import Button -->
         <a href="{{ route('import.stock') }}" class="btn btn-inverse-info">Importer depuis Excel</a>
         &nbsp;&nbsp;&nbsp;
-        <!-- Export Button -->
         <a href="{{ route('export.stock') }}" class="btn btn-inverse-info">Exporter vers Excel</a>
       </ol>
     </nav>
@@ -44,8 +42,8 @@
             <td>{{$item ->prix_total}}</td>
             <td>
                 <a class="btn btn-danger" href="{{ route('delete.stock', $item->id) }}" id="delete">Supprimer</a>
-            <a class="btn btn-success" href="{{ route('edit.driver', $item->id)}}">Editer</a>
-</td>
+                <a class="btn btn-success" href="{{ route('edit.stock', $item->id)}}">Editer</a>
+            </td>
           </tr>
 
           @endforeach 
