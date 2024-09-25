@@ -42,10 +42,9 @@ class DriverController extends Controller
             'date_naissance.after' => 'Vous devez avoir au moins 18 ans.',
         ];
     
-        // Validate the request
+
         $validatedData = $request->validate($rules, $messages);
     
-        // Check if the driver is at least 18 years old
         if ($request->has('date_naissance')) {
             $birthDate = new \DateTime($request->input('date_naissance'));
             $currentDate = new \DateTime();
@@ -58,28 +57,27 @@ class DriverController extends Controller
             }
         }
     
-        // Handle photo upload
+
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');
             $validatedData['photo'] = $photoPath;
         }
     
-        // Create the driver record
+     
         $driver = Driver::create($validatedData);
     
-        // Log activity
+
         activity()
             ->causedBy(auth()->user())
             ->performedOn($driver)
             ->log('Conducteur créé');
-    
-        // Set notification message
-        $notification = [
+
+
+       $notification = [
             'message' => 'Conducteur créé avec succès.',
             'alert-type' => 'success'
         ];
-    
-        // Redirect with success notification
+
         return redirect()->route('our.drivers')->with($notification);
     }
     

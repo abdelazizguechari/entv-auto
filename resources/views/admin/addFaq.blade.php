@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-12 ">
 <div class="card">
-  <div class="card-body bg-dark">
+  <div class="card-body ">
 
                     <h6 class="card-title fs-4">Ajouter FAQ</h6>
                     <hr>
@@ -25,11 +25,11 @@
                        
                         <div class="mb-3">
                             <label class="form-label">reponse</label>
-                            <textarea class="form-control" name="reponse" rows="3" placeholder="Entrez la description"></textarea>
+                            <textarea class="form-control" name="reponse" rows="3" placeholder="Entrez la reponse"></textarea>
                         </div>
                       
-                        <button type="submit" class="btn btn-primary me-2">Soumettre</button>
-                        <button class="btn btn-secondary">Annuler</button>
+                        <button type="submit" class="btn btn-inverse-primary me-2">Soumettre</button>
+                        <button class="btn btn-inverse-secondary">Annuler</button>
                     </form>
 
   </div>

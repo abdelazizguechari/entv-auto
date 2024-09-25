@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('responsable'); // Department head
             $table->string('localisation'); // Location of the department
             $table->string('email'); // Contact email
-            $table->string('telephone'); // Contact phone number
-            $table->foreignId('enterprise_id')->constrained()->onDelete('cascade'); // Foreign key to enterprises
+            $table->string('telephone');// Contact phone number
+            $table->foreignId('enterprise_id')->nullable()->constrained()->onDelete('cascade'); // Foreign key to enterprises
             $table->timestamps();
         });
     }

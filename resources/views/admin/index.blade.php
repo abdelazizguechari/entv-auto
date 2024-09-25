@@ -45,8 +45,8 @@
                   <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item d-flex align-items-center" href="">
-                    <i data-feather="eye" class="icon-sm me-2"></i> <span class="">Voir</span>
+                  <a class="dropdown-item d-flex align-items-center" href="{{route('make.section')}}">
+                    <i data-feather="eye" class="icon-sm me-2"></i> <span class="">ajouter</span>
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="{{route('update.section')}}">
                     <i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Modifier</span>
@@ -63,19 +63,19 @@
             </div>
             <hr>
             <div class="col-12">
-              <h6>Nom du département : <span style="font-weight: 100">{{ $data->nom }}</span></h6>
+              <h6>Nom du département : <span style="font-weight: 100">{{ $data->nom ?? null }}</span></h6>
               <hr pt-3>
               
-              <h6>Nombre d'employés dans ce département : <span style="font-weight: 100">{{ $data->nb_employes }} employés</span></h6>
+              <h6>Nombre d'employés dans ce département : <span style="font-weight: 100">{{ $data->nb_employes ?? null }} employés</span></h6>
               <hr pt-3>
               
-              <h6>Responsable du département :<span style="font-weight: 100">{{ $data->responsable }}</span></h6>
+              <h6>Responsable du département :<span style="font-weight: 100">{{ $data->responsable ?? null }}</span></h6>
               <hr pt-3>
               
-              <h6>Localisation du département :<span style="font-weight: 100">{{ $data->localisation }}</span></h6>
+              <h6>Localisation du département :<span style="font-weight: 100">{{ $data->localisation  ?? null }}</span></h6>
               <hr pt-3>
               
-              <h6>Contact du département :<span style="font-weight: 100">{{ $data->email }} | {{ $data->telephone }}</span></h6>
+              <h6>Contact du département :<span style="font-weight: 100">{{ $data->email  ?? null }} | {{ $data->telephone  ?? null}}</span></h6>
               <hr pt-3>
               
             </div>

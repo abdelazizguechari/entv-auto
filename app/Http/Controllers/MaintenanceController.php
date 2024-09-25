@@ -72,10 +72,7 @@ class MaintenanceController extends Controller
 
     public function Datainmaintenance()
     {
-        $data = Maintenance::join('drivers', 'maintenance.driver_id', '=', 'drivers.id')
-            ->select('maintenance.*', 'drivers.nom as driver_name')
-            ->where('maintenance.status', 'inwork')
-            ->get();
+        $data = Maintenance::where('status' , 'inwork')->get(); 
 
         // Log data retrieval
         // activity()
@@ -124,7 +121,7 @@ class MaintenanceController extends Controller
             ->log('Maintenance completé et archive crée : ' . $id);
 
         $notification = [
-            'message' => 'car ajouter on maintenance success.',
+            'message' => 'car ajouter on archive success.',
             'alert-type' => 'success'
         ];
 

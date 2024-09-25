@@ -27,8 +27,8 @@
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label class="form-label">Chauffeur</label>
-                                    <input type="text" class="form-control" name="chauffeur" value="{{  $chauffeur->nom }}" readonly>
-                                    <input type="hidden" name="driver_id" value="{{$chauffeur->id}}" >
+                                    <input type="text" class="form-control" name="chauffeur" value="{{  $chauffeur->nom ?? 'N/A' }}" readonly>
+                                    <input type="hidden" name="driver_id" value="{{$chauffeur->id ?? null}}" >
                                 </div>
                             </div>
                         </div>
@@ -38,17 +38,17 @@
                                 <div class="col-sm-4">
                                     <div class="mb-3">
                                         <label class="form-label">la catégorie de panne</label>
-                                        <select style="background-color:black" class="form-control" name="categorie_panne" id="categorie_panne" class="form-control">
+                                        <select  class="form-control" name="categorie_panne" id="categorie_panne" class="form-control">
                                            
 
-                                            <option style="background-color:#060C17" value="">Sélectionnez la catégorie de panne</option>
-                                            <option style="background-color:#060C17" value="moteur">Panne Moteur</option>
-                                            <option style="background-color:#060C17" style="background-color:#060C17" value="freins">Panne de Freins</option>
-                                            <option style="background-color:#060C17" value="transmission">Panne de Transmission</option>
-                                            <option style="background-color:#060C17" value="electrique">Problème Électrique</option>
-                                            <option style="background-color:#060C17" value="pneu">Pneu Crevé</option>
-                                            <option style="background-color:#060C17" value="batterie">Batterie Déchargée</option>
-                                            <option style="background-color:#060C17" value="autre">Autre</option>
+                                            <option  value="">Sélectionnez la catégorie de panne</option>
+                                            <option  value="moteur">Panne Moteur</option>
+                                            <option  value="freins">Panne de Freins</option>
+                                            <option  value="transmission">Panne de Transmission</option>
+                                            <option  value="electrique">Problème Électrique</option>
+                                            <option  value="pneu">Pneu Crevé</option>
+                                            <option  value="batterie">Batterie Déchargée</option>
+                                            <option  value="autre">Autre</option>
                                        
                                         </select>
                                     </div>
@@ -66,9 +66,9 @@
                                 <div class="col-sm-4">
                                     <div class="mb-3">
                                         <label class="form-label">Type de Maintenance</label>
-                                        <select style="background-color: black; text-transform: uppercase;" class="form-control" name="maintenance_type">
-                                            <option style="background-color:#060C17" value="inside">Inside</option>
-                                            <option style="background-color: #060C17" value="outside">Outside</option>
+                                        <select  class="form-control" name="maintenance_type">
+                                            <option  value="inside">Inside</option>
+                                            <option  value="outside">Outside</option>
                                         </select>
                                     </div>
                                 </div><!-- Col -->

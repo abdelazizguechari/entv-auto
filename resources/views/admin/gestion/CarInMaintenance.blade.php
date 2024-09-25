@@ -28,7 +28,15 @@
           <tr>
             <td>{{$key + 1}}</td>
             <td>{{$item ->immatriculation}}</td>
-            <td>{{$item ->driver_name}}</td>
+
+
+            @if (empty($item ->driver_name) )
+               {{'voiteur without drivers'}}
+            @else
+               {{$item ->driver_name}} 
+            @endif
+                       
+            <td>{{$item ->driver_name }}</td>
             <td>{{$item ->start_date}}</td>
             <td>{{$item ->categorie_panne}}</td>
             <td>

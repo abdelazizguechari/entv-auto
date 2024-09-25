@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('maintenance', function (Blueprint $table) {
             $table->id();
             $table->string('immatriculation');
-            $table->foreignId('stock_id')->constrained('stock')->onDelete('cascade');
-            $table->foreignId('driver_id')->constrained('drivers')->onDelete('cascade');
+            $table->foreignId('stock_id')->nullable()->constrained('stock')->onDelete('cascade');
+            $table->foreignId('driver_id')->nullable()->constrained('drivers')->onDelete('cascade');
             $table->enum('maintenance_type', ['inside', 'outside']);
             $table->date('start_date');
             $table->date('end_date')->nullable();

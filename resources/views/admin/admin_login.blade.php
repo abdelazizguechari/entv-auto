@@ -36,7 +36,7 @@
 	<link rel="stylesheet" href="{{asset('backend/assets/css/demo2/style.css')}}">
     <!-- Fin des styles de mise en page -->
 
-    <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.png')}}" />
+    <link rel="shortcut icon" href="{{asset('backend/assets/images/entvlogo.png')}}" sizes="120x48" type="image/png"/>
 </head>
 <body>
 	<div class="main-wrapper">
@@ -78,7 +78,7 @@
                                             </div>
                                         </form> 
                                         <a href="{{ route('password.request') }}" class="text-decoration-none">
-                                            <div>
+                                            <div class="mt-3">
                                                 <p>Mot de passe oublié ?</p>
                                             </div>
                                         </a>

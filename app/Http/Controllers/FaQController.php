@@ -12,7 +12,7 @@ class FaQController extends Controller
         $faq = faqmodel::all();
         return view('admin.faq',compact('faq'));
     }
-
+    
     public function addFaq () {
        return view('admin.addFaq');
     }

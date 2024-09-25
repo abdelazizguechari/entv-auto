@@ -126,6 +126,40 @@ public function archive($id)
 
     return redirect()->back()->with($notification);
 }
+
+
+public function index()
+ {
+
+    return view('admin.enterprise.enterprise');
+}
+
+
+
+public function createsection(Request $request) {
+
+
+    $section =  new Department() ;
+    $section->nom = $request->nom ;
+    $section->nb_employes = $request->nb_employes;
+    $section->responsable = $request->responsable;
+    $section->localisation = $request->localisation;
+    $section->email = $request->email;
+    $section->telephone = $request->telephone;
+    $section->save();
+
+    $notification = [
+     'message' => 'section crée',
+     'alert-type' => 'success'
+    ];
+
+    return redirect()->back()->with($notification);
+
+}
+
+
+
+
   
 
 }

@@ -15,14 +15,13 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\FaQController ;
-use App\Http\Controllers\DashboardController ;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PusherController;
 use App\Http\Controllers\CalendarEventController;
-
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\NotificationController;
 
@@ -108,6 +107,27 @@ Route::middleware(['auth'])->group(function () {
      
     
     });
+
+
+
+
+
+
+    
+    Route::get('admin/addsection' , DashboardController::class , 'index') ->name('make.section');
+
+    Route::post('admin/section', Dashboardcontroller::class , 'createsection')->name('create.section');
+
+
+
+
+
+
+
+
+
+
+
 
 
     // In routes/web.php

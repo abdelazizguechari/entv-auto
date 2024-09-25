@@ -21,14 +21,14 @@ class StockController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request input
+    
         $request->validate([
             'stocks.*.category' => 'required|string',
             'stocks.*.quantity' => 'required|integer|min:0',
             'stocks.*.price' => 'required|numeric|min:0',
         ]);
 
-        // Iterate over the stocks input and create new Stock entries
+      
         foreach ($request->input('stocks') as $stockData) {
             $stock = Stock::create([
                 'category' => $stockData['category'], 
@@ -96,10 +96,10 @@ class StockController extends Controller
         
         $handle = fopen('php://output', 'w');
         
-        // Add headers to the CSV
+ 
         fputcsv($handle, ['ID', 'Name', 'Category', 'Quantity', 'Price', 'Total Price', 'Description', 'Created At', 'Updated At']);
         
-        // Add data to the CSV
+      
         foreach ($stocks as $stock) {
             fputcsv($handle, [
                 $stock->id,
@@ -123,13 +123,13 @@ class StockController extends Controller
         );
     }
     
-    // Show import form
+
     public function showImportForm()
     {
-        return view('admin.gestion.stock.impoststock'); // Create this view for the import form
+        return view('admin.gestion.stock.impoststock'); 
     }
 
-    // Import stock data from Excel (CSV)
+
     public function importExcel(Request $request)
     {
         $request->validate([
@@ -139,12 +139,12 @@ class StockController extends Controller
         $file = $request->file('file');
         $handle = fopen($file, 'r');
         
-        // Skip the header row
+     
         fgetcsv($handle);
         
         while (($row = fgetcsv($handle)) !== false) {
             Stock::updateOrCreate(
-                ['id' => $row[0]], // Update if ID matches
+                ['id' => $row[0]], 
                 [
                     'name' => $row[1],
                     'category' => $row[2],
