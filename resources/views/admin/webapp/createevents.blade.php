@@ -24,7 +24,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title fs-4">Créer une Mission d'Événement</h6>
+                    <h6 class="card-title fs-4">Créer Un Événement</h6>
                     <hr>
                     <form id="eventForm" action="{{ route('missions.store.events') }}" method="POST">
                         @csrf
@@ -71,7 +71,7 @@
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
                             @endif
                         </div>
-                        <button type="button" class="btn btn-inverse-info" onclick="submitFormAndAddMission()">etap suiver</button>
+                        <button type="button" class="btn btn-inverse-info" onclick="submitFormAndAddMission()">etape suivante</button>
                     </form>
                 </div>
             </div>

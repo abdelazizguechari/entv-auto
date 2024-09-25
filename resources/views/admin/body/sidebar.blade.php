@@ -166,9 +166,6 @@ use Illuminate\Support\Facades\Auth;
   </div>
 </li>
 
-
-
-
         <li class="nav-item nav-category mt-2 mb-2">{{ __('navbar.manage_archives') }}</li>
 
         <li class="nav-item">

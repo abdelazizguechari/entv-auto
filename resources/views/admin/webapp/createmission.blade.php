@@ -101,17 +101,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="car_id">Voiture</label>
-                                    <select class="form-control" id="car_id" name="car_id" required>
-                                        <option value="">Sélectionnez une voiture</option>
-                                        @foreach($cars as $car)
-                                            <option value="{{ $car->immatriculation }}">{{ $car->immatriculation }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                            <div class="form-group">
+                            <label for="car_id">Voiture</label>
+                            <select class="form-control @error('car_id') is-invalid @enderror" id="car_id" name="car_id" required>
+                                <option value="">Sélectionnez une voiture</option>
+                                @if(!empty($cars) && $cars->count())
+                                    @foreach($cars as $car)
+                                        <option value="{{ $car->immatriculation }}" {{ old('car_id') == $car->immatriculation ? 'selected' : '' }}>{{ $car->immatriculation }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">Aucune voiture disponible</option>
+                                @endif
+                            </select>
+                            @error('car_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         </div>
 
                         <div class="row mt-3 mb-3">

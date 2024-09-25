@@ -7,7 +7,7 @@ class ThemeController extends Controller
 {
     public function switch(Request $request)
     {
-        $theme = $request->input('theme', 'dark'); // Default to 'dark'
+        $theme = $request->input('theme', 'dark');
         $request->session()->put('theme', $theme);
         return response()->json(['status' => 'success']);
     }

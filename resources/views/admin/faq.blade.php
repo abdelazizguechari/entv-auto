@@ -6,7 +6,7 @@
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-            <a href="{{ route('add.Faq') }}" class="btn btn-inverse-info">Add QUESTIONS</a>
+            <a href="{{ route('add.Faq') }}" class="btn btn-inverse-info">Ajouter questions</a>
         </ol>
     </nav>
 
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">QUESTIONS FRÉQUEMMENT POSÉES</h6>
+                    <h6 class="card-title">foire aux questions</h6>
                     <div class="accordion" id="FaqAccordion">
                        
                     </div>

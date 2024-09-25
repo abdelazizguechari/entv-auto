@@ -16,7 +16,7 @@
             <th>#</th>
             <th>Nom</th>
             <th>email</th>
-            <th>phone</th>
+            <th>n° telephone</th>
             <th>mat</th>
             <th>role</th>
             <th>action</th>

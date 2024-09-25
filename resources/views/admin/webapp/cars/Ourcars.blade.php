@@ -1,17 +1,6 @@
-
-
-
-
-
-
 @extends('admin.dash')
 
 @section('admin') 
-
-
-
-
-
 <div class="page-content">
 
 

@@ -33,8 +33,8 @@
                     <td>{{ $item->end_date }}</td>
                     <td>{{ $item->telephone }}</td>
                     <td>
-                        <a class="btn btn-danger" href="{{ route('delete.driver', $item->driver_id) }}" id="delete">Supprimer</a>
-                        <a class="btn btn-success" href="{{ route('edit.driver', $item->driver_id) }}">Editer</a>
+
+                        <a class="btn btn-danger" href="{{ route('activate.driver', $item->driver_id) }}">terminer</a>
                     </td>
                 </tr>
             @endforeach

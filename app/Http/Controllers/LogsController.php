@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\User;
 
 class LogsController extends Controller
 {
     public function index(Request $request)
     {
-
         $description = $request->input('description', '');
-        $userId = $request->input('user_id', '');
+        $username = $request->input('username', ''); 
         $dateFrom = $request->input('date_from', '');
         $dateTo = $request->input('date_to', '');
 
@@ -21,8 +21,13 @@ class LogsController extends Controller
             $query->where('description', 'like', "%$description%");
         }
 
-        if ($userId) {
-            $query->where('causer_id', $userId);
+        if ($username) {
+            $user = User::where('firstname', $username)->first();
+            if ($user) {
+                $query->where('causer_id', $user->id);
+            } else {
+                $query->whereNull('causer_id');
+            }
         }
 
         if ($dateFrom) {

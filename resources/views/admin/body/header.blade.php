@@ -98,7 +98,7 @@
                     </div>
                     <div class="p-1">
                         @forelse (Auth::user()->unreadNotifications as $notification)
-                            <a href="{{ route('notifications.show', $notification->id) }}" class="dropdown-item py-2 {{ !$notification->read_at ? 'bg-light' : '' }}">
+                            <a href="{{ route('notifications.show', $notification->id) }}" class="dropdown-item py-2 {{ !$notification->read_at ?  : '' }}">
                                 <i class="me-2 icon-md" data-feather="info"></i> 
                                 <span class="{{ !$notification->read_at ? 'font-weight-bold' : 'text-muted' }}">
                                     {{ $notification->data['message'] }}

@@ -139,7 +139,6 @@ class MissionsController extends Controller
             'car_id' => 'required|string|exists:cars,immatriculation',
             'event_id' => 'nullable|exists:events,id',
         ], [
-            // Custom error messages in French
             'name.required' => 'Le nom est obligatoire.',
             'description.required' => 'La description est obligatoire.',
             'mission_type.required' => 'Le type de mission est obligatoire.',
@@ -331,10 +330,10 @@ class MissionsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string', // Made description required
-            'event_start' => 'nullable|date',
-            'event_end' => 'nullable|date',
+            'event_start' => 'required|date',
+            'event_end' => 'required|date',
             // Custom validation to ensure event_start is not after event_end
-            'event_start' => ['nullable', 'date', function ($attribute, $value, $fail) use ($request) {
+            'event_start' => ['required', 'date', function ($attribute, $value, $fail) use ($request) {
                 if ($request->event_end && $value > $request->event_end) {
                     $fail('La date de début de l\'événement ne peut pas être après la date de fin.');
                 }
@@ -441,10 +440,5 @@ class MissionsController extends Controller
             Log::error('Error fetching missions by date: ' . $e->getMessage());
             return response()->json(['error' => 'Unable to fetch missions'], 500);
         }
-    }
-    
-
-
- 
-    
+    }   
 }

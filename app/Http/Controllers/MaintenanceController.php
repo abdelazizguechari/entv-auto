@@ -103,6 +103,12 @@ class MaintenanceController extends Controller
         $maintenance->end_date = Carbon::now();
         $maintenance->save();
 
+        $car = Carsm::where('immatriculation', $maintenance->immatriculation)->first();
+        if ($car) {
+            $car->status = 'active';  // Set car status to active
+            $car->save();
+        }
+
         MaintenanceArchive::create([
             'maintenance_id' => $maintenance->id,
             'maintenance_type' => $maintenance->maintenance_type,
@@ -195,7 +201,6 @@ class MaintenanceController extends Controller
             $stockItem->quantity -= $quantity;
             $stockItem->save();
 
-            // Log stock item addition to maintenance
             activity()
                 ->causedBy(Auth::user())
                 ->performedOn($stockItem)

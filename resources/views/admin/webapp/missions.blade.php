@@ -25,7 +25,6 @@
                         ];
                     @endphp
                    
-                         <!-- Display the grouped date -->
 
                         <table class="table" id="dataTableExample">
                             <thead>

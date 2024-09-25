@@ -9,24 +9,24 @@
     
     <form method="GET" action="{{ route('logs.index') }}" class="mb-4">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col">
                 <label for="description" class="form-label">Description</label>
                 <input type="text" id="description" name="description" class="form-control" value="{{ request('description') }}">
             </div>
-            <div class="col-md-3">
-                <label for="user_id" class="form-label">User ID</label>
-                <input type="text" id="user_id" name="user_id" class="form-control" value="{{ request('user_id') }}">
+            <div class="col">
+                <label for="username" class="form-label">Nom d'utilisateur</label>
+                <input type="text" name="username" id="username" class="form-control" value="{{ request('firstname') }}">
             </div>
-            <div class="col-md-3">
-                <label for="date_from" class="form-label">Date From</label>
+            <div class="col">
+                <label for="date_from" class="form-label">De</label>
                 <input type="date" id="date_from" name="date_from" class="form-control" value="{{ request('date_from') }}">
             </div>
-            <div class="col-md-3">
-                <label for="date_to" class="form-label">Date To</label>
+            <div class="col">
+                <label for="date_to" class="form-label">Au</label>
                 <input type="date" id="date_to" name="date_to" class="form-control" value="{{ request('date_to') }}">
             </div>
         </div>
-        <button type="submit" class="btn btn-inverse-primary mt-3">Filter</button>
+        <button type="submit" class="btn btn-inverse-primary mt-3">Filtrer</button>
     </form>
 
     <hr>
@@ -34,10 +34,10 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>LOG ID</th>
                 <th>Description</th>
-                <th>User ID</th>
-                <th>Created At</th>
+                <th>ID utilisateur</th>
+                <th>Créé Le</th>
             </tr>
         </thead>
         <tbody>
