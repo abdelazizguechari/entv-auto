@@ -5,15 +5,37 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Department;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Log;
+use id;
 
 class Admincontroller extends Controller
 {
 
+    public function AdminDash(Request $request) {
+        $theme = $request->session()->get('theme', 'dark');
+        return view ('admin.dash',compact('theme'));
     
-public function AdminDashboard() {
-    return view ('admin.index');
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+    
+
+    
+
+public function caladner() {
+    return view ('admin.webapp.calander');
 
 }
+
 
 
 
@@ -27,6 +49,12 @@ public function Addmission() {
 
 }
 
+
+
+public function draiveradd() {
+
+    return view('admin.adding.draiveradd');
+}
 
 public function Adminlogin() {
     return view ('admin.admin_login');
@@ -47,7 +75,8 @@ public function updateprofil(Request $request) {
     $data = User::find($id);
 
     
-    $data->name = $request->username;
+    $data->firstname = $request->firstname;
+    $data->lastname = $request->lastname;
     $data->email = $request->email;
     $data->phone = $request->phone;
     $data->address = $request->address;
@@ -70,16 +99,39 @@ public function updateprofil(Request $request) {
 }
 
 
+public function passwordupdate(Request $request)
+{
+    $request->validate([
+        'old_password' => 'required',
+        'new_password' => 'required|confirmed|min:6',
+    ]);
+
+    if (!Hash::check($request->old_password, auth()->user()->password)) {
+        $notification = [
+            'message' => 'Old password does not match.',
+            'alert-type' => 'error'
+        ];
+        return back()->with($notification);
+    }
+
+
+
+
+    $notification = [
+        'message' => 'Password changed successfully.',
+        'alert-type' => 'success'
+    ];
+    return back()->with($notification);
+}
+
 public function changpassword () {
-    return view ('admin.changepassword');
+
+    $id = Auth::user()->id ;
+    $profiledata = User::find($id);
+    return view ('admin.changepassword',compact('profiledata'));
 }
 
 
-
-public function draiveradd() {
-
-    return view('admin.adding.draiver_add');
-}
 
 
 public function adminsigne() {
@@ -88,36 +140,235 @@ public function adminsigne() {
 }
 
 
-// public function adminsingedata(request $request) {
+public function usersigne(Request $request) {
+   
+    
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'willaya' => 'required|string|max:255',
+            'mat' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+            'birthday' => 'required|date', 
+        ]);
 
-// $request -> validate([
+       
 
-//     'name' => 'string|max(50)|requiard' ,
-//     'username' => 'string|max(50)|requiard' ,
-//     'phone' =>'string|max(50)|requiard' ,
-//     'email' =>'email|max(50)|requiard' ,
-//     'address' =>'string|max(50)|requiard' ,
-//     'mat' => 'string|max(50)|requiard' ,
-//     'password' => 'string|max(50)|requiard' ,
+        $user = User::create([
+            'firstname' => $request->input('firstname'),
+            'lastname' => $request->input('lastname'),
+            'willaya' => $request->input('willaya'),
+            'mat' => $request->input('mat'),
+            'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),  
+            'birthday' => $request->input('birthday'),
+        ]);
 
-// ]);
+        Auth::login($user);
 
-// $request = new user
+        return redirect()->route('admin.login');
+    }
+
+    public function newlogin(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        $credentials = ['email' => $request->email, 'password' => $request->password];
+    
+        Log::info('Attempting login with credentials: ', $credentials);
+    
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->intended('/admin/home');
+            }
+
+            Auth::logout();
+            return back()->withErrors(['email' => 'Unauthorized']);
+        }
+
+        return back()->withErrors(['email' => 'Invalid login credentials']);
+    }
+    
+    // public function Adminlogout(Request $request): RedirectResponse
+    // {
+ 
+    //     Auth::logout();
+
+
+    //     $request->session()->invalidate();
+
+       
+    //     $request->session()->regenerateToken();
+
+     
+    //     return redirect()->route('admin.login');
+    // }
+    
+
+
+public function addadmin() {
+
+    $Role = Role::all();
+    return view('admin.role.adminsetup.addadmin',compact('Role')); 
+}
+
+
+public function Ouradmins() {
 
 
     
-// }
- 
+        $alladmin = User::where('role','admin')->
+        where('id' ,'!=' ,auth()->id())
+        ->get();
+    
 
-public function Adminlogout(Request $request): RedirectResponse
-{
-    Auth::guard('web')->logout();
-
-    $request->session()->invalidate();
-
-    $request->session()->regenerateToken();
-
-    return redirect('/admin/login');
+    
+    return view('admin.role.adminsetup.ouradmin',compact('alladmin')); 
 }
+
+
+public function Saveadmin(Request $request)
+    {
+        $user = new User();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->mat = $request->mat;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->birthday = $request->birthday;
+        $user->password = Hash::make($request->password);
+        $user->role = 'admin';
+        $user->status = 'active';
+
+        if ($request->roles) {
+            $role = Role::find($request->roles);
+            if ($role) {
+                $user->save();
+                $user->assignRole($role);
+
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($user)
+                    ->withProperties(['role' => $role->name])
+                    ->log('utilisateur creé avec le role ' . $role->name);
+
+                $notification = [
+                    'message' => 'Admin created and role assigned successfully.',
+                    'alert-type' => 'success'
+                ];
+            } else {
+                $notification = [
+                    'message' => 'Role not found.',
+                    'alert-type' => 'error'
+                ];
+            }
+        } else {
+            $user->save();
+        }
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->log('utilisateur creé');
+
+        $notification = [
+            'message' => 'User Created.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('Our.admins')->with($notification);
+    }
+
+
+
+    public function Delateadmin($id)
+    {
+        $Delateadmin = User::findOrFail($id);
+
+        if (!is_null($Delateadmin)) {
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($Delateadmin)
+                ->log('Utilisateur supprimé');
+
+            $Delateadmin->delete();
+        }
+
+        $notification = [
+            'message' => 'Admin Deleted.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function Editadmin($id){
+
+        $user = User::findOrFail($id);
+        $Role = Role::all();
+
+        return view('admin.role.adminsetup.Editadmin',compact('user','Role'));
+
+    }
+
+    public function Updateadmin(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'mat' => $request->mat,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($user)
+            ->log('Utilisateur mis à jour');
+
+        $user->roles()->detach();
+
+        if ($request->roles) {
+            $role = Role::find($request->roles);
+            if ($role) {
+                $user->save();
+                $user->assignRole($role);
+
+                activity()
+                    ->causedBy(Auth::user())
+                    ->performedOn($user)
+                    ->withProperties(['role' => $role->name])
+                    ->log('utilisateur mis à jour avec le role ' . $role->name);
+
+                $notification = [
+                    'message' => 'Admin updated and role assigned successfully.',
+                    'alert-type' => 'success'
+                ];
+            } else {
+                $notification = [
+                    'message' => 'Role not found.',
+                    'alert-type' => 'error'
+                ];
+            }
+        }
+
+        $notification = [
+            'message' => 'Admin information updated.',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('Our.admins')->with($notification);
+    }
+
+
 };
 

@@ -105,6 +105,7 @@ return [
         ),
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -118,9 +119,23 @@ return [
     |
     */
 
+  
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    
+
+    'aliases' => [
+
+
+    // Add your aliases here
+    'Route' => Illuminate\Support\Facades\Route::class,
+    'str' => Illuminate\Support\Str::class,
+    'Auth' => Illuminate\Support\Facades\Auth::class,
+
+
+],
 
 ];
